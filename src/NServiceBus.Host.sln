@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NServiceBus.Hosting.WindowsX86", "NServiceBus.Hosting.Windows\NServiceBus.Hosting.WindowsX86.csproj", "{79487CAA-C060-49C8-B689-6250C61A46D5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NServiceBus.Host32", "NServiceBus.Hosting.Windows\NServiceBus.Host32.csproj", "{79487CAA-C060-49C8-B689-6250C61A46D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NServiceBus.Hosting.WindowsAnyCpu", "NServiceBus.Hosting.Windows\NServiceBus.Hosting.WindowsAnyCpu.csproj", "{85E813C0-4A94-4946-8B1F-DE1E39AA7D11}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NServiceBus.Host", "NServiceBus.Hosting.Windows\NServiceBus.Host.csproj", "{85E813C0-4A94-4946-8B1F-DE1E39AA7D11}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NServiceBus.Hosting.Profiles", "NServiceBus.Hosting.Profiles\NServiceBus.Hosting.Profiles.csproj", "{60826589-EB19-46F7-9567-69F46C3668B9}"
 EndProject
