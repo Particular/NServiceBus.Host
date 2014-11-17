@@ -3,7 +3,7 @@
     /// <summary>
     /// Indicates that the infrastructure should configure itself for production.
     /// </summary>
-    public interface Production : PerformanceCounters
+    public interface Production : IProfile
     {
     }
 }
