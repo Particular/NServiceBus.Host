@@ -30,6 +30,7 @@
     <NoWarn>
     </NoWarn>
     <Prefer32Bit>true</Prefer32Bit>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <AssemblyName>NServiceBus.Host32</AssemblyName>
@@ -44,6 +45,7 @@
     <NoWarn>
     </NoWarn>
     <Prefer32Bit>true</Prefer32Bit>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup>
     <DelaySign>true</DelaySign>
