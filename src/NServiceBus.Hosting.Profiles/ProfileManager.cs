@@ -4,7 +4,6 @@ namespace NServiceBus.Hosting.Profiles
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
-    using Logging;
 
     /// <summary>
     /// Scans and loads profile handlers from the given assemblies
@@ -133,13 +132,10 @@ namespace NServiceBus.Hosting.Profiles
 
             foreach (var profileWithHandlerTypes in handlersByProfile)
             {
-                Logger.Info("Activating profile: " + profileWithHandlerTypes.Profile.AssemblyQualifiedName);
-
                 foreach (var handlerType in profileWithHandlerTypes.HandlerTypes)
                 {
                     if (executedHandlers.Contains(handlerType))
                     {
-                        Logger.Debug("Profile handler was already activated by a preceding profile: " + handlerType.AssemblyQualifiedName);
                         continue;
                     }
                     var profileHandler = (IHandleProfile)Activator.CreateInstance(handlerType);
@@ -149,7 +145,6 @@ namespace NServiceBus.Hosting.Profiles
                         wantsActiveProfiles.ActiveProfiles = activeProfiles;
                     }
 
-                    Logger.Debug("Activating profile handler: " + handlerType.AssemblyQualifiedName);
                     profileHandler.ProfileActivated(config);
 
                     executedHandlers.Add(handlerType);
@@ -198,7 +193,5 @@ namespace NServiceBus.Hosting.Profiles
                 }
             }
         }
-
-        static ILog Logger = LogManager.GetLogger<ProfileManager>();
     }
 }

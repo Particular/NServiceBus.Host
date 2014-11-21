@@ -5,7 +5,6 @@ namespace NServiceBus.Hosting.Wcf
     using System.ServiceModel;
     using System.ServiceModel.Channels;
     using System.ServiceModel.Configuration;
-    using Logging;
 
     /// <summary>
     /// A specialized service host that adds a default endpoint if non is specified in config
@@ -47,12 +46,9 @@ namespace NServiceBus.Hosting.Wcf
             }
             if (!endpointAlreadyConfigured)
             {
-                logger.Debug("Endpoint for contract: " + contractType.Name + " is not found in configuration, going to add it programmatically");
                 AddServiceEndpoint(contractType, binding, address);
             }
                 
         }
-
-        static ILog logger = LogManager.GetLogger<WcfServiceHost>();
     }
 }
