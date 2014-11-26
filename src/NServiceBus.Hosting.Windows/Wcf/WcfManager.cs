@@ -5,7 +5,6 @@
     using System.Linq;
     using System.ServiceModel;
     using System.ServiceModel.Channels;
-    using Logging;
     using NServiceBus.ObjectBuilder;
 
     /// <summary>
@@ -41,7 +40,6 @@
 
                 hosts.Add(host);
 
-                logger.Debug("Going to host the WCF service: " + serviceType.AssemblyQualifiedName);
                 host.Open();
             }
         }
@@ -84,8 +82,6 @@
             return false;
         }
 
-
-        static ILog logger = LogManager.GetLogger<WcfManager>();
         readonly List<ServiceHost> hosts = new List<ServiceHost>();
     }
 }
