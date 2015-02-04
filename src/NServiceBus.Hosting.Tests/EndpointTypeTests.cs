@@ -7,83 +7,78 @@ namespace NServiceBus.Hosting.Tests
         using Windows;
         using Windows.Arguments;
         using NUnit.Framework;
-
-        abstract class TestContext
-        {
-            protected EndpointType EndpointType;
-        }
-
+        
         [TestFixture]
-        class OtherProperty_Getter_Tests : TestContext
+        class OtherProperty_Getter_Tests 
         {
-            [TestFixtureSetUp]
-            public void TestFixtureSetup()
-            {
-                EndpointType = new EndpointType(typeof (TestEndpointType));
-            }
 
             [Test]
             public void the_assemblyQualifiedName_getter_should_not_blow_up()
             {
-                Trace.WriteLine(EndpointType.AssemblyQualifiedName);
+                var endpointType = new EndpointType(typeof(TestEndpointType));
+                Trace.WriteLine(endpointType.AssemblyQualifiedName);
             }
 
             [Test]
             public void the_endpointConfigurationFile_getter_should_not_blow_up()
             {
-                Trace.WriteLine(EndpointType.EndpointConfigurationFile);
+                var endpointType = new EndpointType(typeof(TestEndpointType));
+                Trace.WriteLine(endpointType.EndpointConfigurationFile);
             }
 
             [Test]
             public void the_endpointVersion_getter_should_not_blow_up()
             {
-                Trace.WriteLine(EndpointType.EndpointVersion);
+                var endpointType = new EndpointType(typeof(TestEndpointType));
+                Trace.WriteLine(endpointType.EndpointVersion);
             }
         }
 
         [TestFixture]
-        class EndpointName_Getter_Tests : TestContext
+        class EndpointName_Getter_Tests 
         {
-            HostArguments hostArguments;
-
-            [TestFixtureSetUp]
-            public void TestFixtureSetup()
-            {
-                hostArguments = new HostArguments(new string[0])
-                    {
-                        EndpointName = "EndpointNameFromHostArgs"
-                    };
-            }
 
             [Test]
             public void when_endpointName_attribute_exists_it_should_have_first_priority()
-            {                
-                EndpointType = new EndpointType(hostArguments, typeof (TestEndpointTypeWithEndpointNameAttribute));
+            {
+                var hostArguments = new HostArguments(new string[0])
+                {
+                    EndpointName = "EndpointNameFromHostArgs"
+                };
+                var endpointType = new EndpointType(hostArguments, typeof (TestEndpointTypeWithEndpointNameAttribute));
 
-                Assert.AreEqual("EndpointNameFromAttribute", EndpointType.EndpointName);
+                Assert.AreEqual("EndpointNameFromAttribute", endpointType.EndpointName);
             }
 
             [Test]
             [Ignore("this hasn't been implemented yet as far as i can tell")]
             public void when_endpointName_is_provided_via_configuration_it_should_have_second_priority()
             {
+                var hostArguments = new HostArguments(new string[0])
+                {
+                    EndpointName = "EndpointNameFromHostArgs"
+                };
                 var configuration = new BusConfiguration();
 
                 configuration.EndpointName("EndpointNameFromConfiguration");
 
                 Bus.Create(configuration);
 
-                EndpointType = new EndpointType(hostArguments, typeof (TestEndpointType));
+                var endpointType = new EndpointType(hostArguments, typeof (TestEndpointType));
 
-                Assert.AreEqual("EndpointNameFromConfiguration", EndpointType.EndpointName);
+                Assert.AreEqual("EndpointNameFromConfiguration", endpointType.EndpointName);
             }
 
             [Test]
             public void when_endpointName_is_provided_via_hostArgs_it_should_have_third_priority()
             {
-                EndpointType = new EndpointType(hostArguments, typeof (TestEndpointType));
+                var hostArguments = new HostArguments(new string[0])
+                {
+                    EndpointName = "EndpointNameFromHostArgs"
+                };
+                var endpointType = new EndpointType(hostArguments, typeof (TestEndpointType));
 
-                Assert.AreEqual("EndpointNameFromHostArgs", EndpointType.EndpointName);
+                Assert.AreEqual("EndpointNameFromHostArgs", endpointType.EndpointName);
             }
 
             [Test]
@@ -97,48 +92,48 @@ namespace NServiceBus.Hosting.Tests
             [Test]
             public void when_no_EndpointName_defined_it_should_return_null()
             {
+                var hostArguments = new HostArguments(new string[0])
+                {
+                    EndpointName = "EndpointNameFromHostArgs"
+                };
                 hostArguments.EndpointName = null;
-                EndpointType = new EndpointType(hostArguments, typeof (TestEndpointType));
-                Assert.IsNull(EndpointType.EndpointName);
+                var endpointType = new EndpointType(hostArguments, typeof (TestEndpointType));
+                Assert.IsNull(endpointType.EndpointName);
             }
         }
 
         [TestFixture]
-        class ServiceName_Getter_Tests : TestContext
+        class ServiceName_Getter_Tests 
         {
-            HostArguments hostArguments;
 
             [Test]
-            public void
-                when_serviceName_is_not_provided_via_hostArgs_and_endpoint_has_a_namespace_it_should_use_the_namespace()
+            public void when_serviceName_is_not_provided_via_hostArgs_and_endpoint_has_a_namespace_it_should_use_the_namespace()
             {
-                hostArguments = new HostArguments(new string[0]);
-                EndpointType = new EndpointType(hostArguments, typeof (TestEndpointType));
+                var hostArguments = new HostArguments(new string[0]);
+                var endpointType = new EndpointType(hostArguments, typeof (TestEndpointType));
 
-                Assert.AreEqual("NServiceBus.Hosting.Tests.EndpointTypeTests", EndpointType.ServiceName);
+                Assert.AreEqual("NServiceBus.Hosting.Tests.EndpointTypeTests", endpointType.ServiceName);
             }
 
             [Test]
-            public void
-                when_serviceName_is_not_provided_via_hostArgs_and_endpoint_has_no_namespace_it_should_use_the_assembly_name
-                ()
+            public void when_serviceName_is_not_provided_via_hostArgs_and_endpoint_has_no_namespace_it_should_use_the_assembly_name()
             {
-                hostArguments = new HostArguments(new string[0]);
-                EndpointType = new EndpointType(hostArguments, typeof (TestEndpointTypeWithoutANamespace));
+                var hostArguments = new HostArguments(new string[0]);
+                var endpointType = new EndpointType(hostArguments, typeof (TestEndpointTypeWithoutANamespace));
 
-                Assert.AreEqual("NServiceBus.Hosting.Tests", EndpointType.ServiceName);
+                Assert.AreEqual("NServiceBus.Hosting.Tests", endpointType.ServiceName);
             }
 
             [Test]
             public void when_serviceName_is_provided_via_hostArgs_it_should_have_first_priority()
             {
-                hostArguments = new HostArguments(new string[0])
-                    {
-                        ServiceName = "ServiceNameFromHostArgs"
-                    };
-                EndpointType = new EndpointType(hostArguments, typeof (TestEndpointType));
+                var hostArguments = new HostArguments(new string[0])
+                                              {
+                                                  ServiceName = "ServiceNameFromHostArgs"
+                                              };
+                var endpointType = new EndpointType(hostArguments, typeof (TestEndpointType));
 
-                Assert.AreEqual("ServiceNameFromHostArgs", EndpointType.ServiceName);
+                Assert.AreEqual("ServiceNameFromHostArgs", endpointType.ServiceName);
             }
         }
 
