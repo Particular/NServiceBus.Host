@@ -11,141 +11,118 @@ namespace EndpointTypeDeterminerTests
     using NServiceBus.Hosting.Windows.Arguments;
     using NUnit.Framework;
 
-    abstract class TestContext
-    {
-        protected AssemblyScanner AssemblyScanner;
-        protected Type EndpointTypeDefinedInConfigurationFile = typeof(ConfigWithCustomTransport);
-        protected Type RetrievedEndpointType;
-        protected EndpointTypeDeterminer EndpointTypeDeterminer;
-    }
-
     [TestFixture]
-    class GetEndpointConfigurationTypeForHostedEndpoint_Tests : TestContext
+    class GetEndpointConfigurationTypeForHostedEndpoint_Tests 
     {
-        HostArguments hostArguments;
-
-        [TestFixtureSetUp]
-        public void TestFixtureSetup()
-        {
-            AssemblyScanner = new AssemblyScanner();
-        }
-
+        
         [Test]
-        public void
-            when_endpoint_type_is_not_provided_via_hostArgs_it_should_fall_through_to_other_modes_of_determining_endpoint_type
-            ()
+        public void when_endpoint_type_is_not_provided_via_hostArgs_it_should_fall_through_to_other_modes_of_determining_endpoint_type()
         {
-            EndpointTypeDeterminer = new EndpointTypeDeterminer(AssemblyScanner,
+            var endpointTypeDefinedInConfigurationFile = typeof(ConfigWithCustomTransport);
+            var endpointTypeDeterminer = new EndpointTypeDeterminer(new AssemblyScanner(),
                 () => ConfigurationManager.AppSettings["EndpointConfigurationType"]);
-            hostArguments = new HostArguments(new string[0]);
+            var hostArguments = new HostArguments(new string[0]);
 
             // will match with config-based type
-            RetrievedEndpointType = EndpointTypeDeterminer.GetEndpointConfigurationTypeForHostedEndpoint(hostArguments).Type;
+            var RetrievedEndpointType = endpointTypeDeterminer.GetEndpointConfigurationTypeForHostedEndpoint(hostArguments).Type;
 
-            Assert.AreEqual(EndpointTypeDefinedInConfigurationFile, RetrievedEndpointType);
+            Assert.AreEqual(endpointTypeDefinedInConfigurationFile, RetrievedEndpointType);
         }
 
         [Test]
         public void when_endpoint_type_is_provided_via_hostArgs_it_should_have_first_priority()
         {
-            EndpointTypeDeterminer = new EndpointTypeDeterminer(AssemblyScanner,
+            var endpointTypeDeterminer = new EndpointTypeDeterminer(new AssemblyScanner(),
                 () => ConfigurationManager.AppSettings["EndpointConfigurationType"]);
-            hostArguments = new HostArguments(new string[0])
-            {
-                EndpointConfigurationType = typeof(TestEndpointType).AssemblyQualifiedName
-            };
+            var hostArguments = new HostArguments(new string[0])
+                                          {
+                                              EndpointConfigurationType = typeof(TestEndpointType).AssemblyQualifiedName
+                                          };
 
-            RetrievedEndpointType = EndpointTypeDeterminer.GetEndpointConfigurationTypeForHostedEndpoint(hostArguments).Type;
+            var RetrievedEndpointType = endpointTypeDeterminer.GetEndpointConfigurationTypeForHostedEndpoint(hostArguments).Type;
 
             Assert.AreEqual(typeof(TestEndpointType), RetrievedEndpointType);
         }
 
         [Test]
-        [ExpectedException(typeof(ConfigurationErrorsException))]
         public void when_invalid_endpoint_type_is_provided_via_hostArgs_it_should_blow_up()
         {
-            EndpointTypeDeterminer = new EndpointTypeDeterminer(AssemblyScanner,
+            var endpointTypeDeterminer = new EndpointTypeDeterminer(new AssemblyScanner(),
                 () => ConfigurationManager.AppSettings["EndpointConfigurationType"]);
-            hostArguments = new HostArguments(new string[0])
-            {
-                EndpointConfigurationType = "I am an invalid type name"
-            };
+            var hostArguments = new HostArguments(new string[0])
+                                          {
+                                              EndpointConfigurationType = "I am an invalid type name"
+                                          };
 
-            RetrievedEndpointType = EndpointTypeDeterminer.GetEndpointConfigurationTypeForHostedEndpoint(hostArguments).Type;
+            Assert.Throws<ConfigurationErrorsException>(() =>
+            {
+                // ReSharper disable once UnusedVariable
+                var type = endpointTypeDeterminer.GetEndpointConfigurationTypeForHostedEndpoint(hostArguments).Type;
+            });
         }
     }
 
     [TestFixture]
-    class GetEndpointConfigurationType_Tests_2 : TestContext
+    class GetEndpointConfigurationType_Tests
     {
-        [TestFixtureSetUp]
-        public void TestFixtureSetup()
-        {
-            AssemblyScanner = new AssemblyScanner();
-        }
-
         [Test]
-        [ExpectedException(typeof(InvalidOperationException),
-            ExpectedMessage = "Host doesn't support hosting of multiple endpoints",
-            MatchType = MessageMatch.StartsWith)]
         public void when_multiple_endpoint_types_found_via_assembly_scanning_it_should_blow_up()
         {
-            EndpointTypeDeterminer = new EndpointTypeDeterminer(AssemblyScanner, () => null);
-
-            RetrievedEndpointType = EndpointTypeDeterminer.GetEndpointConfigurationType().Type;
-        }
-    }
-
-    [TestFixture]
-    class GetEndpointConfigurationType_Tests : TestContext
-    {
-        [TestFixtureSetUp]
-        public void TestFixtureSetup()
-        {
-            AssemblyScanner = new AssemblyScanner();
+            var endpointTypeDeterminer = new EndpointTypeDeterminer(new AssemblyScanner(), () => null);
+            var exception = Assert.Throws<InvalidOperationException>(() =>
+            {
+                // ReSharper disable once UnusedVariable
+                var type = endpointTypeDeterminer.GetEndpointConfigurationType().Type;
+            });
+            Assert.That(exception.Message, Is.StringStarting("Host doesn't support hosting of multiple endpoints"));
         }
 
         [Test]
         public void when_endpoint_type_is_provided_via_configuration_it_should_have_first_priority()
         {
-            EndpointTypeDeterminer = new EndpointTypeDeterminer(AssemblyScanner,
+            var EndpointTypeDefinedInConfigurationFile = typeof(ConfigWithCustomTransport);
+            var EndpointTypeDeterminer = new EndpointTypeDeterminer(new AssemblyScanner(),
                 () => ConfigurationManager.AppSettings["EndpointConfigurationType"]);
 
-            RetrievedEndpointType = EndpointTypeDeterminer.GetEndpointConfigurationType().Type;
+            var RetrievedEndpointType = EndpointTypeDeterminer.GetEndpointConfigurationType().Type;
 
             Assert.AreEqual(EndpointTypeDefinedInConfigurationFile, RetrievedEndpointType);
         }
 
         [Test]
-        [ExpectedException(typeof(ConfigurationErrorsException),
-            ExpectedMessage = "The 'EndpointConfigurationType' entry in the NServiceBus.Host.exe.config",
-            MatchType = MessageMatch.StartsWith)]
         public void when_invalid_endpoint_type_is_provided_via_configuration_it_should_blow_up()
         {
-            EndpointTypeDeterminer = new EndpointTypeDeterminer(AssemblyScanner,
-                () => "I am an invalid type name");
+            var AssemblyScanner = new AssemblyScanner();
+            var endpointTypeDeterminer = new EndpointTypeDeterminer(AssemblyScanner, () => "I am an invalid type name");
 
-            RetrievedEndpointType = EndpointTypeDeterminer.GetEndpointConfigurationType().Type;
+            var exception = Assert.Throws<ConfigurationErrorsException>(() =>
+            {
+                // ReSharper disable once UnusedVariable
+                var type = endpointTypeDeterminer.GetEndpointConfigurationType().Type;
+            });
+            Assert.That(exception.Message, Is.StringStarting("The 'EndpointConfigurationType' entry in the NServiceBus.Host.exe.config"));
         }
 
         [Test]
-        [ExpectedException(typeof(InvalidOperationException),
-            ExpectedMessage = "No endpoint configuration found in scanned assemblies",
-            MatchType = MessageMatch.StartsWith)]
         public void when_no_endpoint_type_found_via_configuration_or_assembly_scanning_it_should_blow_up()
         {
-            AssemblyScanner = new AssemblyScanner
+            var AssemblyScanner = new AssemblyScanner
+                                              {
+                                                  IncludeExesInScan = false,
+                                                  AssembliesToSkip = new List<string>
+                                                                     {
+                                                                         Assembly.GetExecutingAssembly().GetName().Name
+                                                                     }
+                                              };
+
+            var endpointTypeDeterminer = new EndpointTypeDeterminer(AssemblyScanner, () => null);
+
+            var exception = Assert.Throws<InvalidOperationException>(() =>
             {
-                IncludeExesInScan = false,
-                AssembliesToSkip = new List<string>
-                {
-                    Assembly.GetExecutingAssembly().GetName().Name
-                }
-            };
-
-            EndpointTypeDeterminer = new EndpointTypeDeterminer(AssemblyScanner, () => null);
-
-            RetrievedEndpointType = EndpointTypeDeterminer.GetEndpointConfigurationType().Type;
+                // ReSharper disable once UnusedVariable
+                var type = endpointTypeDeterminer.GetEndpointConfigurationType().Type;
+            });
+            Assert.That(exception.Message, Is.StringStarting("No endpoint configuration found in scanned assemblies"));
         }
     }
 }
