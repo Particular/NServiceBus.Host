@@ -50,6 +50,50 @@ namespace NServiceBus.Hosting.Tests
                 Assert.AreEqual("EndpointNameFromAttribute", endpointType.EndpointName);
             }
 
+            [EndpointName("EndpointNameFromAttribute")]
+            class TestEndpointTypeWithEndpointNameAttribute
+            {
+            }
+
+            [Test]
+            public void when_core_endpointName_attribute_exists_it_should_have_first_priority()
+            {
+                var hostArguments = new HostArguments(new string[0])
+                {
+                    EndpointName = "EndpointNameFromHostArgs"
+                };
+                var endpointType = new EndpointType(hostArguments, typeof(TestEndpointTypeWithCoreEndpointNameAttribute));
+
+                Assert.AreEqual("EndpointNameFromCoreAttribute", endpointType.EndpointName);
+            }
+
+            [NServiceBus.EndpointName("EndpointNameFromCoreAttribute")]
+            class TestEndpointTypeWithCoreEndpointNameAttribute
+            {
+            }
+
+            [Test]
+            public void when_both_core_and_host_endpointName_attribute_exists_it_should_throw()
+            {
+                var hostArguments = new HostArguments(new string[0])
+                                    {
+                                        EndpointName = "EndpointNameFromHostArgs"
+                                    };
+                var endpointType = new EndpointType(hostArguments, typeof(TestEndpointTypeWithBothEndpointNameAttribute));
+                var exception = Assert.Throws<Exception>(() =>
+                {
+                    // ReSharper disable once UnusedVariable
+                    var endpointName = endpointType.EndpointName;
+                });
+                Assert.AreEqual("Please either define a [NServiceBus.EndpointNameAttribute] or a [NServiceBus.Hosting.Windows.EndpointNameAttribute], but not both.", exception.Message);
+            }
+
+            [NServiceBus.EndpointName("EndpointNameFromCoreAttribute")]
+            [EndpointName("EndpointNameAttribute")]
+            class TestEndpointTypeWithBothEndpointNameAttribute
+            {
+            }
+
             [Test]
             [Ignore("this hasn't been implemented yet as far as i can tell")]
             public void when_endpointName_is_provided_via_configuration_it_should_have_second_priority()
@@ -162,10 +206,6 @@ namespace NServiceBus.Hosting.Tests
         {
         }
 
-        [EndpointName("EndpointNameFromAttribute")]
-        class TestEndpointTypeWithEndpointNameAttribute
-        {
-        }
     }
 }
 
