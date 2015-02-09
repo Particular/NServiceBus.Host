@@ -54,7 +54,9 @@
     <ApplicationIcon>NServiceBus.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="FodyWeavers.xml">
       <SubType>Designer</SubType>
     </None>
@@ -103,6 +105,7 @@
     <Compile Include="..\NServiceBus.Hosting.Profiles\ProfileManager.cs">
       <Link>Profiles\ProfileManager.cs</Link>
     </Compile>
+    <Compile Include="EndpointNameAttribute.cs" />
     <Compile Include="EndpointType.cs" />
     <Compile Include="EndpointTypeDeterminer.cs" />
     <Compile Include="FileVersionRetriever.cs" />
