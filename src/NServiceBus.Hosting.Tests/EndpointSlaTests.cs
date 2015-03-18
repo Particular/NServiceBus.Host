@@ -16,7 +16,7 @@ class EndpointSlaTests
     {
         TimeSpan sla;
         GenericHost.TryGetSlaFromEndpointConfigType(typeof(ClassWithCoreSlaAttribute), out sla);
-        Assert.AreEqual(TimeSpan.FromHours(1),sla);
+        Assert.AreEqual(TimeSpan.FromHours(1), sla);
     }
 
     [NServiceBus.Hosting.Windows.EndpointSLA("2:00:00")]
@@ -43,11 +43,11 @@ class EndpointSlaTests
     [Test]
     public void With_both_sla_attribute_should_throw()
     {
-        TimeSpan sla;
         var exception = Assert.Throws<Exception>(() =>
         {
+            TimeSpan sla;
             GenericHost.TryGetSlaFromEndpointConfigType(typeof(ClassWithBothSlaAttribute), out sla);
         });
-        Assert.AreEqual("Please either define a [NServiceBus.EndpointSLAAttribute] or a [NServiceBus.Hosting.Windows.EndpointSLAAttribute], but not both.",exception.Message);
+        Assert.AreEqual("Please either define a [NServiceBus.EndpointSLAAttribute] or a [NServiceBus.Hosting.Windows.EndpointSLAAttribute], but not both.", exception.Message);
     }
 }
