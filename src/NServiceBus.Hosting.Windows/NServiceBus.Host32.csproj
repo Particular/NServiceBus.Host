@@ -108,6 +108,7 @@
       <Link>Profiles\ProfileManager.cs</Link>
     </Compile>
     <Compile Include="EndpointNameAttribute.cs" />
+    <Compile Include="EndpointSLAAttribute.cs" />
     <Compile Include="EndpointType.cs" />
     <Compile Include="EndpointTypeDeterminer.cs" />
     <Compile Include="FileVersionRetriever.cs" />
