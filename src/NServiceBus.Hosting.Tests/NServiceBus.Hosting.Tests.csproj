@@ -61,14 +61,15 @@
     <Compile Include="AssemblyListExtensions\WhereConcreteTests.cs" />
     <Compile Include="AssemblyPathHelper.cs" />
     <Compile Include="EndpointTypeDeterminerTests.cs" />
+    <Compile Include="EndpointSlaTests.cs" />
     <Compile Include="EndpointTypeTests.cs" />
     <Compile Include="ProfileManagerTests.cs" />
     <Compile Include="With_transport_tests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NServiceBus.Hosting.Windows\NServiceBus.Hosting.WindowsAnyCpu.csproj">
+    <ProjectReference Include="..\NServiceBus.Hosting.Windows\NServiceBus.Host.csproj">
       <Project>{85E813C0-4A94-4946-8B1F-DE1E39AA7D11}</Project>
-      <Name>NServiceBus.Hosting.WindowsAnyCpu</Name>
+      <Name>NServiceBus.Host</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

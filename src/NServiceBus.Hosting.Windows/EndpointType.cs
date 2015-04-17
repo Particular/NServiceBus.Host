@@ -2,6 +2,7 @@
 {
     using System;
     using System.IO;
+    using System.Linq;
     using Arguments;
 
     /// <summary>
@@ -56,17 +57,25 @@
         {
             get
             {
-                var arr = type.GetCustomAttributes(typeof (EndpointNameAttribute), false);
-                if (arr.Length == 1)
+                var hostEndpointAttribute = (EndpointNameAttribute)type.GetCustomAttributes(typeof(EndpointNameAttribute), false)
+                    .FirstOrDefault();
+                var coreEndpointAttribute = (NServiceBus.EndpointNameAttribute)type.GetCustomAttributes(typeof(NServiceBus.EndpointNameAttribute), false)
+                    .FirstOrDefault();
+
+                if (hostEndpointAttribute != null && coreEndpointAttribute != null)
                 {
-                    return ((EndpointNameAttribute) arr[0]).Name;
+                    throw new Exception("Please either define a [NServiceBus.EndpointNameAttribute] or a [NServiceBus.Hosting.Windows.EndpointNameAttribute], but not both.");
                 }
-                
-                if (arguments.EndpointName != null)
+                if (hostEndpointAttribute != null)
                 {
-                    return arguments.EndpointName;
+                    return hostEndpointAttribute.Name;
                 }
-                return null;
+                if (coreEndpointAttribute != null)
+                {
+                    return coreEndpointAttribute.Name;
+                }
+
+                return arguments.EndpointName;
             }
         }
 

@@ -9,6 +9,7 @@ namespace NServiceBus
     using Hosting.Profiles;
     using Hosting.Wcf;
     using Logging;
+    using NServiceBus.Configuration.AdvanceExtensibility;
     using NServiceBus.Unicast;
 
     class GenericHost
@@ -103,7 +104,7 @@ namespace NServiceBus
             }
 
             var configuration = new BusConfiguration();
-
+            SetSlaFromAttribute(configuration, specifier);
             configuration.EndpointName(endpointNameToUse);
             configuration.DefineCriticalErrorAction(OnCriticalError);
 
@@ -117,6 +118,43 @@ namespace NServiceBus
             profileManager.ActivateProfileHandlers(configuration);
 
             bus = (UnicastBus) Bus.Create(configuration);
+        }
+
+        void SetSlaFromAttribute(BusConfiguration configuration, IConfigureThisEndpoint configureThisEndpoint)
+        {
+            var endpointConfigurationType = configureThisEndpoint
+                .GetType();
+            TimeSpan sla;
+            if (TryGetSlaFromEndpointConfigType(endpointConfigurationType, out sla))
+            {
+                configuration.GetSettings().Set("EndpointSLA", sla);
+            }
+        }
+
+        internal static bool TryGetSlaFromEndpointConfigType(Type endpointConfigurationType, out TimeSpan sla)
+        {
+            var hostSLAAttribute = (Hosting.Windows.EndpointSLAAttribute) endpointConfigurationType
+                .GetCustomAttributes(typeof(Hosting.Windows.EndpointSLAAttribute), false)
+                .FirstOrDefault();
+            var coreSLAAttribute = (EndpointSLAAttribute) endpointConfigurationType
+                .GetCustomAttributes(typeof(EndpointSLAAttribute), false)
+                .FirstOrDefault();
+            if (hostSLAAttribute != null && coreSLAAttribute != null)
+            {
+                throw new Exception("Please either define a [NServiceBus.EndpointSLAAttribute] or a [NServiceBus.Hosting.Windows.EndpointSLAAttribute], but not both.");
+            }
+            if (coreSLAAttribute != null)
+            {
+                sla = coreSLAAttribute.SLA;
+                return true;
+            }
+            if (hostSLAAttribute != null)
+            {
+                sla = hostSLAAttribute.SLA;
+                return true;
+            }
+            sla = TimeSpan.Zero;
+            return false;
         }
 
         // Windows hosting behavior when critical error occurs is suicide.
