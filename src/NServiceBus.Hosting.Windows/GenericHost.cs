@@ -25,7 +25,7 @@ namespace NServiceBus
 
 
             endpointNameToUse = endpointName;
-            endpointVersionToUse = FileVersionRetriever.GetFileVersion(specifier.GetType());
+            List<Assembly> assembliesToScan;
 
             if (scannableAssembliesFullName == null || !scannableAssembliesFullName.Any())
             {
@@ -106,8 +106,6 @@ namespace NServiceBus
             var configuration = new BusConfiguration();
             SetSlaFromAttribute(configuration, specifier);
             configuration.EndpointName(endpointNameToUse);
-            configuration.EndpointVersion(endpointVersionToUse);
-            configuration.AssembliesToScan(assembliesToScan);
             configuration.DefineCriticalErrorAction(OnCriticalError);
 
             if (moreConfiguration != null)
@@ -169,13 +167,11 @@ namespace NServiceBus
             
             Environment.FailFast(String.Format("The following critical error was encountered by NServiceBus:\n{0}\nNServiceBus is shutting down.", errorMessage), exception);
         }
-
-        List<Assembly> assembliesToScan;
+        
         ProfileManager profileManager;
         IConfigureThisEndpoint specifier;
         WcfManager wcfManager;
         UnicastBus bus;
         string endpointNameToUse;
-        string endpointVersionToUse;
     }
 }
