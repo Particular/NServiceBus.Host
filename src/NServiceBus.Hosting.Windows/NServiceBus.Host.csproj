@@ -112,6 +112,7 @@
     <Compile Include="EndpointTypeDeterminer.cs" />
     <Compile Include="FileVersionRetriever.cs" />
     <Compile Include="GenericHost.cs" />
+    <Compile Include="IConfigureThisEndpoint.cs" />
     <Compile Include="Installers\WindowsInstaller.cs" />
     <Compile Include="InternalsVisibleTo.cs" />
     <Compile Include="LoggingHandlers\IntegrationLoggingHandler.cs" />

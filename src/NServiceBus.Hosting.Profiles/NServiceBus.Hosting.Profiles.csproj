@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IConfigureLoggingForProfile.cs" />
+    <Compile Include="IConfigureThisEndpoint.cs" />
     <Compile Include="IHandleAnyProfile.cs" />
     <Compile Include="IHandleProfile.cs" />
     <Compile Include="IProfile.cs" />
