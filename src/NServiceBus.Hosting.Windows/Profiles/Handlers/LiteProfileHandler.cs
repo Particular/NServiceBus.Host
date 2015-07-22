@@ -12,7 +12,7 @@
             config.GetSettings().EnableFeatureByDefault<InstallationSupport>();
             //if (!config.Configurer.HasComponent<IManageMessageFailures>()) //TODO: Not sure how to handle this yet
             //{
-                config.DiscardFailedMessagesInsteadOfSendingToErrorQueue();
+                // config.DiscardFailedMessagesInsteadOfSendingToErrorQueue();
             //}
         }
 

@@ -1,8 +1,11 @@
 namespace NServiceBus.Hosting.Tests
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using NServiceBus.ConsistencyGuarantees;
     using NUnit.Framework;
     using Transports;
-    using Unicast;
 
     [TestFixture]
     public class With_transport_tests
@@ -30,9 +33,9 @@ namespace NServiceBus.Hosting.Tests
         }
     }
 
-    public class MyTestTransportSender : ISendMessages
+    public class MyTestTransportSender : IDispatchMessages
     {
-        public void Send(TransportMessage message, SendOptions sendOptions)
+        public void Dispatch(OutgoingMessage message, DispatchOptions dispatchOptions)
         {
         }
     }
@@ -52,5 +55,19 @@ namespace NServiceBus.Hosting.Tests
 
     public class MyTestTransport : TransportDefinition
     {
+        public override string GetSubScope(string address, string qualifier)
+        {
+            return string.Empty;
+        }
+
+        public override IEnumerable<Type> GetSupportedDeliveryConstraints()
+        {
+            return Enumerable.Empty<Type>();
+        }
+
+        public override ConsistencyGuarantee GetDefaultConsistencyGuarantee()
+        {
+            return new AtLeastOnce();
+        }
     }
 }

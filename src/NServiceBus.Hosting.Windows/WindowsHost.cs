@@ -8,7 +8,7 @@ namespace NServiceBus.Hosting.Windows
     /// </summary>
     public class WindowsHost : MarshalByRefObject
     {
-        NServiceBus.GenericHost genericHost;
+        GenericHost genericHost;
 
         /// <summary>
         /// Accepts the type which will specify the users custom configuration.
@@ -18,7 +18,7 @@ namespace NServiceBus.Hosting.Windows
         {
             var specifier = (IConfigureThisEndpoint)Activator.CreateInstance(endpointType);
 
-            genericHost = new NServiceBus.GenericHost(specifier, args, new List<Type> { typeof(Production) }, endpointName, scannableAssembliesFullName);
+            genericHost = new GenericHost(specifier, args, new List<Type> { typeof(Production) }, endpointName, scannableAssembliesFullName);
         }
 
         /// <summary>
