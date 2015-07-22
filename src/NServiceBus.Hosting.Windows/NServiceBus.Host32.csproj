@@ -58,6 +58,7 @@
     <ApplicationIcon>NServiceBus.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="FodyWeavers.xml">
       <SubType>Designer</SubType>
     </None>
@@ -70,8 +71,9 @@
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
-    <Reference Include="NServiceBus.Core">
-      <HintPath>..\packages\NServiceBus.5.0.1\lib\net45\NServiceBus.Core.dll</HintPath>
+    <Reference Include="NServiceBus.Core, Version=5.0.0.0, Culture=neutral, PublicKeyToken=9fc386479f8a226c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NServiceBus.6.0.0-unstable0518\lib\net451\NServiceBus.Core.dll</HintPath>
     </Reference>
     <Reference Include="Obsolete">
       <HintPath>..\packages\Obsolete.Fody.3.1.0.0\Lib\NET35\Obsolete.dll</HintPath>
@@ -114,6 +116,7 @@
     <Compile Include="FileVersionRetriever.cs" />
     <Compile Include="GenericHost.cs" />
     <Compile Include="HostProgram.cs" />
+    <Compile Include="IConfigureThisEndpoint.cs" />
     <Compile Include="Installers\WindowsInstaller.cs" />
     <Compile Include="InstallWindowsHost.cs" />
     <Compile Include="InternalsVisibleTo.cs" />
@@ -165,9 +168,9 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\NuGetPackager.0.4.12\build\NuGetPackager.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NuGetPackager.0.4.12\build\NuGetPackager.targets'))" />
     <Error Condition="!Exists('..\packages\GitVersionTask.1.3.3\Build\GitVersionTask.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\GitVersionTask.1.3.3\Build\GitVersionTask.targets'))" />
-    <Error Condition="!Exists('..\packages\Fody.1.26.1\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.1.26.1\build\Fody.targets'))" />
+    <Error Condition="!Exists('..\packages\Fody.1.29.0\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.1.29.0\build\Fody.targets'))" />
   </Target>
   <Import Project="..\packages\NuGetPackager.0.4.12\build\NuGetPackager.targets" Condition="Exists('..\packages\NuGetPackager.0.4.12\build\NuGetPackager.targets')" />
   <Import Project="..\packages\GitVersionTask.1.3.3\Build\GitVersionTask.targets" Condition="Exists('..\packages\GitVersionTask.1.3.3\Build\GitVersionTask.targets')" />
-  <Import Project="..\packages\Fody.1.26.1\build\Fody.targets" Condition="Exists('..\packages\Fody.1.26.1\build\Fody.targets')" />
+  <Import Project="..\packages\Fody.1.29.0\build\Fody.targets" Condition="Exists('..\packages\Fody.1.29.0\build\Fody.targets')" />
 </Project>
