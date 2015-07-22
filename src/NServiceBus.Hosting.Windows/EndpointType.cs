@@ -59,23 +59,7 @@
             {
                 var hostEndpointAttribute = (EndpointNameAttribute)type.GetCustomAttributes(typeof(EndpointNameAttribute), false)
                     .FirstOrDefault();
-                var coreEndpointAttribute = (NServiceBus.EndpointNameAttribute)type.GetCustomAttributes(typeof(NServiceBus.EndpointNameAttribute), false)
-                    .FirstOrDefault();
-
-                if (hostEndpointAttribute != null && coreEndpointAttribute != null)
-                {
-                    throw new Exception("Please either define a [NServiceBus.EndpointNameAttribute] or a [NServiceBus.Hosting.Windows.EndpointNameAttribute], but not both.");
-                }
-                if (hostEndpointAttribute != null)
-                {
-                    return hostEndpointAttribute.Name;
-                }
-                if (coreEndpointAttribute != null)
-                {
-                    return coreEndpointAttribute.Name;
-                }
-
-                return arguments.EndpointName;
+                return hostEndpointAttribute != null ? hostEndpointAttribute.Name : arguments.EndpointName;
             }
         }
 

@@ -133,21 +133,9 @@ namespace NServiceBus
 
         internal static bool TryGetSlaFromEndpointConfigType(Type endpointConfigurationType, out TimeSpan sla)
         {
-            var hostSLAAttribute = (Hosting.Windows.EndpointSLAAttribute) endpointConfigurationType
-                .GetCustomAttributes(typeof(Hosting.Windows.EndpointSLAAttribute), false)
-                .FirstOrDefault();
-            var coreSLAAttribute = (EndpointSLAAttribute) endpointConfigurationType
+            var hostSLAAttribute = (EndpointSLAAttribute) endpointConfigurationType
                 .GetCustomAttributes(typeof(EndpointSLAAttribute), false)
                 .FirstOrDefault();
-            if (hostSLAAttribute != null && coreSLAAttribute != null)
-            {
-                throw new Exception("Please either define a [NServiceBus.EndpointSLAAttribute] or a [NServiceBus.Hosting.Windows.EndpointSLAAttribute], but not both.");
-            }
-            if (coreSLAAttribute != null)
-            {
-                sla = coreSLAAttribute.SLA;
-                return true;
-            }
             if (hostSLAAttribute != null)
             {
                 sla = hostSLAAttribute.SLA;
