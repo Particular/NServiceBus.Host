@@ -15,11 +15,11 @@
     <copyright>Copyright 2010-2014 NServiceBus. All rights reserved</copyright>
     <tags>nservicebus servicebus msmq cqrs publish subscribe</tags>
     <dependencies>
-      <dependency id="NServiceBus" version="[5.0.0, 6.0.0)" />
+      <dependency id="NServiceBus" version="[6.0.0, 7.0.0)" />
     </dependencies>
   </metadata>
   <files>
-    <file src="..\..\binaries\NServiceBus.Host32.???" target="lib\net45" />
+    <file src="..\..\binaries\NServiceBus.Host32.???" target="lib\net451" />
 	<file src="..\..\packaging\nuget\nservicebus.host\*.*" target="tools" />
   </files>
 </package>
