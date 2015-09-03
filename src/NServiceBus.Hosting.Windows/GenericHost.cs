@@ -9,7 +9,6 @@ namespace NServiceBus
     using Hosting.Profiles;
     using Logging;
     using NServiceBus.Configuration.AdvanceExtensibility;
-    using NServiceBus.Unicast;
 
     class GenericHost
     {
@@ -50,12 +49,8 @@ namespace NServiceBus
         {
             try
             {
-                PerformConfiguration();
-
-                if (bus != null && !bus.Settings.Get<bool>("Endpoint.SendOnly"))
-                {
-                    bus.Start();
-                }
+                bus = PerformConfiguration()
+                    .Start();
             }
             catch (Exception ex)
             {
@@ -72,7 +67,6 @@ namespace NServiceBus
             if (bus != null)
             {
                 bus.Dispose();
-
                 bus = null;
             }
         }
@@ -82,12 +76,11 @@ namespace NServiceBus
         /// </summary>
         public void Install(string username)
         {
-            PerformConfiguration(builder => builder.EnableInstallers(username));
-          
-            bus.Dispose();
+            PerformConfiguration(builder => builder.EnableInstallers(username))
+                .Dispose();
         }
 
-        void PerformConfiguration(Action<BusConfiguration> moreConfiguration = null)
+        IStartableBus PerformConfiguration(Action<BusConfiguration> moreConfiguration = null)
         {
             var loggingConfigurers = profileManager.GetLoggingConfigurer();
             foreach (var loggingConfigurer in loggingConfigurers)
@@ -109,7 +102,7 @@ namespace NServiceBus
             RoleManager.TweakConfigurationBuilder(specifier, configuration);
             profileManager.ActivateProfileHandlers(configuration);
 
-            bus = (UnicastBus) Bus.Create(configuration);
+            return Bus.Create(configuration);
         }
 
         void SetSlaFromAttribute(BusConfiguration configuration, IConfigureThisEndpoint configureThisEndpoint)
@@ -150,7 +143,7 @@ namespace NServiceBus
         
         ProfileManager profileManager;
         IConfigureThisEndpoint specifier;
-        UnicastBus bus;
+        IBus bus;
         string endpointNameToUse;
     }
 }
