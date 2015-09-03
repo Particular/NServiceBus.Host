@@ -7,7 +7,6 @@ namespace NServiceBus
     using System.Threading;
     using Hosting.Helpers;
     using Hosting.Profiles;
-    //using Hosting.Wcf;
     using Logging;
     using NServiceBus.Configuration.AdvanceExtensibility;
     using NServiceBus.Unicast;
@@ -42,8 +41,6 @@ namespace NServiceBus
             }
 
             profileManager = new ProfileManager(assembliesToScan, args, defaultProfiles);
-
-            //wcfManager = new WcfManager();
         }
 
         /// <summary>
@@ -59,8 +56,6 @@ namespace NServiceBus
                 {
                     bus.Start();
                 }
-
-                //wcfManager.Startup(bus);
             }
             catch (Exception ex)
             {
@@ -74,8 +69,6 @@ namespace NServiceBus
         /// </summary>
         public void Stop()
         {
-            //wcfManager.Shutdown();
-
             if (bus != null)
             {
                 bus.Dispose();
@@ -157,7 +150,6 @@ namespace NServiceBus
         
         ProfileManager profileManager;
         IConfigureThisEndpoint specifier;
-        //WcfManager wcfManager;
         UnicastBus bus;
         string endpointNameToUse;
     }
