@@ -118,6 +118,8 @@
     <Compile Include="IConfigureThisEndpoint.cs" />
     <Compile Include="Installers\WindowsInstaller.cs" />
     <Compile Include="InternalsVisibleTo.cs" />
+    <Compile Include="IWantToRunWhenBusStartsAndStops.cs" />
+    <Compile Include="LifecycleExtensions.cs" />
     <Compile Include="LoggingHandlers\IntegrationLoggingHandler.cs" />
     <Compile Include="LoggingHandlers\LiteLoggingHandler.cs" />
     <Compile Include="LoggingHandlers\ProductionLoggingHandler.cs" />

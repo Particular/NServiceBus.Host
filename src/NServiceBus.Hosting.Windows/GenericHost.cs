@@ -9,6 +9,7 @@ namespace NServiceBus
     using Hosting.Profiles;
     using Logging;
     using NServiceBus.Configuration.AdvanceExtensibility;
+    using NServiceBus.Hosting.Windows;
 
     class GenericHost
     {
@@ -49,14 +50,15 @@ namespace NServiceBus
         {
             try
             {
-                bus = PerformConfiguration()
-                    .Start();
+                bus = PerformConfiguration().Start();
             }
             catch (Exception ex)
             {
                 LogManager.GetLogger<GenericHost>().Fatal("Exception when starting endpoint.", ex);
                 throw;
             }
+
+            LifecycleExtensions.StartExtensions(OnCriticalError);
         }
 
         /// <summary>
@@ -66,6 +68,8 @@ namespace NServiceBus
         {
             if (bus != null)
             {
+                LifecycleExtensions.StopExtensions();
+
                 bus.Dispose();
                 bus = null;
             }
@@ -140,7 +144,7 @@ namespace NServiceBus
             
             Environment.FailFast(String.Format("The following critical error was encountered by NServiceBus:\n{0}\nNServiceBus is shutting down.", errorMessage), exception);
         }
-        
+
         ProfileManager profileManager;
         IConfigureThisEndpoint specifier;
         IBus bus;

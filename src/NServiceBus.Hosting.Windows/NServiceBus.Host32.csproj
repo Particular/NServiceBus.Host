@@ -109,6 +109,7 @@
     <Compile Include="..\NServiceBus.Hosting.Profiles\ProfileManager.cs">
       <Link>Profiles\ProfileManager.cs</Link>
     </Compile>
+    <Compile Include="LifecycleExtensions.cs" />
     <Compile Include="EndpointNameAttribute.cs" />
     <Compile Include="EndpointSLAAttribute.cs" />
     <Compile Include="EndpointType.cs" />
@@ -120,6 +121,7 @@
     <Compile Include="Installers\WindowsInstaller.cs" />
     <Compile Include="InstallWindowsHost.cs" />
     <Compile Include="InternalsVisibleTo.cs" />
+    <Compile Include="IWantToRunWhenBusStartsAndStops.cs" />
     <Compile Include="LoggingHandlers\IntegrationLoggingHandler.cs" />
     <Compile Include="LoggingHandlers\LiteLoggingHandler.cs" />
     <Compile Include="LoggingHandlers\ProductionLoggingHandler.cs" />
