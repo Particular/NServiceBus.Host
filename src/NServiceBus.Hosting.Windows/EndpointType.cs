@@ -33,25 +33,13 @@
             AssertIsValid();
         }
 
-        internal Type Type
-        {
-            get { return type; }
-        }
+        internal Type Type => type;
 
-        public string EndpointConfigurationFile
-        {
-            get { return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, type.Assembly.ManifestModule.Name + ".config"); }
-        }
+        public string EndpointConfigurationFile => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, type.Assembly.ManifestModule.Name + ".config");
 
-        public string EndpointVersion
-        {
-            get { return FileVersionRetriever.GetFileVersion(type); }
-        }
+        public string EndpointVersion => FileVersionRetriever.GetFileVersion(type);
 
-        public string AssemblyQualifiedName
-        {
-            get { return type.AssemblyQualifiedName; }
-        }
+        public string AssemblyQualifiedName => type.AssemblyQualifiedName;
 
         public string EndpointName
         {
