@@ -19,7 +19,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="..\..\binaries\NServiceBus.Host32.???" target="lib\net451" />
+    <file src="..\..\binaries\NServiceBus.Host32.???" target="lib\net452" />
 	<file src="..\..\packaging\nuget\nservicebus.host\*.*" target="tools" />
   </files>
 </package>
