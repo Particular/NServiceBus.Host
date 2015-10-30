@@ -7,10 +7,9 @@ namespace NServiceBus
     using System.Threading;
     using Hosting.Helpers;
     using Hosting.Profiles;
-    using Hosting.Wcf;
     using Logging;
     using NServiceBus.Configuration.AdvanceExtensibility;
-    using NServiceBus.Unicast;
+    using NServiceBus.Hosting.Windows;
 
     class GenericHost
     {
@@ -30,7 +29,6 @@ namespace NServiceBus
             if (scannableAssembliesFullName == null || !scannableAssembliesFullName.Any())
             {
                 var assemblyScanner = new AssemblyScanner();
-                assemblyScanner.MustReferenceAtLeastOneAssembly.Add(typeof(IHandleMessages<>).Assembly);
                 assembliesToScan = assemblyScanner
                     .GetScannableAssemblies()
                     .Assemblies;
@@ -43,8 +41,6 @@ namespace NServiceBus
             }
 
             profileManager = new ProfileManager(assembliesToScan, args, defaultProfiles);
-
-            wcfManager = new WcfManager();
         }
 
         /// <summary>
@@ -54,20 +50,15 @@ namespace NServiceBus
         {
             try
             {
-                PerformConfiguration();
-
-                if (bus != null && !bus.Settings.Get<bool>("Endpoint.SendOnly"))
-                {
-                    bus.Start();
-                }
-
-                wcfManager.Startup(bus);
+                bus = PerformConfiguration().Start();
             }
             catch (Exception ex)
             {
                 LogManager.GetLogger<GenericHost>().Fatal("Exception when starting endpoint.", ex);
                 throw;
             }
+
+            LifecycleExtensions.StartExtensions(OnCriticalError);
         }
 
         /// <summary>
@@ -75,12 +66,11 @@ namespace NServiceBus
         /// </summary>
         public void Stop()
         {
-            wcfManager.Shutdown();
-
             if (bus != null)
             {
-                bus.Dispose();
+                LifecycleExtensions.StopExtensions();
 
+                bus.Dispose();
                 bus = null;
             }
         }
@@ -90,12 +80,11 @@ namespace NServiceBus
         /// </summary>
         public void Install(string username)
         {
-            PerformConfiguration(builder => builder.EnableInstallers(username));
-          
-            bus.Dispose();
+            PerformConfiguration(builder => builder.EnableInstallers(username))
+                .Dispose();
         }
 
-        void PerformConfiguration(Action<BusConfiguration> moreConfiguration = null)
+        IStartableBus PerformConfiguration(Action<BusConfiguration> moreConfiguration = null)
         {
             var loggingConfigurers = profileManager.GetLoggingConfigurer();
             foreach (var loggingConfigurer in loggingConfigurers)
@@ -108,16 +97,13 @@ namespace NServiceBus
             configuration.EndpointName(endpointNameToUse);
             configuration.DefineCriticalErrorAction(OnCriticalError);
 
-            if (moreConfiguration != null)
-            {
-                moreConfiguration(configuration);
-            }
+            moreConfiguration?.Invoke(configuration);
 
             specifier.Customize(configuration);
             RoleManager.TweakConfigurationBuilder(specifier, configuration);
             profileManager.ActivateProfileHandlers(configuration);
 
-            bus = (UnicastBus) Bus.Create(configuration);
+            return Bus.Create(configuration);
         }
 
         void SetSlaFromAttribute(BusConfiguration configuration, IConfigureThisEndpoint configureThisEndpoint)
@@ -133,21 +119,9 @@ namespace NServiceBus
 
         internal static bool TryGetSlaFromEndpointConfigType(Type endpointConfigurationType, out TimeSpan sla)
         {
-            var hostSLAAttribute = (Hosting.Windows.EndpointSLAAttribute) endpointConfigurationType
-                .GetCustomAttributes(typeof(Hosting.Windows.EndpointSLAAttribute), false)
-                .FirstOrDefault();
-            var coreSLAAttribute = (EndpointSLAAttribute) endpointConfigurationType
+            var hostSLAAttribute = (EndpointSLAAttribute) endpointConfigurationType
                 .GetCustomAttributes(typeof(EndpointSLAAttribute), false)
                 .FirstOrDefault();
-            if (hostSLAAttribute != null && coreSLAAttribute != null)
-            {
-                throw new Exception("Please either define a [NServiceBus.EndpointSLAAttribute] or a [NServiceBus.Hosting.Windows.EndpointSLAAttribute], but not both.");
-            }
-            if (coreSLAAttribute != null)
-            {
-                sla = coreSLAAttribute.SLA;
-                return true;
-            }
             if (hostSLAAttribute != null)
             {
                 sla = hostSLAAttribute.SLA;
@@ -165,13 +139,12 @@ namespace NServiceBus
                 Thread.Sleep(10000); // so that user can see on their screen the problem
             }
             
-            Environment.FailFast(String.Format("The following critical error was encountered by NServiceBus:\n{0}\nNServiceBus is shutting down.", errorMessage), exception);
+            Environment.FailFast($"The following critical error was encountered by NServiceBus:\n{errorMessage}\nNServiceBus is shutting down.", exception);
         }
-        
+
         ProfileManager profileManager;
         IConfigureThisEndpoint specifier;
-        WcfManager wcfManager;
-        UnicastBus bus;
+        IBus bus;
         string endpointNameToUse;
     }
 }

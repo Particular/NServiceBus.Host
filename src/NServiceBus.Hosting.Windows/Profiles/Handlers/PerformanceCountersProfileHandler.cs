@@ -10,7 +10,7 @@
         public void ProfileActivated(BusConfiguration config)
         {
             config.EnableCriticalTimePerformanceCounter();
-            config.EnableSLAPerformanceCounter();   
+            config.EnableSLAPerformanceCounter();
         }
 
         public void ProfileActivated(Configure config)

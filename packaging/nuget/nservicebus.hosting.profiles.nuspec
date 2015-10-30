@@ -19,6 +19,6 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="..\..\src\NServiceBus.Hosting.Profiles\**\*.cs" target="content\App_Packages\NServiceBus.Hosting.Profiles" />
+    <file src="..\..\src\NServiceBus.Hosting.Profiles\**\*.cs" target="content\App_Packages\NServiceBus.Hosting.Profiles" exclude="IConfigureThisEndpoint.cs" />
   </files>
 </package>

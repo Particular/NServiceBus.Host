@@ -33,25 +33,13 @@
             AssertIsValid();
         }
 
-        internal Type Type
-        {
-            get { return type; }
-        }
+        internal Type Type => type;
 
-        public string EndpointConfigurationFile
-        {
-            get { return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, type.Assembly.ManifestModule.Name + ".config"); }
-        }
+        public string EndpointConfigurationFile => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, type.Assembly.ManifestModule.Name + ".config");
 
-        public string EndpointVersion
-        {
-            get { return FileVersionRetriever.GetFileVersion(type); }
-        }
+        public string EndpointVersion => FileVersionRetriever.GetFileVersion(type);
 
-        public string AssemblyQualifiedName
-        {
-            get { return type.AssemblyQualifiedName; }
-        }
+        public string AssemblyQualifiedName => type.AssemblyQualifiedName;
 
         public string EndpointName
         {
@@ -59,23 +47,7 @@
             {
                 var hostEndpointAttribute = (EndpointNameAttribute)type.GetCustomAttributes(typeof(EndpointNameAttribute), false)
                     .FirstOrDefault();
-                var coreEndpointAttribute = (NServiceBus.EndpointNameAttribute)type.GetCustomAttributes(typeof(NServiceBus.EndpointNameAttribute), false)
-                    .FirstOrDefault();
-
-                if (hostEndpointAttribute != null && coreEndpointAttribute != null)
-                {
-                    throw new Exception("Please either define a [NServiceBus.EndpointNameAttribute] or a [NServiceBus.Hosting.Windows.EndpointNameAttribute], but not both.");
-                }
-                if (hostEndpointAttribute != null)
-                {
-                    return hostEndpointAttribute.Name;
-                }
-                if (coreEndpointAttribute != null)
-                {
-                    return coreEndpointAttribute.Name;
-                }
-
-                return arguments.EndpointName;
+                return hostEndpointAttribute != null ? hostEndpointAttribute.Name : arguments.EndpointName;
             }
         }
 

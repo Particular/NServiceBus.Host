@@ -133,12 +133,12 @@ namespace NServiceBus.Hosting.Windows.Arguments
         public string DisplayName { get; set; }
         public string Description { get; set; }
         public string EndpointConfigurationType { get; set; }
-        public List<string> DependsOn { get; private set; }
+        public List<string> DependsOn { get; }
         public bool StartManually { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
         public string EndpointName { get; set; }
-        public List<string> ScannedAssemblies { get; private set; }
+        public List<string> ScannedAssemblies { get; }
 
         public void PrintUsage()
         {

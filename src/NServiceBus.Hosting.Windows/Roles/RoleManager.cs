@@ -18,7 +18,6 @@
                 config.Transactions().Disable();
 
                 config.DisableFeature<Features.SecondLevelRetries>();
-                config.DisableFeature<StorageDrivenPublishing>();
                 config.DisableFeature<TimeoutManager>();
             }
 
