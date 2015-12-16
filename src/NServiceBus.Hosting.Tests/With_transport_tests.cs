@@ -3,7 +3,10 @@ namespace NServiceBus.Hosting.Tests
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using NServiceBus.ConsistencyGuarantees;
+    using NServiceBus.Extensibility;
+    using NServiceBus.Settings;
     using NUnit.Framework;
     using Transports;
 
@@ -18,9 +21,7 @@ namespace NServiceBus.Hosting.Tests
             builder.EndpointName("myTests");
             builder.UseTransport<MyTestTransport>();
 
-            var config = builder.BuildConfiguration();
-
-            Assert.IsInstanceOf<MyTestTransport>(config.Settings.Get<TransportDefinition>());
+            Assert.IsInstanceOf<MyTestTransport>(builder.Settings.Get<TransportDefinition>());
         }
 
         [Test]
@@ -29,14 +30,15 @@ namespace NServiceBus.Hosting.Tests
             var builder = new BusConfiguration();
             builder.EndpointName("myTests");
 
-            Assert.True(builder.BuildConfiguration().Settings.Get<TransportDefinition>() is MsmqTransport);
+            Assert.True(builder.Settings.Get<TransportDefinition>() is MsmqTransport);
         }
     }
 
     public class MyTestTransportSender : IDispatchMessages
     {
-        public void Dispatch(OutgoingMessage message, DispatchOptions dispatchOptions)
+ public Task Dispatch(IEnumerable<TransportOperation> outgoingMessages, ContextBag context)
         {
+            throw new NotImplementedException();
         }
     }
 
@@ -55,19 +57,48 @@ namespace NServiceBus.Hosting.Tests
 
     public class MyTestTransport : TransportDefinition
     {
-        public override string GetSubScope(string address, string qualifier)
+
+
+        protected internal override TransportReceivingConfigurationResult ConfigureForReceiving(TransportReceivingConfigurationContext context)
         {
-            return string.Empty;
+            return new TransportReceivingConfigurationResult(() => new FakeReceiver(context.Settings.Get<Exception>()), () => new FakeQueueCreator(), () => Task.FromResult(StartupCheckResult.Success));
+        }
+
+        protected internal override TransportSendingConfigurationResult ConfigureForSending(TransportSendingConfigurationContext context)
+        {
+            return new TransportSendingConfigurationResult(() => new FakeDispatcher(), () => Task.FromResult(StartupCheckResult.Success));
         }
 
         public override IEnumerable<Type> GetSupportedDeliveryConstraints()
         {
-            return Enumerable.Empty<Type>();
+            return new List<Type>();
         }
 
-        public override ConsistencyGuarantee GetDefaultConsistencyGuarantee()
+        public override TransportTransactionMode GetSupportedTransactionMode()
         {
-            return new AtLeastOnce();
+            return TransportTransactionMode.None;
         }
+
+        public override IManageSubscriptions GetSubscriptionManager()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string GetDiscriminatorForThisEndpointInstance(ReadOnlySettings settings)
+        {
+            return null;
+        }
+
+        public override string ToTransportAddress(LogicalAddress logicalAddress)
+        {
+            return logicalAddress.ToString();
+        }
+
+        public override OutboundRoutingPolicy GetOutboundRoutingPolicy(ReadOnlySettings settings)
+        {
+            return new OutboundRoutingPolicy(OutboundRoutingType.Unicast, OutboundRoutingType.Unicast, OutboundRoutingType.Unicast);
+        }
+
+        public override string ExampleConnectionStringForErrorMessage => null;
     }
 }

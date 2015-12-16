@@ -1,24 +1,16 @@
 ﻿namespace NServiceBus.Hosting.Windows.Profiles.Handlers
 {
-    using Features;
     using Hosting.Profiles;
-    using NServiceBus.Configuration.AdvanceExtensibility;
-
 
     class LiteProfileHandler : IHandleProfile<Lite>
     {
         public void ProfileActivated(BusConfiguration config)
         {
-            config.GetSettings().EnableFeatureByDefault<InstallationSupport>();
+            config.EnableInstallers();
             //if (!config.Configurer.HasComponent<IManageMessageFailures>()) //TODO: Not sure how to handle this yet
             //{
-                // config.DiscardFailedMessagesInsteadOfSendingToErrorQueue();
+            // config.DiscardFailedMessagesInsteadOfSendingToErrorQueue();
             //}
-        }
-
-        public void ProfileActivated(Configure config)
-        {
-            
         }
     }
 }

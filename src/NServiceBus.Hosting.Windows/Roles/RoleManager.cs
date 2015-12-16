@@ -8,11 +8,7 @@
     {
         public static void TweakConfigurationBuilder(IConfigureThisEndpoint specifier, BusConfiguration config)
         {
-            if (specifier is AsA_Server)
-            {
-                config.ScaleOut().UseSingleBrokerQueue();
-            }
-            else if (specifier is AsA_Client)
+            if (specifier is AsA_Client)
             {
                 config.PurgeOnStartup(true);
                 config.Transactions().Disable();

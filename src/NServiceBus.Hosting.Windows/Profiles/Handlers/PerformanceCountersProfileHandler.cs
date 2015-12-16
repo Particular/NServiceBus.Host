@@ -12,9 +12,5 @@
             config.EnableCriticalTimePerformanceCounter();
             config.EnableSLAPerformanceCounter();
         }
-
-        public void ProfileActivated(Configure config)
-        {
-        }
     }
 }

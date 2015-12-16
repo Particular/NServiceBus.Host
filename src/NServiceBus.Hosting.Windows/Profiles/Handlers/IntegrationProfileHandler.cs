@@ -8,11 +8,7 @@
     {
         public void ProfileActivated(BusConfiguration config)
         {
-            config.GetSettings().EnableFeatureByDefault<InstallationSupport>();
-        }
-
-        public void ProfileActivated(Configure config)
-        {
+            config.EnableInstallers();
         }
     }
 }

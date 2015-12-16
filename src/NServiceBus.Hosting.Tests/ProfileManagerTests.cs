@@ -27,10 +27,6 @@ namespace NServiceBus.Hosting.Tests
                 {
                     activated = true;
                 }
-
-                public void ProfileActivated(Configure config)
-                {
-                }
             }
 
             [Test]
@@ -82,10 +78,6 @@ namespace NServiceBus.Hosting.Tests
                 public void ProfileActivated(BusConfiguration config)
                 {
                     activated = true;
-                }
-
-                public void ProfileActivated(Configure config)
-                {
                 }
             }
 
@@ -143,10 +135,6 @@ namespace NServiceBus.Hosting.Tests
                 {
                     activated = true;
                 }
-
-                public void ProfileActivated(Configure config)
-                {
-                }
             }
 
             public class BaseProfileHandler : IHandleProfile<BaseProfile>
@@ -156,10 +144,6 @@ namespace NServiceBus.Hosting.Tests
                 public void ProfileActivated(BusConfiguration config)
                 {
                     activated = true;
-                }
-
-                public void ProfileActivated(Configure config)
-                {
                 }
             }
             [Test]
@@ -277,10 +261,6 @@ namespace NServiceBus.Hosting.Tests
                 {
                     activatedCount++;
                 }
-
-                public void ProfileActivated(Configure config)
-                {
-                    }
             }
             [Test]
             public void All_profiles_should_be_registered_in_active_profiles()
@@ -325,10 +305,6 @@ namespace NServiceBus.Hosting.Tests
                 {
                     activated = true;
                 }
-
-                public void ProfileActivated(Configure config)
-                {
-                }
             }
 
             public class Handler2 : IHandleProfile<Profile>
@@ -338,10 +314,6 @@ namespace NServiceBus.Hosting.Tests
                 public void ProfileActivated(BusConfiguration config)
                 {
                     activated = true;
-                }
-
-                public void ProfileActivated(Configure config)
-                {
                 }
             }
 
@@ -393,10 +365,6 @@ namespace NServiceBus.Hosting.Tests
                 {
                     activations.Add(GetType());
                 }
-
-                public void ProfileActivated(Configure config)
-                {
-                }
             }
 
             public class Handler2 : IHandleProfile<Profile2>
@@ -404,11 +372,6 @@ namespace NServiceBus.Hosting.Tests
                 public void ProfileActivated(BusConfiguration config)
                 {
                     activations.Add(GetType());
-                }
-
-                public void ProfileActivated(Configure config)
-                {
-                    
                 }
             }
 
@@ -504,10 +467,6 @@ namespace NServiceBus.Hosting.Tests
                 {
                     activations.Add(this);
                 }
-
-                public void ProfileActivated(Configure config)
-                {
-                }
             }
 
             [Test]
@@ -543,11 +502,6 @@ namespace NServiceBus.Hosting.Tests
                 {
                     activations.Add(GetType());
                 }
-
-                public void ProfileActivated(Configure config)
-                {
-                    
-                }
             }
 
             public class SpecializedHandler : IHandleProfile<SpecializedProfile>
@@ -555,10 +509,6 @@ namespace NServiceBus.Hosting.Tests
                 public void ProfileActivated(BusConfiguration config)
                 {
                     activations.Add(GetType());
-                }
-
-                public void ProfileActivated(Configure config)
-                {
                 }
             }
 
@@ -615,10 +565,6 @@ namespace NServiceBus.Hosting.Tests
                 {
                     activated = true;
                 }
-
-                public  void ProfileActivated(Configure config)
-                {
-                }
             }
 
             [Test]
@@ -665,10 +611,6 @@ namespace NServiceBus.Hosting.Tests
                     
                 }
 
-                public void ProfileActivated(Configure config)
-                {
-                }
-
                 public IEnumerable<Type> ActiveProfiles
                 {
                     get { return activeProfiles; }
@@ -708,10 +650,6 @@ namespace NServiceBus.Hosting.Tests
                     activatedCalled = true;
                 }
 
-                public void ProfileActivated(Configure config)
-                {
-                }
-
             }
             [Test]
             public void ProfileActivated_should_be_called()
@@ -736,20 +674,16 @@ namespace NServiceBus.Hosting.Tests
 
             public class ChildHandler : BaseHandler
             {
-                public override void ProfileActivated(Configure config)
+                public override void ProfileActivated(BusConfiguration config)
                 {
                 }
             }
 
             public class BaseHandler : IHandleProfile<Profile>
             {
-                public void ProfileActivated(BusConfiguration config)
+                public virtual void ProfileActivated(BusConfiguration config)
                 {
                     throw new NotImplementedException();
-                }
-
-                public virtual void ProfileActivated(Configure config)
-                {
                 }
             }
 
