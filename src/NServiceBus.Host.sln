@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NServiceBus.Host32", "NServiceBus.Hosting.Windows\NServiceBus.Host32.csproj", "{79487CAA-C060-49C8-B689-6250C61A46D5}"
 EndProject
@@ -16,11 +16,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{5026BE
 		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NServiceBus.Host.Deploy", "NServiceBus.Host.Deploy\NServiceBus.Host.Deploy.csproj", "{3CC95C0D-6F30-4E47-9F0E-DFC4C375F6D8}"
-	ProjectSection(ProjectDependencies) = postProject
-		{60826589-EB19-46F7-9567-69F46C3668B9} = {60826589-EB19-46F7-9567-69F46C3668B9}
-		{79487CAA-C060-49C8-B689-6250C61A46D5} = {79487CAA-C060-49C8-B689-6250C61A46D5}
-		{85E813C0-4A94-4946-8B1F-DE1E39AA7D11} = {85E813C0-4A94-4946-8B1F-DE1E39AA7D11}
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E8988E0D-F62E-4208-9997-55D4FC3CB766}"
+	ProjectSection(SolutionItems) = preProject
+		TrapsAndPitfalls.md = TrapsAndPitfalls.md
 	EndProjectSection
 EndProject
 Global
@@ -73,16 +71,6 @@ Global
 		{93B2CD66-7860-47A3-A039-B7D778E9A8F4}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{93B2CD66-7860-47A3-A039-B7D778E9A8F4}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{93B2CD66-7860-47A3-A039-B7D778E9A8F4}.Release|x86.ActiveCfg = Release|Any CPU
-		{3CC95C0D-6F30-4E47-9F0E-DFC4C375F6D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3CC95C0D-6F30-4E47-9F0E-DFC4C375F6D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3CC95C0D-6F30-4E47-9F0E-DFC4C375F6D8}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{3CC95C0D-6F30-4E47-9F0E-DFC4C375F6D8}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{3CC95C0D-6F30-4E47-9F0E-DFC4C375F6D8}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{3CC95C0D-6F30-4E47-9F0E-DFC4C375F6D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3CC95C0D-6F30-4E47-9F0E-DFC4C375F6D8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3CC95C0D-6F30-4E47-9F0E-DFC4C375F6D8}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{3CC95C0D-6F30-4E47-9F0E-DFC4C375F6D8}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{3CC95C0D-6F30-4E47-9F0E-DFC4C375F6D8}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
