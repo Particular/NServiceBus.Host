@@ -11,7 +11,7 @@
             if (specifier is AsA_Client)
             {
                 config.PurgeOnStartup(true);
-                config.Transactions().Disable();
+               // config.Transactions().Disable();
 
                 config.DisableFeature<Features.SecondLevelRetries>();
                 config.DisableFeature<TimeoutManager>();
