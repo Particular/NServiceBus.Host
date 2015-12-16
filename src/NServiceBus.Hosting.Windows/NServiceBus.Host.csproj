@@ -55,9 +55,6 @@
     <ApplicationIcon>NServiceBus.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="app.config">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="FodyWeavers.xml">
       <SubType>Designer</SubType>
     </None>
