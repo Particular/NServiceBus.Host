@@ -1,8 +1,7 @@
 ﻿namespace NServiceBus.Hosting.Windows.Profiles.Handlers
 {
-    using Features;
+    
     using Hosting.Profiles;
-    using NServiceBus.Configuration.AdvanceExtensibility;
 
     class IntegrationProfileHandler : IHandleProfile<Integration>
     {
