@@ -12,13 +12,6 @@
             if (specifier is AsA_Client)
             {
                 config.PurgeOnStartup(true);
-                // new API makes this obsolete
-                // config.Transactions().Disable();
-
-                // this is how to do it but the Settings property is internal
-                // config.Settings.Set<TransportTransactionMode>(TransportTransactionMode.ReceiveOnly);
-
-                // sneaky backdoor compiles
                 config.GetSettings().Set<TransportTransactionMode>(TransportTransactionMode.None);
 
                 config.DisableFeature<Features.SecondLevelRetries>();
