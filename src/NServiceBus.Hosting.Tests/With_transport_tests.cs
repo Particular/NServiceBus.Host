@@ -2,9 +2,8 @@ namespace NServiceBus.Hosting.Tests
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
-    using NServiceBus.ConsistencyGuarantees;
+    using NServiceBus.Configuration.AdvanceExtensibility;
     using NServiceBus.Extensibility;
     using NServiceBus.Settings;
     using NUnit.Framework;
@@ -30,7 +29,7 @@ namespace NServiceBus.Hosting.Tests
             var builder = new BusConfiguration();
             builder.EndpointName("myTests");
 
-            Assert.True(builder.Settings.Get<TransportDefinition>() is MsmqTransport);
+            Assert.True(builder.GetSettings().Get<TransportDefinition>() is MsmqTransport);            
         }
     }
 
