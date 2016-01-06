@@ -3,7 +3,6 @@ namespace NServiceBus.Hosting.Tests
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using NServiceBus.Configuration.AdvanceExtensibility;
     using NServiceBus.Extensibility;
     using NServiceBus.Settings;
     using NUnit.Framework;
