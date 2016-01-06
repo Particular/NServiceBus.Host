@@ -22,16 +22,6 @@ namespace NServiceBus.Hosting.Tests
 
             Assert.IsInstanceOf<MyTestTransport>(builder.Settings.Get<TransportDefinition>());
         }
-
-        [Ignore] // waiting for answer on if this is still required
-        [Test]
-        public void Should_default_to_msmq_if_no_other_transport_is_configured()
-        {
-            var builder = new BusConfiguration();
-            builder.EndpointName("myTests");
-
-            Assert.True(builder.GetSettings().Get<TransportDefinition>() is MsmqTransport);            
-        }
     }
 
     public class MyTestTransportSender : IDispatchMessages
