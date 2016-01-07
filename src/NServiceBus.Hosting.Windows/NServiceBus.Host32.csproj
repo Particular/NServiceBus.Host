@@ -71,8 +71,8 @@
       <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
     <Reference Include="NServiceBus.Core, Version=6.0.0.0, Culture=neutral, PublicKeyToken=9fc386479f8a226c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NServiceBus.6.0.0-unstable0519\lib\net451\NServiceBus.Core.dll</HintPath>
+      <HintPath>..\packages\NServiceBus.6.0.0-unstable1291\lib\net452\NServiceBus.Core.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Obsolete, Version=4.0.3.0, Culture=neutral, PublicKeyToken=1ca091877d12ca03, processorArchitecture=MSIL">
       <HintPath>..\packages\Obsolete.Fody.4.0.3\lib\dotnet\Obsolete.dll</HintPath>
@@ -109,7 +109,6 @@
     <Compile Include="..\NServiceBus.Hosting.Profiles\ProfileManager.cs">
       <Link>Profiles\ProfileManager.cs</Link>
     </Compile>
-    <Compile Include="LifecycleExtensions.cs" />
     <Compile Include="EndpointNameAttribute.cs" />
     <Compile Include="EndpointSLAAttribute.cs" />
     <Compile Include="EndpointType.cs" />
@@ -121,7 +120,6 @@
     <Compile Include="Installers\WindowsInstaller.cs" />
     <Compile Include="InstallWindowsHost.cs" />
     <Compile Include="InternalsVisibleTo.cs" />
-    <Compile Include="IWantToRunWhenBusStartsAndStops.cs" />
     <Compile Include="LoggingHandlers\IntegrationLoggingHandler.cs" />
     <Compile Include="LoggingHandlers\LiteLoggingHandler.cs" />
     <Compile Include="LoggingHandlers\ProductionLoggingHandler.cs" />

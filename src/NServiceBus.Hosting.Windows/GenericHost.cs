@@ -4,12 +4,12 @@ namespace NServiceBus
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
-    using System.Threading;
+    using System.Threading.Tasks;
     using Hosting.Helpers;
     using Hosting.Profiles;
     using Logging;
     using NServiceBus.Configuration.AdvanceExtensibility;
-    using NServiceBus.Hosting.Windows;
+
 
     class GenericHost
     {
@@ -17,11 +17,10 @@ namespace NServiceBus
         {
             this.specifier = specifier;
          
-            if (String.IsNullOrEmpty(endpointName))
+            if (string.IsNullOrEmpty(endpointName))
             {
                 endpointName = specifier.GetType().Namespace ?? specifier.GetType().Assembly.GetName().Name;
             }
-
 
             endpointNameToUse = endpointName;
             List<Assembly> assembliesToScan;
@@ -50,15 +49,14 @@ namespace NServiceBus
         {
             try
             {
-                bus = PerformConfiguration().Start();
+                var startableEndpoint = PerformConfiguration().Result;
+                bus =  startableEndpoint.Start().Result;
             }
             catch (Exception ex)
             {
                 LogManager.GetLogger<GenericHost>().Fatal("Exception when starting endpoint.", ex);
                 throw;
             }
-
-            LifecycleExtensions.StartExtensions(OnCriticalError);
         }
 
         /// <summary>
@@ -66,13 +64,8 @@ namespace NServiceBus
         /// </summary>
         public void Stop()
         {
-            if (bus != null)
-            {
-                LifecycleExtensions.StopExtensions();
-
-                bus.Dispose();
-                bus = null;
-            }
+            bus?.Stop().GetAwaiter().GetResult();
+            bus = null;
         }
 
         /// <summary>
@@ -84,7 +77,7 @@ namespace NServiceBus
                 .Dispose();
         }
 
-        IStartableBus PerformConfiguration(Action<BusConfiguration> moreConfiguration = null)
+        Task<IStartableEndpoint> PerformConfiguration(Action<BusConfiguration> moreConfiguration = null)
         {
             var loggingConfigurers = profileManager.GetLoggingConfigurer();
             foreach (var loggingConfigurer in loggingConfigurers)
@@ -103,7 +96,7 @@ namespace NServiceBus
             RoleManager.TweakConfigurationBuilder(specifier, configuration);
             profileManager.ActivateProfileHandlers(configuration);
 
-            return Bus.Create(configuration);
+            return Endpoint.Create(configuration);
         }
 
         void SetSlaFromAttribute(BusConfiguration configuration, IConfigureThisEndpoint configureThisEndpoint)
@@ -132,19 +125,20 @@ namespace NServiceBus
         }
 
         // Windows hosting behavior when critical error occurs is suicide.
-        void OnCriticalError(string errorMessage, Exception exception)
+        async Task OnCriticalError(IEndpointInstance endpoint, string error, Exception exception)
         {
             if (Environment.UserInteractive)
             {
-                Thread.Sleep(10000); // so that user can see on their screen the problem
+                await Task.Delay(10000).ConfigureAwait(false); // so that user can see on their screen the problem
             }
             
-            Environment.FailFast($"The following critical error was encountered by NServiceBus:\n{errorMessage}\nNServiceBus is shutting down.", exception);
+            Environment.FailFast($"The following critical error was encountered by NServiceBus:\n{error}\nNServiceBus is shutting down.", exception);
+            await Task.FromResult(0);
         }
 
         ProfileManager profileManager;
         IConfigureThisEndpoint specifier;
-        IBus bus;
+        IEndpointInstance bus;
         string endpointNameToUse;
     }
 }

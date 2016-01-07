@@ -2,20 +2,17 @@
 {
     using System;
     using System.Linq;
+    using NServiceBus.Configuration.AdvanceExtensibility;
     using NServiceBus.Features;
 
     class RoleManager
     {
         public static void TweakConfigurationBuilder(IConfigureThisEndpoint specifier, BusConfiguration config)
         {
-            if (specifier is AsA_Server)
-            {
-                config.ScaleOut().UseSingleBrokerQueue();
-            }
-            else if (specifier is AsA_Client)
+            if (specifier is AsA_Client)
             {
                 config.PurgeOnStartup(true);
-                config.Transactions().Disable();
+                config.GetSettings().Set<TransportTransactionMode>(TransportTransactionMode.None);
 
                 config.DisableFeature<Features.SecondLevelRetries>();
                 config.DisableFeature<TimeoutManager>();
