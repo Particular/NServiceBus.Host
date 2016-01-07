@@ -3,10 +3,12 @@ namespace NServiceBus.Hosting.Tests
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using NServiceBus.Extensibility;
+    using NServiceBus.Routing;
     using NServiceBus.Settings;
+    using NServiceBus.Transports;
+    using NServiceBus.Extensibility;
     using NUnit.Framework;
-    using Transports;
+
 
     [TestFixture]
     public class With_transport_tests
@@ -25,7 +27,7 @@ namespace NServiceBus.Hosting.Tests
 
     public class MyTestTransportSender : IDispatchMessages
     {
- public Task Dispatch(IEnumerable<TransportOperation> outgoingMessages, ContextBag context)
+        public Task Dispatch(TransportOperations outgoingMessages, ContextBag context)
         {
             throw new NotImplementedException();
         }
@@ -73,7 +75,12 @@ namespace NServiceBus.Hosting.Tests
             throw new NotImplementedException();
         }
 
-        public override string GetDiscriminatorForThisEndpointInstance(ReadOnlySettings settings)
+        public override EndpointInstance BindToLocalEndpoint(EndpointInstance instance, ReadOnlySettings settings)
+        {
+            throw new NotImplementedException();
+        }
+
+        public  string GetDiscriminatorForThisEndpointInstance(ReadOnlySettings settings)
         {
             return null;
         }

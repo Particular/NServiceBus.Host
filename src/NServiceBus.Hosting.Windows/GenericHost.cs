@@ -125,15 +125,14 @@ namespace NServiceBus
         }
 
         // Windows hosting behavior when critical error occurs is suicide.
-        async Task OnCriticalError(IEndpointInstance endpoint, string error, Exception exception)
+        async Task OnCriticalError(ICriticalErrorContext endpoint)
         {
             if (Environment.UserInteractive)
             {
                 await Task.Delay(10000).ConfigureAwait(false); // so that user can see on their screen the problem
             }
             
-            Environment.FailFast($"The following critical error was encountered by NServiceBus:\n{error}\nNServiceBus is shutting down.", exception);
-            await Task.FromResult(0);
+            Environment.FailFast($"The following critical error was encountered by NServiceBus:NServiceBus is shutting down.");
         }
 
         ProfileManager profileManager;
