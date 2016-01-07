@@ -6,9 +6,9 @@
     using System.Linq;
     using System.Runtime.ExceptionServices;
     using Arguments;
-    using Helpers;
     using Installers;
     using Magnum.StateMachine;
+    using NServiceBus.Hosting.Helpers;
     using Topshelf;
     using Topshelf.Configuration;
 
