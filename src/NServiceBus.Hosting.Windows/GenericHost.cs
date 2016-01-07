@@ -50,7 +50,7 @@ namespace NServiceBus
             try
             {
                 var startableEndpoint = PerformConfiguration().Result;
-                bus =  startableEndpoint.Start().Result;
+                endpoint =  startableEndpoint.Start().Result;
             }
             catch (Exception ex)
             {
@@ -64,8 +64,7 @@ namespace NServiceBus
         /// </summary>
         public void Stop()
         {
-            bus?.Stop().GetAwaiter().GetResult();
-            bus = null;
+            endpoint?.Stop().GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -137,7 +136,7 @@ namespace NServiceBus
 
         ProfileManager profileManager;
         IConfigureThisEndpoint specifier;
-        IEndpointInstance bus;
+        IEndpointInstance endpoint;
         string endpointNameToUse;
     }
 }
