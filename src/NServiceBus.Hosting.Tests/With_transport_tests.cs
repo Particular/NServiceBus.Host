@@ -6,37 +6,32 @@ namespace NServiceBus.Hosting.Tests
     using NServiceBus.Routing;
     using NServiceBus.Settings;
     using NServiceBus.Transports;
+    using NServiceBus.Extensibility;
+    using NUnit.Framework;
 
-    //using System;
-    //using System.Collections.Generic;
-    //using System.Threading.Tasks;
-    //using NServiceBus.Extensibility;
-    //using NServiceBus.Settings;
-    //using NUnit.Framework;
-    //using Transports;
 
-    //   [TestFixture]
-    //   public class With_transport_tests
-    //   {
-    //       [Test]
-    //       public void Should_configure_requested_transport()
-    //       {
-    //           var builder = new BusConfiguration();
+    [TestFixture]
+    public class With_transport_tests
+    {
+        [Test]
+        public void Should_configure_requested_transport()
+        {
+            var builder = new BusConfiguration();
 
-    //           builder.EndpointName("myTests");
-    //           builder.UseTransport<MyTestTransport>();
+            builder.EndpointName("myTests");
+            builder.UseTransport<MyTestTransport>();
 
-    //           Assert.IsInstanceOf<MyTestTransport>(builder.Settings.Get<TransportDefinition>());
-    //       }
-    //   }
+            Assert.IsInstanceOf<MyTestTransport>(builder.Settings.Get<TransportDefinition>());
+        }
+    }
 
-    //   public class MyTestTransportSender : IDispatchMessages
-    //   {
-    //public Task Dispatch(IEnumerable<TransportOperation> outgoingMessages, ContextBag context)
-    //       {
-    //           throw new NotImplementedException();
-    //       }
-    //   }
+    public class MyTestTransportSender : IDispatchMessages
+    {
+        public Task Dispatch(TransportOperations outgoingMessages, ContextBag context)
+        {
+            throw new NotImplementedException();
+        }
+    }
 
     public class ConfigWithCustomTransport : IConfigureThisEndpoint, AsA_Server, UsingTransport<MyTestTransport>
     {
@@ -44,12 +39,12 @@ namespace NServiceBus.Hosting.Tests
         {
         }
     }
-    //   class SecondConfigureThisEndpoint : IConfigureThisEndpoint
-    //   {
-    //       public void Customize(BusConfiguration configuration)
-    //       {
-    //       }
-    //   }
+    class SecondConfigureThisEndpoint : IConfigureThisEndpoint
+    {
+        public void Customize(BusConfiguration configuration)
+        {
+        }
+    }
 
     public class MyTestTransport : TransportDefinition
     {
