@@ -17,11 +17,10 @@ namespace NServiceBus
         {
             this.specifier = specifier;
          
-            if (String.IsNullOrEmpty(endpointName))
+            if (string.IsNullOrEmpty(endpointName))
             {
                 endpointName = specifier.GetType().Namespace ?? specifier.GetType().Assembly.GetName().Name;
             }
-
 
             endpointNameToUse = endpointName;
             List<Assembly> assembliesToScan;
@@ -46,12 +45,12 @@ namespace NServiceBus
         /// <summary>
         ///     Creates and starts the bus as per the configuration
         /// </summary>
-        public async void Start()
+        public void Start()
         {
             try
             {
-                var startableEndpoint = await PerformConfiguration();
-                bus = startableEndpoint.Start();
+                var startableEndpoint = PerformConfiguration().Result;
+                bus =  startableEndpoint.Start().Result;
             }
             catch (Exception ex)
             {
@@ -65,11 +64,8 @@ namespace NServiceBus
         /// </summary>
         public void Stop()
         {
-            if (bus != null)
-            {
-                bus.Dispose();
-                bus = null;
-            }
+            bus?.Stop().GetAwaiter().GetResult();
+            bus = null;
         }
 
         /// <summary>
@@ -142,7 +138,7 @@ namespace NServiceBus
 
         ProfileManager profileManager;
         IConfigureThisEndpoint specifier;
-        Task<IEndpointInstance> bus;
+        IEndpointInstance bus;
         string endpointNameToUse;
     }
 }

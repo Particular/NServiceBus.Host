@@ -3,13 +3,8 @@
     using NServiceBus;
 
     /// <summary>
-    /// Called in order to configure logging.
+    /// Configure logging in the constructor of the class that implements IConfigureThisEndpoint.
     /// </summary>
-    /// <remarks>
-    /// If you want logging configured regardless of profiles, do not use this interface,
-    /// instead configure logging before you call <see cref="Endpoint.Create"/> if you self hosting or configure logging the constructor of the class that implements <see cref="IConfigureThisEndpoint"/>.
-    /// Implementors should work against the generic version of this interface in the host.
-    /// </remarks>
     [ObsoleteEx(
         TreatAsErrorFromVersion = "7.0",
         Message = "Configure logging in the constructor of the class that implements IConfigureThisEndpoint.",
