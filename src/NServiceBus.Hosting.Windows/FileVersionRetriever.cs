@@ -4,26 +4,20 @@
     using System.Diagnostics;
     using System.Reflection;
 
-    /// <summary>
-    /// Helper class to retrieve File version.
-    /// </summary>
     class FileVersionRetriever
     {
-        /// <summary>
-        /// Retrieves a semver compliant version from a <see cref="Type"/>.
-        /// </summary>
-        /// <param name="type"><see cref="Type"/> to retrieve version from.</param>
-        /// <returns>SemVer compliant version.</returns>
+        // Retrieves a semver compliant version from a <see cref="Type"/>s Assembly.
         public static string GetFileVersion(Type type)
         {
-            if (!String.IsNullOrEmpty(type.Assembly.Location))
+            var assembly = type.Assembly;
+            if (!string.IsNullOrEmpty(assembly.Location))
             {
-                var fileVersion = FileVersionInfo.GetVersionInfo(type.Assembly.Location);
+                var fileVersion = FileVersionInfo.GetVersionInfo(assembly.Location);
 
                 return new Version(fileVersion.FileMajorPart, fileVersion.FileMinorPart, fileVersion.FileBuildPart).ToString(3);
             }
 
-            var customAttributes = type.Assembly.GetCustomAttributes(typeof(AssemblyFileVersionAttribute), false);
+            var customAttributes = assembly.GetCustomAttributes(typeof(AssemblyFileVersionAttribute), false);
 
             if (customAttributes.Length >= 1)
             {
@@ -35,7 +29,7 @@
                 }
             }
 
-            return type.Assembly.GetName().Version.ToString(3);
+            return assembly.GetName().Version.ToString(3);
         }
     }
 }

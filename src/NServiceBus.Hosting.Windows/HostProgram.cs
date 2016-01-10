@@ -1,6 +1,5 @@
 ﻿namespace NServiceBus.Hosting.Windows
 {
-    using System;
     using System.Collections.Generic;
     using System.Configuration;
     using System.Linq;
@@ -50,7 +49,7 @@
             }
 
             //Add the endpoint name so that the new appDomain can get it
-            if (arguments.EndpointName == null && !String.IsNullOrEmpty(endpointName))
+            if (arguments.EndpointName == null && !string.IsNullOrEmpty(endpointName))
             {
                 args = args.Concat(new[] {$@"/endpointName={endpointName}"}).ToArray();
             }
@@ -103,17 +102,17 @@
 
                 var serviceCommandLine = new List<string>();
 
-                if (!String.IsNullOrEmpty(arguments.EndpointConfigurationType))
+                if (!string.IsNullOrEmpty(arguments.EndpointConfigurationType))
                 {
                     serviceCommandLine.Add($@"/endpointConfigurationType:""{arguments.EndpointConfigurationType}""");
                 }
 
-                if (!String.IsNullOrEmpty(endpointName))
+                if (!string.IsNullOrEmpty(endpointName))
                 {
                     serviceCommandLine.Add($@"/endpointName:""{endpointName}""");
                 }
 
-                if (!String.IsNullOrEmpty(serviceName))
+                if (!string.IsNullOrEmpty(serviceName))
                 {
                     serviceCommandLine.Add($@"/serviceName:""{serviceName}""");
                 }
@@ -128,7 +127,7 @@
                     serviceCommandLine.AddRange(arguments.OtherArgs);
                 }
 
-                var commandLine = String.Join(" ", serviceCommandLine);
+                var commandLine = string.Join(" ", serviceCommandLine);
                 x.SetServiceCommandLine(commandLine);
 
                 if (arguments.DependsOn != null)

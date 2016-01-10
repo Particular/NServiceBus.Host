@@ -29,23 +29,23 @@
             {
                 throw new ArgumentNullException("type");
             }
-            this.type = type;
+            Type = type;
             AssertIsValid();
         }
 
-        internal Type Type => type;
+        internal Type Type { get; }
 
-        public string EndpointConfigurationFile => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, type.Assembly.ManifestModule.Name + ".config");
+        public string EndpointConfigurationFile => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Type.Assembly.ManifestModule.Name + ".config");
 
-        public string EndpointVersion => FileVersionRetriever.GetFileVersion(type);
+        public string EndpointVersion => FileVersionRetriever.GetFileVersion(Type);
 
-        public string AssemblyQualifiedName => type.AssemblyQualifiedName;
+        public string AssemblyQualifiedName => Type.AssemblyQualifiedName;
 
         public string EndpointName
         {
             get
             {
-                var hostEndpointAttribute = (EndpointNameAttribute)type.GetCustomAttributes(typeof(EndpointNameAttribute), false)
+                var hostEndpointAttribute = (EndpointNameAttribute)Type.GetCustomAttributes(typeof(EndpointNameAttribute), false)
                     .FirstOrDefault();
                 return hostEndpointAttribute != null ? hostEndpointAttribute.Name : arguments.EndpointName;
             }
@@ -55,7 +55,7 @@
         {
             get
             {
-                var serviceName = type.Namespace ?? type.Assembly.GetName().Name;
+                var serviceName = Type.Namespace ?? Type.Assembly.GetName().Name;
 
                 if (arguments.ServiceName != null)
                 {
@@ -68,16 +68,15 @@
 
         void AssertIsValid()
         {
-            var constructor = type.GetConstructor(Type.EmptyTypes);
+            var constructor = Type.GetConstructor(Type.EmptyTypes);
 
             if (constructor == null)
             {
                 throw new InvalidOperationException(
-                    "Endpoint configuration type needs to have a default constructor: " + type.FullName);
+                    "Endpoint configuration type needs to have a default constructor: " + Type.FullName);
             }
         }
 
         readonly HostArguments arguments = new HostArguments(new string[0]);
-        readonly Type type;
     }
 }

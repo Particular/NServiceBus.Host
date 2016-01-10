@@ -3,6 +3,12 @@
 // ReSharper disable JoinDeclarationAndInitializer
 // ReSharper disable IdentifierTypo
 // ReSharper disable UnusedMethodReturnValue.Local
+// ReSharper disable ConvertToAutoProperty
+// ReSharper disable ConvertToAutoPropertyWhenPossible
+// ReSharper disable RedundantToStringCallForValueType
+// ReSharper disable ForCanBeConvertedToForeach
+// ReSharper disable RedundantArrayCreationExpression
+// ReSharper disable RedundantExplicitArrayCreation
 //
 // Options.cs
 //
