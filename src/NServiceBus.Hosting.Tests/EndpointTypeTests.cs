@@ -6,6 +6,8 @@ namespace NServiceBus.Hosting.Tests
         using System.Diagnostics;
         using Windows;
         using Windows.Arguments;
+        using NServiceBus.Satellites;
+        using NServiceBus.Unicast.Transport;
         using NUnit.Framework;
 
         abstract class TestContext
@@ -76,6 +78,31 @@ namespace NServiceBus.Hosting.Tests
                 EndpointType = new EndpointType(hostArguments, typeof (TestEndpointType));
 
                 Assert.AreEqual("EndpointNameFromConfiguration", EndpointType.EndpointName);
+            }
+
+            public class Whatever : IAdvancedSatellite
+            {
+                public bool Handle(TransportMessage message)
+                {
+                    throw new NotImplementedException();
+                }
+
+                public void Start()
+                {
+                    throw new NotImplementedException();
+                }
+
+                public void Stop()
+                {
+                    throw new NotImplementedException();
+                }
+
+                public Address InputAddress { get; }
+                public bool Disabled { get; }
+                public Action<TransportReceiver> GetReceiverCustomization()
+                {
+                    throw new NotImplementedException();
+                }
             }
 
             [Test]
