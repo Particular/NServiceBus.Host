@@ -14,7 +14,7 @@
     [TestFixture]
     class GenericHostTests
     {
-        // This test is on ignore, becaise
+        // This test is on ignore, because
         // #1 It takes 30+ seconds to verify if it's working.
         // #2 It uses MSMQ as it is starting the actual bus and the host doesn't have acceptance tests.
         // Still leaving it here at the moment for reference.
