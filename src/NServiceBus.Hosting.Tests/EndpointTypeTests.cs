@@ -79,12 +79,6 @@ namespace NServiceBus.Hosting.Tests
             }
 
             [Test]
-            public void DoSomething()
-            {
-
-            }
-
-            [Test]
             public void when_endpointName_is_provided_via_hostArgs_it_should_have_third_priority()
             {
                 EndpointType = new EndpointType(hostArguments, typeof (TestEndpointType));

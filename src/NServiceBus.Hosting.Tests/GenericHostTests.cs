@@ -1,19 +1,11 @@
-﻿using System;
-using System.Threading;
-using NServiceBus;
-using NServiceBus.Satellites;
-
-namespace NServiceBus.Hosting.Tests
+﻿namespace NServiceBus.Hosting.Tests
 {
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Threading;
-    using System.Threading.Tasks;
     using NServiceBus.Config;
     using NServiceBus.Config.ConfigurationSource;
-    using NServiceBus.Hosting.Tests.EndpointTypeTests;
-    using NServiceBus.Hosting.Windows;
     using NServiceBus.Satellites;
     using NServiceBus.Unicast.Transport;
     using NUnit.Framework;
@@ -22,8 +14,12 @@ namespace NServiceBus.Hosting.Tests
     [TestFixture]
     class GenericHostTests
     {
-        [Test]
-        public void SomeTest()
+        // This test is on ignore, becaise
+        // #1 It takes 30+ seconds to verify if it's working.
+        // #2 It uses MSMQ as it is starting the actual bus and the host doesn't have acceptance tests.
+        // Still leaving it here at the moment for reference.
+        [Test, Ignore]
+        public void VerifyThirtySecondTimeoutToWork()
         {
             string[] args = new string[0];
             var specifier = new MyTestEndpoint();
@@ -31,10 +27,14 @@ namespace NServiceBus.Hosting.Tests
             GenericHost host = new GenericHost(specifier, args, new List<Type> { typeof(Production) }, "nservicebus");
 
             host.Start();
+
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
             host.Stop();
+            sw.Stop();
+
+            Assert.IsTrue(sw.Elapsed.Seconds < 35);
         }
-
-
 
         class MyTestEndpoint : IConfigureThisEndpoint, IProvideConfiguration<MessageForwardingInCaseOfFaultConfig>
         {

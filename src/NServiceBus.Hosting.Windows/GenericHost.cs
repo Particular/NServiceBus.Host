@@ -71,11 +71,30 @@ namespace NServiceBus
         }
 
         /// <summary>
-        ///     Finalize
+        /// Shut down bus or give up after 30 seconds, so host won't hang indefinitely.
         /// </summary>
         public void Stop()
         {
-            var disposeTask = Task.Factory.StartNew(() =>
+            Task disposeTask = DisposeBusTask();
+
+            StartShutdownReporter();
+            var timeoutTask = Task.Delay(TimeSpan.FromSeconds(30));
+
+            var finishedResult = Task.WhenAny(disposeTask, timeoutTask).GetAwaiter().GetResult();
+
+            if (finishedResult.Equals(timeoutTask))
+            {
+                LogManager.GetLogger<GenericHost>().Error("The host failed to stop with-in the time allowed (30s).");
+            }
+        }
+
+        /// <summary>
+        /// The original code to shut down the bus, wrapped inside a task.
+        /// </summary>
+        /// <returns></returns>
+        private Task DisposeBusTask()
+        {
+            return Task.Factory.StartNew(() =>
             {
                 wcfManager.Shutdown();
 
@@ -86,18 +105,11 @@ namespace NServiceBus
                     bus = null;
                 }
             });
-
-            StartShutdownReporter();
-            var timeoutTask = Task.Delay(TimeSpan.FromSeconds(AllowedTimeToShutdown));
-
-            var finishedResult = Task.WhenAny(disposeTask, timeoutTask).GetAwaiter().GetResult();
-
-            if (finishedResult.Equals(timeoutTask))
-            {
-                LogManager.GetLogger<GenericHost>().Error("The host failed to stop with-in the time allowed (30s).");
-            }
         }
 
+        /// <summary>
+        /// Reports every 10 seconds that it's trying to shut down the host.
+        /// </summary>
         private void StartShutdownReporter()
         {
             const int interval = 10000;
@@ -160,8 +172,6 @@ namespace NServiceBus
 
             Environment.FailFast(String.Format("The following critical error was encountered by NServiceBus:\n{0}\nNServiceBus is shutting down.", errorMessage), exception);
         }
-
-        protected virtual int AllowedTimeToShutdown { get; set; }
 
         List<Assembly> assembliesToScan;
         ProfileManager profileManager;
