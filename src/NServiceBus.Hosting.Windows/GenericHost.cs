@@ -5,6 +5,7 @@ namespace NServiceBus
     using System.Linq;
     using System.Reflection;
     using System.Threading;
+    using System.Threading.Tasks;
     using Hosting.Helpers;
     using Hosting.Profiles;
     using Hosting.Wcf;
@@ -15,8 +16,9 @@ namespace NServiceBus
     {
         public GenericHost(IConfigureThisEndpoint specifier, string[] args, List<Type> defaultProfiles, string endpointName, IEnumerable<string> scannableAssembliesFullName = null)
         {
+            TimeAllowedToStopInSeconds = 30;
             this.specifier = specifier;
-         
+
             if (String.IsNullOrEmpty(endpointName))
             {
                 endpointName = specifier.GetType().Namespace ?? specifier.GetType().Assembly.GetName().Name;
@@ -70,18 +72,58 @@ namespace NServiceBus
         }
 
         /// <summary>
-        ///     Finalize
+        /// Shut down bus or give up after 30 seconds, so host won't hang indefinitely.
         /// </summary>
         public void Stop()
         {
-            wcfManager.Shutdown();
+            Task disposeTask = DisposeBusTask();
 
-            if (bus != null)
+            StartShutdownReporter();
+            var timeoutTask = Task.Delay(TimeSpan.FromSeconds(this.TimeAllowedToStopInSeconds));
+
+            var finishedResult = Task.WhenAny(disposeTask, timeoutTask).GetAwaiter().GetResult();
+
+            if (finishedResult.Equals(timeoutTask))
             {
-                bus.Dispose();
-
-                bus = null;
+                LogManager.GetLogger<GenericHost>().Error("The host failed to stop with-in the time allowed (30s).");
             }
+        }
+
+        /// <summary>
+        /// The original code to shut down the bus, wrapped inside a task.
+        /// </summary>
+        /// <returns></returns>
+        private Task DisposeBusTask()
+        {
+            return Task.Factory.StartNew(() =>
+            {
+                wcfManager.Shutdown();
+
+                if (bus != null)
+                {
+                    bus.Dispose();
+
+                    bus = null;
+                }
+            });
+        }
+
+        /// <summary>
+        /// Reports every 10 seconds that it's trying to shut down the host.
+        /// </summary>
+        private void StartShutdownReporter()
+        {
+            const int interval = 10000;
+            var timeSpent = 0;
+
+            var timer = new System.Timers.Timer();
+            timer.Elapsed += (sender, args) =>
+            {
+                timeSpent += interval / 1000;
+                LogManager.GetLogger<GenericHost>().InfoFormat("Trying to shut down host for {0} seconds.", timeSpent);
+            };
+            timer.Interval = interval;
+            timer.Enabled = true;
         }
 
         /// <summary>
@@ -90,7 +132,7 @@ namespace NServiceBus
         public void Install(string username)
         {
             PerformConfiguration(builder => builder.EnableInstallers(username));
-          
+
             bus.Dispose();
         }
 
@@ -118,7 +160,7 @@ namespace NServiceBus
             RoleManager.TweakConfigurationBuilder(specifier, configuration);
             profileManager.ActivateProfileHandlers(configuration);
 
-            bus = (UnicastBus) Bus.Create(configuration);
+            bus = (UnicastBus)Bus.Create(configuration);
         }
 
         // Windows hosting behavior when critical error occurs is suicide.
@@ -128,9 +170,12 @@ namespace NServiceBus
             {
                 Thread.Sleep(10000); // so that user can see on their screen the problem
             }
-            
+
             Environment.FailFast(String.Format("The following critical error was encountered by NServiceBus:\n{0}\nNServiceBus is shutting down.", errorMessage), exception);
         }
+
+        public int TimeAllowedToStopInSeconds { get; set; }
+
         List<Assembly> assembliesToScan;
         ProfileManager profileManager;
         IConfigureThisEndpoint specifier;
