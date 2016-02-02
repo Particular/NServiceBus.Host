@@ -16,6 +16,7 @@ namespace NServiceBus
     {
         public GenericHost(IConfigureThisEndpoint specifier, string[] args, List<Type> defaultProfiles, string endpointName, IEnumerable<string> scannableAssembliesFullName = null)
         {
+            TimeAllowedToStopInSeconds = 30;
             this.specifier = specifier;
 
             if (String.IsNullOrEmpty(endpointName))
@@ -78,7 +79,7 @@ namespace NServiceBus
             Task disposeTask = DisposeBusTask();
 
             StartShutdownReporter();
-            var timeoutTask = Task.Delay(TimeSpan.FromSeconds(30));
+            var timeoutTask = Task.Delay(TimeSpan.FromSeconds(this.TimeAllowedToStopInSeconds));
 
             var finishedResult = Task.WhenAny(disposeTask, timeoutTask).GetAwaiter().GetResult();
 
@@ -172,6 +173,8 @@ namespace NServiceBus
 
             Environment.FailFast(String.Format("The following critical error was encountered by NServiceBus:\n{0}\nNServiceBus is shutting down.", errorMessage), exception);
         }
+
+        public int TimeAllowedToStopInSeconds { get; set; }
 
         List<Assembly> assembliesToScan;
         ProfileManager profileManager;
