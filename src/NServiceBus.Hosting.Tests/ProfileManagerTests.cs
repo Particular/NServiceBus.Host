@@ -23,7 +23,7 @@ namespace NServiceBus.Hosting.Tests
             {
                 internal static bool activated;
 
-                public void ProfileActivated(BusConfiguration config)
+                public void ProfileActivated(EndpointConfiguration config)
                 {
                     activated = true;
                 }
@@ -75,7 +75,7 @@ namespace NServiceBus.Hosting.Tests
             {
                 internal static bool activated;
 
-                public void ProfileActivated(BusConfiguration config)
+                public void ProfileActivated(EndpointConfiguration config)
                 {
                     activated = true;
                 }
@@ -131,7 +131,7 @@ namespace NServiceBus.Hosting.Tests
             {
                 public static bool activated;
 
-                public void ProfileActivated(BusConfiguration config)
+                public void ProfileActivated(EndpointConfiguration config)
                 {
                     activated = true;
                 }
@@ -141,7 +141,7 @@ namespace NServiceBus.Hosting.Tests
             {
                 public static bool activated;
 
-                public void ProfileActivated(BusConfiguration config)
+                public void ProfileActivated(EndpointConfiguration config)
                 {
                     activated = true;
                 }
@@ -257,7 +257,7 @@ namespace NServiceBus.Hosting.Tests
             {
                 public static int activatedCount;
 
-                public void ProfileActivated(BusConfiguration config)
+                public void ProfileActivated(EndpointConfiguration config)
                 {
                     activatedCount++;
                 }
@@ -301,7 +301,7 @@ namespace NServiceBus.Hosting.Tests
             {
                 public static bool activated;
 
-                public void ProfileActivated(BusConfiguration config)
+                public void ProfileActivated(EndpointConfiguration config)
                 {
                     activated = true;
                 }
@@ -311,7 +311,7 @@ namespace NServiceBus.Hosting.Tests
             {
                 public static bool activated;
 
-                public void ProfileActivated(BusConfiguration config)
+                public void ProfileActivated(EndpointConfiguration config)
                 {
                     activated = true;
                 }
@@ -361,7 +361,7 @@ namespace NServiceBus.Hosting.Tests
 
             public class Handler1 : IHandleProfile<Profile1>
             {
-                public void ProfileActivated(BusConfiguration config)
+                public void ProfileActivated(EndpointConfiguration config)
                 {
                     activations.Add(GetType());
                 }
@@ -369,7 +369,7 @@ namespace NServiceBus.Hosting.Tests
 
             public class Handler2 : IHandleProfile<Profile2>
             {
-                public void ProfileActivated(BusConfiguration config)
+                public void ProfileActivated(EndpointConfiguration config)
                 {
                     activations.Add(GetType());
                 }
@@ -463,7 +463,7 @@ namespace NServiceBus.Hosting.Tests
 
             public class Handler : IHandleProfile<Profile1>, IHandleProfile<Profile2>
             {
-                public void ProfileActivated(BusConfiguration config)
+                public void ProfileActivated(EndpointConfiguration config)
                 {
                     activations.Add(this);
                 }
@@ -498,7 +498,7 @@ namespace NServiceBus.Hosting.Tests
 
             public class BaseHandler : IHandleProfile<BaseProfile>
             {
-                public void ProfileActivated(BusConfiguration config)
+                public void ProfileActivated(EndpointConfiguration config)
                 {
                     activations.Add(GetType());
                 }
@@ -506,7 +506,7 @@ namespace NServiceBus.Hosting.Tests
 
             public class SpecializedHandler : IHandleProfile<SpecializedProfile>
             {
-                public void ProfileActivated(BusConfiguration config)
+                public void ProfileActivated(EndpointConfiguration config)
                 {
                     activations.Add(GetType());
                 }
@@ -551,7 +551,7 @@ namespace NServiceBus.Hosting.Tests
             {
                 public new static bool activated;
 
-                public override void ProfileActivated(BusConfiguration config)
+                public override void ProfileActivated(EndpointConfiguration config)
                 {
                     activated = true;
                 }
@@ -561,7 +561,7 @@ namespace NServiceBus.Hosting.Tests
             {
                 public static bool activated;
 
-                public virtual void ProfileActivated(BusConfiguration config)
+                public virtual void ProfileActivated(EndpointConfiguration config)
                 {
                     activated = true;
                 }
@@ -606,7 +606,7 @@ namespace NServiceBus.Hosting.Tests
             {
                 internal static IEnumerable<Type> activeProfiles;
 
-                public void ProfileActivated(BusConfiguration config)
+                public void ProfileActivated(EndpointConfiguration config)
                 {
                     
                 }
@@ -645,7 +645,7 @@ namespace NServiceBus.Hosting.Tests
             {
                 internal static bool activatedCalled;
 
-                public void ProfileActivated(BusConfiguration config)
+                public void ProfileActivated(EndpointConfiguration config)
                 {
                     activatedCalled = true;
                 }
@@ -674,14 +674,14 @@ namespace NServiceBus.Hosting.Tests
 
             public class ChildHandler : BaseHandler
             {
-                public override void ProfileActivated(BusConfiguration config)
+                public override void ProfileActivated(EndpointConfiguration config)
                 {
                 }
             }
 
             public class BaseHandler : IHandleProfile<Profile>
             {
-                public virtual void ProfileActivated(BusConfiguration config)
+                public virtual void ProfileActivated(EndpointConfiguration config)
                 {
                     throw new NotImplementedException();
                 }

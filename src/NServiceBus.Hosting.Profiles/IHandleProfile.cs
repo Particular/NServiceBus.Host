@@ -15,7 +15,7 @@
         /// Called when a given profile is activated.
         /// </summary>
 // ReSharper disable UnusedParameter.Global
-        void ProfileActivated(BusConfiguration config);
+        void ProfileActivated(EndpointConfiguration config);
 // ReSharper restore UnusedParameter.Global
     }
 }

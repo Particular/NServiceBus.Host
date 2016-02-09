@@ -76,7 +76,7 @@ namespace NServiceBus
                 .Dispose();
         }
 
-        Task<IStartableEndpoint> PerformConfiguration(Action<BusConfiguration> moreConfiguration = null)
+        Task<IStartableEndpoint> PerformConfiguration(Action<EndpointConfiguration> moreConfiguration = null)
         {
             var loggingConfigurers = profileManager.GetLoggingConfigurer();
             foreach (var loggingConfigurer in loggingConfigurers)
@@ -84,7 +84,7 @@ namespace NServiceBus
                 loggingConfigurer.Configure(specifier);
             }
 
-            var configuration = new BusConfiguration();
+            var configuration = new EndpointConfiguration();
             SetSlaFromAttribute(configuration, specifier);
             configuration.EndpointName(endpointNameToUse);
             configuration.DefineCriticalErrorAction(OnCriticalError);
@@ -98,7 +98,7 @@ namespace NServiceBus
             return Endpoint.Create(configuration);
         }
 
-        void SetSlaFromAttribute(BusConfiguration configuration, IConfigureThisEndpoint configureThisEndpoint)
+        void SetSlaFromAttribute(EndpointConfiguration configuration, IConfigureThisEndpoint configureThisEndpoint)
         {
             var endpointConfigurationType = configureThisEndpoint
                 .GetType();

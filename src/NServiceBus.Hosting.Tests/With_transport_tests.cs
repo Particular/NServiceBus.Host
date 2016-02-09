@@ -16,7 +16,7 @@ namespace NServiceBus.Hosting.Tests
         [Test]
         public void Should_configure_requested_transport()
         {
-            var builder = new BusConfiguration();
+            var builder = new EndpointConfiguration();
 
             builder.EndpointName("myTests");
             builder.UseTransport<MyTestTransport>();
@@ -35,13 +35,13 @@ namespace NServiceBus.Hosting.Tests
 
     public class ConfigWithCustomTransport : IConfigureThisEndpoint, AsA_Server, UsingTransport<MyTestTransport>
     {
-        public void Customize(BusConfiguration configuration)
+        public void Customize(EndpointConfiguration configuration)
         {
         }
     }
     class SecondConfigureThisEndpoint : IConfigureThisEndpoint
     {
-        public void Customize(BusConfiguration configuration)
+        public void Customize(EndpointConfiguration configuration)
         {
         }
     }

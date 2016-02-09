@@ -63,7 +63,7 @@ namespace NServiceBus.Hosting.Tests
                 {
                     EndpointName = "EndpointNameFromHostArgs"
                 };
-                var configuration = new BusConfiguration();
+                var configuration = new EndpointConfiguration();
 
                 configuration.EndpointName("EndpointNameFromConfiguration");
 
