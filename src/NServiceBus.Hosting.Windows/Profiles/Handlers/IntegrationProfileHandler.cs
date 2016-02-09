@@ -5,7 +5,7 @@
 
     class IntegrationProfileHandler : IHandleProfile<Integration>
     {
-        public void ProfileActivated(BusConfiguration config)
+        public void ProfileActivated(EndpointConfiguration config)
         {
             config.EnableInstallers();
         }

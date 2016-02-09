@@ -5,7 +5,7 @@
     using System.Configuration;
     using System.Linq;
     using Arguments;
-    using Helpers;
+    using NServiceBus.Hosting.Helpers;
 
     /// <summary>
     ///     Determines the Endpoint Type by applying conventions.

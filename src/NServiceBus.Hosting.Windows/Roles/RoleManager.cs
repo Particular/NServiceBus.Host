@@ -7,7 +7,7 @@
 
     class RoleManager
     {
-        public static void TweakConfigurationBuilder(IConfigureThisEndpoint specifier, BusConfiguration config)
+        public static void TweakConfigurationBuilder(IConfigureThisEndpoint specifier, EndpointConfiguration config)
         {
             if (specifier is AsA_Client)
             {
