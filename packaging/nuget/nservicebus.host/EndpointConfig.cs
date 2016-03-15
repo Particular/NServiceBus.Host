@@ -7,11 +7,8 @@ namespace rootnamespace
     {
         public void Customize(BusConfiguration configuration)
         {
-            // NServiceBus provides multiple durable storage options
-            
+            // NServiceBus provides multiple durable storage options please refer to our documentation for more details.
             // If you don't need a durable storage you can also use, configuration.UsePersistence<InMemoryPersistence>();
-            
-            //Also note that you can mix and match multiple storages to fit you specific needs. 
             configuration.UsePersistence<PLEASE_SELECT_ONE>();
         }
     }
