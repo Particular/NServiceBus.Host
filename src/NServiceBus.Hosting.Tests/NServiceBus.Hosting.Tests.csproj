@@ -44,7 +44,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="NServiceBus.Core, Version=6.0.0.0, Culture=neutral, PublicKeyToken=9fc386479f8a226c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NServiceBus.6.0.0-unstable1509\lib\net452\NServiceBus.Core.dll</HintPath>
+      <HintPath>..\packages\NServiceBus.6.0.0-unstable1685\lib\net452\NServiceBus.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
@@ -68,8 +68,9 @@
     <Compile Include="FakeDispatcher.cs" />
     <Compile Include="FakeQueueCreator.cs" />
     <Compile Include="FakeReceiver.cs" />
+    <Compile Include="GetEndpointConfigurationType_Tests.cs" />
+    <Compile Include="MyEndpointConfig.cs" />
     <Compile Include="ProfileManagerTests.cs" />
-    <Compile Include="With_transport_tests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NServiceBus.Hosting.Windows\NServiceBus.Host.csproj">

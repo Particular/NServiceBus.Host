@@ -5,18 +5,17 @@ namespace NServiceBus
     using System.Linq;
     using System.Reflection;
     using System.Threading.Tasks;
-    using Hosting.Helpers;
-    using Hosting.Profiles;
-    using Logging;
     using NServiceBus.Configuration.AdvanceExtensibility;
-
+    using NServiceBus.Hosting.Helpers;
+    using NServiceBus.Hosting.Profiles;
+    using NServiceBus.Logging;
 
     class GenericHost
     {
         public GenericHost(IConfigureThisEndpoint specifier, string[] args, List<Type> defaultProfiles, string endpointName, IEnumerable<string> scannableAssembliesFullName = null)
         {
             this.specifier = specifier;
-         
+
             if (string.IsNullOrEmpty(endpointName))
             {
                 endpointName = specifier.GetType().Namespace ?? specifier.GetType().Assembly.GetName().Name;
@@ -42,15 +41,12 @@ namespace NServiceBus
             profileManager = new ProfileManager(assembliesToScan, args, defaultProfiles);
         }
 
-        /// <summary>
-        ///     Creates and starts the bus as per the configuration
-        /// </summary>
         public void Start()
         {
             try
             {
                 var startableEndpoint = PerformConfiguration().Result;
-                endpoint =  startableEndpoint.Start().Result;
+                endpoint = startableEndpoint.Start().Result;
             }
             catch (Exception ex)
             {
@@ -59,16 +55,13 @@ namespace NServiceBus
             }
         }
 
-        /// <summary>
-        ///     Finalize
-        /// </summary>
         public void Stop()
         {
             endpoint?.Stop().GetAwaiter().GetResult();
         }
 
         /// <summary>
-        ///     When installing as windows service (/install), run infrastructure installers
+        /// When installing as windows service (/install), run infrastructure installers
         /// </summary>
         public void Install(string username)
         {
@@ -124,19 +117,20 @@ namespace NServiceBus
         }
 
         // Windows hosting behavior when critical error occurs is suicide.
-        async Task OnCriticalError(ICriticalErrorContext endpoint)
+        async Task OnCriticalError(ICriticalErrorContext context)
         {
             if (Environment.UserInteractive)
             {
                 await Task.Delay(10000).ConfigureAwait(false); // so that user can see on their screen the problem
             }
-            
-            Environment.FailFast($"The following critical error was encountered by NServiceBus:NServiceBus is shutting down.");
+
+            Environment.FailFast("The following critical error was encountered by NServiceBus:NServiceBus is shutting down.");
         }
+
+        IEndpointInstance endpoint;
+        string endpointNameToUse;
 
         ProfileManager profileManager;
         IConfigureThisEndpoint specifier;
-        IEndpointInstance endpoint;
-        string endpointNameToUse;
     }
 }
