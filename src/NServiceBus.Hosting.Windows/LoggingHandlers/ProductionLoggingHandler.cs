@@ -1,6 +1,6 @@
 ﻿namespace NServiceBus.Hosting.Windows.LoggingHandlers
 {
-    using NServiceBus.Hosting.Profiles;
+    using Hosting.Profiles;
 
     /// <summary>
     /// Handles logging configuration for the <see cref="Production"/> profile.

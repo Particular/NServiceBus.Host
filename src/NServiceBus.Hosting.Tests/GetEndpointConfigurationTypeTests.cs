@@ -10,7 +10,7 @@ namespace EndpointTypeDeterminerTests
     using NUnit.Framework;
 
     [TestFixture]
-    class GetEndpointConfigurationType_Tests
+    class GetEndpointConfigurationTypeTests
     {
         [Test]
         public void when_multiple_endpoint_types_found_via_assembly_scanning_it_should_blow_up()

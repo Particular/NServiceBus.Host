@@ -1,7 +1,7 @@
 namespace NServiceBus.Hosting.Tests
 {
     using System.Threading.Tasks;
-    using NServiceBus.Transports;
+    using Transports;
 
     class FakeQueueCreator : ICreateQueues
     {

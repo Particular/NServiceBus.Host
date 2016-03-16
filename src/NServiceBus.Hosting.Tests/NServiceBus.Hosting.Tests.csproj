@@ -68,7 +68,7 @@
     <Compile Include="FakeDispatcher.cs" />
     <Compile Include="FakeQueueCreator.cs" />
     <Compile Include="FakeReceiver.cs" />
-    <Compile Include="GetEndpointConfigurationType_Tests.cs" />
+    <Compile Include="GetEndpointConfigurationTypeTests.cs" />
     <Compile Include="MyEndpointConfig.cs" />
     <Compile Include="ProfileManagerTests.cs" />
   </ItemGroup>

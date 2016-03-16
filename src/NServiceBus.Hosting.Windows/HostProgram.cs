@@ -7,7 +7,7 @@
     using Arguments;
     using Installers;
     using Magnum.StateMachine;
-    using NServiceBus.Hosting.Helpers;
+    using Helpers;
     using Topshelf;
     using Topshelf.Configuration;
 

@@ -5,10 +5,10 @@ namespace NServiceBus
     using System.Linq;
     using System.Reflection;
     using System.Threading.Tasks;
-    using NServiceBus.Configuration.AdvanceExtensibility;
-    using NServiceBus.Hosting.Helpers;
-    using NServiceBus.Hosting.Profiles;
-    using NServiceBus.Logging;
+    using Configuration.AdvanceExtensibility;
+    using Hosting.Helpers;
+    using Hosting.Profiles;
+    using Logging;
 
     class GenericHost
     {
@@ -45,8 +45,8 @@ namespace NServiceBus
         {
             try
             {
-                var startableEndpoint = PerformConfiguration().Result;
-                endpoint = startableEndpoint.Start().Result;
+                var startableEndpoint = PerformConfiguration().GetAwaiter().GetResult();
+                endpoint = startableEndpoint.Start().GetAwaiter().GetResult();
             }
             catch (Exception ex)
             {
@@ -129,7 +129,6 @@ namespace NServiceBus
 
         IEndpointInstance endpoint;
         string endpointNameToUse;
-
         ProfileManager profileManager;
         IConfigureThisEndpoint specifier;
     }
