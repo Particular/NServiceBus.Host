@@ -29,11 +29,11 @@
         {
             if (assemblyScanner == null)
             {
-                throw new ArgumentNullException("assemblyScanner");
+                throw new ArgumentNullException(nameof(assemblyScanner));
             }
             if (getEndpointConfigurationTypeFromConfig == null)
             {
-                throw new ArgumentNullException("getEndpointConfigurationTypeFromConfig");
+                throw new ArgumentNullException(nameof(getEndpointConfigurationTypeFromConfig));
             }
             this.assemblyScanner = assemblyScanner;
             this.getEndpointConfigurationTypeFromConfig = getEndpointConfigurationTypeFromConfig;

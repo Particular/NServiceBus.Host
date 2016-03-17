@@ -128,8 +128,14 @@
     <Compile Include="Profiles\Handlers\IntegrationProfileHandler.cs" />
     <Compile Include="Profiles\Handlers\LiteProfileHandler.cs" />
     <Compile Include="Profiles\Handlers\PerformanceCountersProfileHandler.cs" />
+    <Compile Include="Resharper.Annotations.g.cs" />
     <Compile Include="Roles\RoleManager.cs" />
     <Compile Include="Roles\UsingTransport.cs" />
+    <Compile Include="StartableAndStoppable\EndpointConfigurationExtensions.cs" />
+    <Compile Include="StartableAndStoppable\IWantToRunWhenEndpointStartsAndStops.cs" />
+    <Compile Include="StartableAndStoppable\StartableAndStoppableFeature.cs" />
+    <Compile Include="StartableAndStoppable\StartableAndStoppableRunner.cs" />
+    <Compile Include="TaskEx.cs" />
     <Compile Include="WindowsHost.cs" />
     <Compile Include="Profiles\Integration.cs" />
     <Compile Include="Profiles\Lite.cs" />

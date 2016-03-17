@@ -9,6 +9,7 @@
     {
         public static void TweakConfigurationBuilder(IConfigureThisEndpoint specifier, EndpointConfiguration config)
         {
+            // ReSharper disable once SuspiciousTypeConversion.Global
             if (specifier is AsA_Client)
             {
                 config.PurgeOnStartup(true);

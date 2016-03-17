@@ -14,7 +14,7 @@
         {
             if (arguments == null)
             {
-                throw new ArgumentNullException("arguments");
+                throw new ArgumentNullException(nameof(arguments));
             }
             this.arguments = arguments;
         }
@@ -27,7 +27,7 @@
         {
             if (type == null)
             {
-                throw new ArgumentNullException("type");
+                throw new ArgumentNullException(nameof(type));
             }
             Type = type;
             AssertIsValid();
