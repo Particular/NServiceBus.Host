@@ -1,12 +1,11 @@
 namespace NServiceBus.Hosting.Tests
 {
     using System.Threading.Tasks;
-    using NServiceBus.Extensibility;
-    using NServiceBus.Transports;
+    using Extensibility;
+    using Transports;
 
     class FakeDispatcher : IDispatchMessages
     {
- 
         public Task Dispatch(TransportOperations outgoingMessages, ContextBag context)
         {
             return Task.FromResult(0);

@@ -2,8 +2,8 @@
 {
     using System;
     using System.Linq;
-    using NServiceBus.Configuration.AdvanceExtensibility;
-    using NServiceBus.Features;
+    using Configuration.AdvanceExtensibility;
+    using Features;
 
     class RoleManager
     {
