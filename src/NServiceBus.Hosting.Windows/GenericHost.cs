@@ -77,9 +77,9 @@ namespace NServiceBus
                 loggingConfigurer.Configure(specifier);
             }
 
-            var configuration = new EndpointConfiguration();
+            var configuration = new EndpointConfiguration(endpointNameToUse);
             SetSlaFromAttribute(configuration, specifier);
-            configuration.EndpointName(endpointNameToUse);
+
             configuration.DefineCriticalErrorAction(OnCriticalError);
 
             moreConfiguration?.Invoke(configuration);
