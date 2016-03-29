@@ -209,7 +209,7 @@ namespace NDesk.Options
         public void Insert(int index, string item) { values.Insert(index, item); }
         public void RemoveAt(int index) { values.RemoveAt(index); }
 
-        private void AssertValid(int index)
+        void AssertValid(int index)
         {
             if (c.Option == null)
                 throw new InvalidOperationException("OptionContext.Option is null.");
@@ -254,8 +254,8 @@ namespace NDesk.Options
 
     class OptionContext
     {
-        private OptionSet set;
-        private OptionValueCollection c;
+        OptionSet set;
+        OptionValueCollection c;
 
         public OptionContext(OptionSet set)
         {
@@ -297,11 +297,11 @@ namespace NDesk.Options
         protected Option(string prototype, string description, int maxValueCount)
         {
             if (prototype == null)
-                throw new ArgumentNullException("prototype");
+                throw new ArgumentNullException(nameof(prototype));
             if (prototype.Length == 0)
-                throw new ArgumentException("Cannot be the empty string.", "prototype");
+                throw new ArgumentException("Cannot be the empty string.", nameof(prototype));
             if (maxValueCount < 0)
-                throw new ArgumentOutOfRangeException("maxValueCount");
+                throw new ArgumentOutOfRangeException(nameof(maxValueCount));
 
             this.prototype = prototype;
             names = prototype.Split('|');
@@ -313,17 +313,17 @@ namespace NDesk.Options
                 throw new ArgumentException(
                         "Cannot provide maxValueCount of 0 for OptionValueType.Required or " +
                             "OptionValueType.Optional.",
-                        "maxValueCount");
+                        nameof(maxValueCount));
             if (type == OptionValueType.None && maxValueCount > 1)
                 throw new ArgumentException(
                     $"Cannot provide maxValueCount of {maxValueCount} for OptionValueType.None.",
-                        "maxValueCount");
+                        nameof(maxValueCount));
             if (Array.IndexOf(names, "<>") >= 0 &&
                     ((names.Length == 1 && type != OptionValueType.None) ||
                      (names.Length > 1 && MaxValueCount > 1)))
                 throw new ArgumentException(
                         "The default option handler '<>' cannot require values.",
-                        "prototype");
+                        nameof(prototype));
         }
 
         public string Prototype => prototype;
@@ -368,7 +368,7 @@ namespace NDesk.Options
 
         static readonly char[] NameTerminator = new char[] { '=', ':' };
 
-        private OptionValueType ParsePrototype()
+        OptionValueType ParsePrototype()
         {
             var type = '\0';
             var seps = new List<string>();
@@ -409,7 +409,7 @@ namespace NDesk.Options
             return type == '=' ? OptionValueType.Required : OptionValueType.Optional;
         }
 
-        private static void AddSeparators(string name, int end, ICollection<string> seps)
+        static void AddSeparators(string name, int end, ICollection<string> seps)
         {
             var start = -1;
             for (var i = end + 1; i < name.Length; ++i)
@@ -459,7 +459,7 @@ namespace NDesk.Options
     [Serializable]
     class OptionException : Exception
     {
-        private string option;
+        string option;
 
         public OptionException()
         {
@@ -515,7 +515,7 @@ namespace NDesk.Options
         protected override string GetKeyForItem(Option item)
         {
             if (item == null)
-                throw new ArgumentNullException("item");
+                throw new ArgumentNullException(nameof(item));
             if (item.Names != null && item.Names.Length > 0)
                 return item.Names[0];
             // This should never happen, as it's invalid for Option to be
@@ -547,10 +547,10 @@ namespace NDesk.Options
             AddImpl(item);
         }
 
-        private void AddImpl(Option option)
+        void AddImpl(Option option)
         {
             if (option == null)
-                throw new ArgumentNullException("option");
+                throw new ArgumentNullException(nameof(option));
             var added = new List<string>(option.Names.Length);
             try
             {
@@ -583,7 +583,7 @@ namespace NDesk.Options
                 : base(prototype, description, count)
             {
                 if (action == null)
-                    throw new ArgumentNullException("action");
+                    throw new ArgumentNullException(nameof(action));
                 this.action = action;
             }
 
@@ -601,7 +601,7 @@ namespace NDesk.Options
         public OptionSet Add(string prototype, string description, Action<string> action)
         {
             if (action == null)
-                throw new ArgumentNullException("action");
+                throw new ArgumentNullException(nameof(action));
             Option p = new ActionOption(prototype, description, 1,
                     delegate(OptionValueCollection v) { action(v[0]); });
             base.Add(p);
@@ -616,7 +616,7 @@ namespace NDesk.Options
         public OptionSet Add(string prototype, string description, OptionAction<string, string> action)
         {
             if (action == null)
-                throw new ArgumentNullException("action");
+                throw new ArgumentNullException(nameof(action));
             Option p = new ActionOption(prototype, description, 2,
                     delegate(OptionValueCollection v) { action(v[0], v[1]); });
             base.Add(p);
@@ -631,7 +631,7 @@ namespace NDesk.Options
                 : base(prototype, description, 1)
             {
                 if (action == null)
-                    throw new ArgumentNullException("action");
+                    throw new ArgumentNullException(nameof(action));
                 this.action = action;
             }
 
@@ -649,7 +649,7 @@ namespace NDesk.Options
                 : base(prototype, description, 2)
             {
                 if (action == null)
-                    throw new ArgumentNullException("action");
+                    throw new ArgumentNullException(nameof(action));
                 this.action = action;
             }
 
@@ -743,7 +743,7 @@ namespace NDesk.Options
         }
 #endif
 
-        private static bool Unprocessed(ICollection<string> extra, Option def, OptionContext c, string argument)
+        static bool Unprocessed(ICollection<string> extra, Option def, OptionContext c, string argument)
         {
             if (def == null)
             {
@@ -756,13 +756,13 @@ namespace NDesk.Options
             return false;
         }
 
-        private readonly Regex ValueOption = new Regex(
+        readonly Regex ValueOption = new Regex(
             @"^(?<flag>--|-|/)(?<name>[^:=]+)((?<sep>[:=])(?<value>.*))?$");
 
         protected bool GetOptionParts(string argument, out string flag, out string name, out string sep, out string value)
         {
             if (argument == null)
-                throw new ArgumentNullException("argument");
+                throw new ArgumentNullException(nameof(argument));
 
             flag = name = sep = value = null;
             var m = ValueOption.Match(argument);
@@ -820,7 +820,7 @@ namespace NDesk.Options
             return false;
         }
 
-        private void ParseValue(string option, OptionContext c)
+        void ParseValue(string option, OptionContext c)
         {
             if (option != null)
                 foreach (var o in c.Option.ValueSeparators != null
@@ -839,7 +839,7 @@ namespace NDesk.Options
             }
         }
 
-        private bool ParseBool(string option, string n, OptionContext c)
+        bool ParseBool(string option, string n, OptionContext c)
         {
             string rn;
             if (n.Length >= 1 && (n[n.Length - 1] == '+' || n[n.Length - 1] == '-') &&
@@ -856,7 +856,7 @@ namespace NDesk.Options
             return false;
         }
 
-        private bool ParseBundledValue(string f, string n, OptionContext c)
+        bool ParseBundledValue(string f, string n, OptionContext c)
         {
             if (f != "-")
                 return false;
@@ -894,7 +894,7 @@ namespace NDesk.Options
             return true;
         }
 
-        private static void Invoke(OptionContext c, string name, string value, Option option)
+        static void Invoke(OptionContext c, string name, string value, Option option)
         {
             c.OptionName = name;
             c.Option = option;
@@ -902,7 +902,7 @@ namespace NDesk.Options
             option.Invoke(c);
         }
 
-        private const int OptionWidth = 29;
+        const int OptionWidth = 29;
 
         public void WriteOptionDescriptions(TextWriter o)
         {
@@ -996,7 +996,7 @@ namespace NDesk.Options
             o.Write(s);
         }
 
-        private static string GetArgumentName(int index, int maxIndex, string description)
+        static string GetArgumentName(int index, int maxIndex, string description)
         {
             if (description == null)
                 return maxIndex == 1 ? "VALUE" : "VALUE" + (index + 1);
@@ -1022,7 +1022,7 @@ namespace NDesk.Options
             return maxIndex == 1 ? "VALUE" : "VALUE" + (index + 1);
         }
 
-        private static string GetDescription(string description)
+        static string GetDescription(string description)
         {
             if (description == null)
                 return string.Empty;
@@ -1069,7 +1069,7 @@ namespace NDesk.Options
             return sb.ToString();
         }
 
-        private static List<string> GetLines(string description)
+        static List<string> GetLines(string description)
         {
             var lines = new List<string>();
             if (string.IsNullOrEmpty(description))
@@ -1106,7 +1106,7 @@ namespace NDesk.Options
             return lines;
         }
 
-        private static int GetLineEnd(int start, int length, string description)
+        static int GetLineEnd(int start, int length, string description)
         {
             var end = Math.Min(start + length, description.Length);
             var sep = -1;

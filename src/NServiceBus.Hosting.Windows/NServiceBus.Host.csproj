@@ -115,6 +115,9 @@
     <Compile Include="IConfigureThisEndpoint.cs" />
     <Compile Include="Installers\WindowsInstaller.cs" />
     <Compile Include="InternalsVisibleTo.cs" />
+    <Compile Include="Resharper.Annotations.g.cs" />
+    <Compile Include="StartableAndStoppable\EndpointConfigurationExtensions.cs" />
+    <Compile Include="StartableAndStoppable\IWantToRunWhenEndpointStartsAndStops.cs" />
     <Compile Include="LoggingHandlers\IntegrationLoggingHandler.cs" />
     <Compile Include="LoggingHandlers\LiteLoggingHandler.cs" />
     <Compile Include="LoggingHandlers\ProductionLoggingHandler.cs" />
@@ -126,6 +129,9 @@
     <Compile Include="Roles\RoleManager.cs" />
     <Compile Include="Roles\UsingTransport.cs" />
     <Compile Include="InstallWindowsHost.cs" />
+    <Compile Include="StartableAndStoppable\StartableAndStoppableFeature.cs" />
+    <Compile Include="StartableAndStoppable\StartableAndStoppableRunner.cs" />
+    <Compile Include="TaskEx.cs" />
     <Compile Include="WindowsHost.cs" />
     <Compile Include="Profiles\Integration.cs" />
     <Compile Include="Profiles\Lite.cs" />

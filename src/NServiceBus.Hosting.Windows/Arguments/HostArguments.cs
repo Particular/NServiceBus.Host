@@ -9,8 +9,8 @@ namespace NServiceBus.Hosting.Windows.Arguments
 
     class HostArguments
     {
-        private readonly OptionSet installOptions;
-        private readonly OptionSet uninstallOptions;
+        OptionSet installOptions;
+        OptionSet uninstallOptions;
 
         public HostArguments(IEnumerable<string> args)
         {
