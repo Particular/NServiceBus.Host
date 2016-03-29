@@ -19,9 +19,12 @@ namespace NServiceBus
                 context.Settings.GetOrDefault<List<IWantToRunWhenEndpointStartsAndStops>>()
                 ?? new List<IWantToRunWhenEndpointStartsAndStops>();
 
+            var typesToExclude = new HashSet<Type>(startableStoppableInstances.Select(i => i.GetType()));
+
             context.Settings.GetAvailableTypes()
                 .Where(IsConcrete)
                 .Where(IsIWantToRunWhenEndpointStartsAndStops)
+                .Where(t => !typesToExclude.Contains(t))
                 .ToList()
                 .ForEach(t => context.Container.ConfigureComponent(t, DependencyLifecycle.InstancePerCall));
 
