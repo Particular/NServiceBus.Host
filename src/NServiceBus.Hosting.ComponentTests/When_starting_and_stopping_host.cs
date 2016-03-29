@@ -26,6 +26,14 @@
             Assert.True(context.InstanceStopCalled);
         }
 
+        [Test]
+        public void Instance_is_registered_once()
+        {
+            var context = RunHost();
+
+            Assert.AreEqual(1, context.InstanceTimesRegistered);
+        }
+
         static IWantToRunContext RunHost()
         {
             var defaultProfiles = new List<Type>
@@ -52,6 +60,7 @@
             public bool ScannedStopCalled { get; set; }
             public bool InstanceStartCalled { get; set; }
             public bool InstanceStopCalled { get; set; }
+            public int InstanceTimesRegistered { get; set; }
         }
 
         class GenericEndpointConfig : IConfigureThisEndpoint
@@ -79,6 +88,7 @@
                 public RunStuffInstance(IWantToRunContext context)
                 {
                     this.context = context;
+                    this.context.InstanceTimesRegistered++;
                 }
 
                 public Task Start(IMessageSession session)
