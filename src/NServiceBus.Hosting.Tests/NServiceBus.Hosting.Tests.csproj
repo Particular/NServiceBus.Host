@@ -43,6 +43,10 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Moq, Version=4.2.1510.2205, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>..\packages\Moq.4.2.1510.2205\lib\net40\Moq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="NServiceBus.Core, Version=6.0.0.0, Culture=neutral, PublicKeyToken=9fc386479f8a226c, processorArchitecture=MSIL">
       <HintPath>..\packages\NServiceBus.6.0.0-unstable1725\lib\net452\NServiceBus.Core.dll</HintPath>
       <Private>True</Private>
@@ -72,6 +76,7 @@
     <Compile Include="MyEndpointConfig.cs" />
     <Compile Include="ProfileManagerTests.cs" />
     <Compile Include="StartablesAndStoppables\StartableAndStoppableRunnerTests.cs" />
+    <Compile Include="StartablesAndStoppables\StartableAndStoppableRunnerTimeoutTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NServiceBus.Hosting.Windows\NServiceBus.Host.csproj">

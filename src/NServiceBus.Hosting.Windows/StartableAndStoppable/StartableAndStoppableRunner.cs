@@ -26,7 +26,7 @@
                 var startableName = startable1.GetType().AssemblyQualifiedName;
 
                 var longRunningTokenSource =
-                    LongRunningWarning($"The start method for {startableName} is taking too long to complete. The endpoint will not start until this operation has completed. Until then messages that arrive in the endpoint's queue will not be processed.");
+                    LongRunningWarning($"The start method for {startableName} is taking a long time to complete. The endpoint will not start until this operation has completed.");
 
                 var task = startable1.Start(session).ThrowIfNull();
 
@@ -69,7 +69,7 @@
                     var stoppableName = stoppable1.GetType().AssemblyQualifiedName;
 
                     var longRunningTokenSource =
-                        LongRunningWarning($"The stop method for {stoppableName} is taking too long to complete. The endpoint will not shutdown until this operation has completed.");
+                        LongRunningWarning($"The stop method for {stoppableName} is taking a long time to complete. The endpoint will not shut down until this operation has completed.");
 
                     var task = stoppable.Stop(session).ThrowIfNull();
 
@@ -113,26 +113,25 @@
         {
             var tokenSource = new CancellationTokenSource();
 
-            Task.Run(() =>
+            // ReSharper disable once MethodSupportsCancellation
+            Task.Run(async () =>
             {
                 try
                 {
-                    Task.Delay(LongRunningWarningTimeSpan).Wait(tokenSource.Token);
+                    await Task.Delay(LongRunningWarningTimeSpan, tokenSource.Token);
+                    Log.Warn(message);
                 }
-                catch (OperationCanceledException)
+                catch (TaskCanceledException)
                 {
-                    return;
                 }
-
-                Log.Warn(message);
-            }, tokenSource.Token).Ignore();
+            });
 
             return tokenSource;
         }
 
         IEnumerable<IWantToRunWhenEndpointStartsAndStops> wantToRunWhenBusStartsAndStops;
         ConcurrentBag<IWantToRunWhenEndpointStartsAndStops> thingsRanAtStartup = new ConcurrentBag<IWantToRunWhenEndpointStartsAndStops>();
-        static ILog Log = LogManager.GetLogger<StartableAndStoppableRunner>();
+        public static ILog Log = LogManager.GetLogger<StartableAndStoppableRunner>();
         public TimeSpan LongRunningWarningTimeSpan { get; set; }
     }
 }
