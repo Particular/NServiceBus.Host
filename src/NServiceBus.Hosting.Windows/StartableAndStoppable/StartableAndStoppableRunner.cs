@@ -14,7 +14,6 @@
         public StartableAndStoppableRunner(IEnumerable<IWantToRunWhenEndpointStartsAndStops> wantToRunWhenBusStartsAndStops)
         {
             this.wantToRunWhenBusStartsAndStops = wantToRunWhenBusStartsAndStops;
-            LongRunningWarningTimeSpan = TimeSpan.FromMinutes(2);
         }
 
         public Task Start(IMessageSession session)
@@ -25,10 +24,10 @@
                 var startable1 = startable;
                 var startableName = startable1.GetType().AssemblyQualifiedName;
 
-                var longRunningTokenSource =
-                    LongRunningWarning($"The start method for {startableName} is taking a long time to complete. The endpoint will not start until this operation has completed.");
-
                 var task = startable1.Start(session).ThrowIfNull();
+
+                LongRunningWarning(task,
+                    $"The start method for {startableName} is taking a long time to complete. The endpoint will not start until this operation has completed.");
 
                 /* 
                     We can't use the await keyword because of the conditional logging. 
@@ -36,16 +35,14 @@
                 */
                 task.ContinueWith(t =>
                 {
-                    longRunningTokenSource.Cancel();
                     thingsRanAtStartup.Add(startable1);
                     Log.DebugFormat("Started {0}.", startableName);
                 }, TaskContinuationOptions.OnlyOnRanToCompletion | TaskContinuationOptions.ExecuteSynchronously);
                 task.ContinueWith(t =>
                 {
-                    longRunningTokenSource.Cancel();
                     Log.Error($"Startup task {startableName} failed to complete.", t.Exception);
                 }, TaskContinuationOptions.OnlyOnFaulted | TaskContinuationOptions.ExecuteSynchronously);
-                
+
                 startableTasks.Add(task);
             }
 
@@ -68,10 +65,10 @@
                     var stoppable1 = stoppable;
                     var stoppableName = stoppable1.GetType().AssemblyQualifiedName;
 
-                    var longRunningTokenSource =
-                        LongRunningWarning($"The stop method for {stoppableName} is taking a long time to complete. The endpoint will not shut down until this operation has completed.");
-
                     var task = stoppable.Stop(session).ThrowIfNull();
+
+                    LongRunningWarning(task,
+                        $"The stop method for {stoppableName} is taking a long time to complete. The endpoint will not shut down until this operation has completed.");
 
                     /* 
                         We can't use the await keyword because of the conditional logging. 
@@ -79,13 +76,11 @@
                     */
                     task.ContinueWith(t =>
                     {
-                        longRunningTokenSource.Cancel();
                         thingsRanAtStartup.Add(stoppable1);
                         Log.DebugFormat("Stopped {0}.", stoppableName);
                     }, TaskContinuationOptions.OnlyOnRanToCompletion | TaskContinuationOptions.ExecuteSynchronously).Ignore();
                     task.ContinueWith(t =>
                     {
-                        longRunningTokenSource.Cancel();
                         Log.Fatal($"Startup task {stoppableName} failed to stop.", t.Exception);
                         t?.Exception?.Flatten().Handle(e => true);
                     }, TaskContinuationOptions.OnlyOnFaulted | TaskContinuationOptions.ExecuteSynchronously).Ignore();
@@ -109,29 +104,27 @@
             }
         }
 
-        CancellationTokenSource LongRunningWarning(string message)
+        void LongRunningWarning(Task taskToWatch, string message)
         {
-            var tokenSource = new CancellationTokenSource();
+            var delayTokenSource = new CancellationTokenSource();
 
-            // ReSharper disable once MethodSupportsCancellation
-            Task.Run(async () =>
-            {
-                try
+            var warningWaitTimeTask = Task.Delay(LongRunningWarningTimeSpan, delayTokenSource.Token);
+            Task.WhenAny(taskToWatch, warningWaitTimeTask)
+                .ContinueWith(t =>
                 {
-                    await Task.Delay(LongRunningWarningTimeSpan, tokenSource.Token);
-                    Log.Warn(message);
-                }
-                catch (TaskCanceledException)
-                {
-                }
-            });
+                    delayTokenSource.Cancel();
+                    delayTokenSource.Dispose();
 
-            return tokenSource;
+                    if (t.Result == warningWaitTimeTask)
+                    {
+                        Log.Warn(message);
+                    }
+                });
         }
 
         IEnumerable<IWantToRunWhenEndpointStartsAndStops> wantToRunWhenBusStartsAndStops;
         ConcurrentBag<IWantToRunWhenEndpointStartsAndStops> thingsRanAtStartup = new ConcurrentBag<IWantToRunWhenEndpointStartsAndStops>();
         public static ILog Log = LogManager.GetLogger<StartableAndStoppableRunner>();
-        public TimeSpan LongRunningWarningTimeSpan { get; set; }
+        public TimeSpan LongRunningWarningTimeSpan = TimeSpan.FromMinutes(2);
     }
 }

@@ -8,32 +8,46 @@
 
     public class StartableAndStoppableRunnerTimeoutTests
     {
-        static TimeSpan TimeToWarn = TimeSpan.FromSeconds(1);
-        static TimeSpan TimeToWaitForTimeout = TimeToWarn.Add(TimeSpan.FromSeconds(2));
+        static TimeSpan TimeToWarn = TimeSpan.FromSeconds(3);
+        static TimeSpan LongRunningTimespan = TimeToWarn.Add(TimeSpan.FromSeconds(2));
+        static TimeSpan ShortRunningTimespan = TimeToWarn.Subtract(TimeSpan.FromSeconds(2));
+        const string startupWarning = ".+The endpoint will not start until this operation has completed.+";
+        const string shutdownWarning = ".+The endpoint will not shut down.+";
 
         [Test]
         public async Task Should_log_warning_on_long_start()
         {
-            var mockLogger = await RunSlowStartableTest();
+            var mockLogger = await RunStartableWarningTest(new LongRunningStartable());
 
-            mockLogger.Verify(m => m.Warn(It.IsRegex(".+The endpoint will not start until this operation has completed.+")));
+            mockLogger.Verify(m => m.Warn(It.IsRegex(startupWarning)));
         }
 
         [Test]
         public async Task Should_log_warning_on_long_stop()
         {
-            var mockLogger = await RunSlowStartableTest();
+            var mockLogger = await RunStartableWarningTest(new LongRunningStartable());
 
-            mockLogger.Verify(m => m.Warn(It.IsRegex(".+The endpoint will not shut down.+")));
+            mockLogger.Verify(m => m.Warn(It.IsRegex(shutdownWarning)));
+        }
+        [Test]
+        public async Task Should_not_log_warning_on_quick_start()
+        {
+            var mockLogger = await RunStartableWarningTest(new QuickRunningStartable());
+
+            mockLogger.Verify(m => m.Warn(It.IsRegex(startupWarning)), Times.Never);
         }
 
-        static async Task<Mock<ILog>> RunSlowStartableTest()
+        [Test]
+        public async Task Should_not_log_warning_on_quick_stop()
         {
-            var startable = new BlockingLongRunningStartable();
-            var thingsToBeStarted = new IWantToRunWhenEndpointStartsAndStops[]
-            {
-                startable
-            };
+            var mockLogger = await RunStartableWarningTest(new QuickRunningStartable());
+
+            mockLogger.Verify(m => m.Warn(It.IsRegex(shutdownWarning)), Times.Never);
+        }
+
+        static async Task<Mock<ILog>> RunStartableWarningTest(IWantToRunWhenEndpointStartsAndStops instanceToTest)
+        {
+            var thingsToBeStarted = new[] { instanceToTest };
 
             var mockLogger = new Mock<ILog>();
 
@@ -48,16 +62,29 @@
             return mockLogger;
         }
 
-        class BlockingLongRunningStartable : IWantToRunWhenEndpointStartsAndStops
+        class LongRunningStartable : IWantToRunWhenEndpointStartsAndStops
         {
             public async Task Start(IMessageSession session)
             {
-                await Task.Delay(TimeToWaitForTimeout);
+                await Task.Delay(LongRunningTimespan);
             }
 
             public async Task Stop(IMessageSession session)
             {
-                await Task.Delay(TimeToWaitForTimeout);
+                await Task.Delay(LongRunningTimespan);
+            }
+        }
+
+        class QuickRunningStartable : IWantToRunWhenEndpointStartsAndStops
+        {
+            public async Task Start(IMessageSession session)
+            {
+                await Task.Delay(ShortRunningTimespan);
+            }
+
+            public async Task Stop(IMessageSession session)
+            {
+                await Task.Delay(ShortRunningTimespan);
             }
         }
     }
