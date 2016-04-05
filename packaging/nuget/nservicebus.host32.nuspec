@@ -20,6 +20,7 @@
   </metadata>
   <files>
     <file src="..\..\binaries\NServiceBus.Host32.???" target="lib\net452" />
-	<file src="..\..\packaging\nuget\nservicebus.host\*.*" target="tools" />
+    <file src="..\..\packaging\nuget\nservicebus.host\install.ps1" target="tools\net452" />
+    <file src="..\..\packaging\nuget\nservicebus.host\EndpointConfig.cs.pp" target="content\net452" />
   </files>
 </package>
