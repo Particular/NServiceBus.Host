@@ -6,21 +6,21 @@ if(!$toolsPath){
 
 function Get-ConfigureThisEndpointClass($elem) {
 
-    if ($elem.IsCodeType -and ($elem.Kind -eq [EnvDTE.vsCMElement]::vsCMElementClass)) {            
+    if ($elem.IsCodeType -and ($elem.Kind -eq [EnvDTE.vsCMElement]::vsCMElementClass)) {
         foreach ($e in $elem.ImplementedInterfaces) {
             if ($e.FullName -eq "NServiceBus.IConfigureThisEndpoint") {
                 return $elem
             }
-            
+
             return Get-ConfigureThisEndpointClass($e)
-            
+
         }
-    } 
+    }
     elseif ($elem.Kind -eq [EnvDTE.vsCMElement]::vsCMElementNamespace) {
         foreach ($e in $elem.Members) {
             $temp = Get-ConfigureThisEndpointClass($e)
             if($temp -ne $null) {
-                
+
                 return $temp
             }
         }
@@ -30,12 +30,12 @@ function Get-ConfigureThisEndpointClass($elem) {
 }
 
 function Test-HasConfigureThisEndpoint($project) {
-       
+
     foreach ($item in $project.ProjectItems) {
 		if ($projItem.Name -eq "EndpointConfig.cs") {
 			return $true
 		}
-	
+
 		if (HasConfigureThisEndpoint($item)){
 			return $true
 		}
@@ -51,7 +51,7 @@ function HasConfigureThisEndpoint($projItem) {
 			return $true
 		}
 	}
-	
+
 	foreach ($item in $projItem.ProjectItems) {
 		return HasConfigureThisEndpoint($item)
 	}
@@ -94,16 +94,9 @@ function Add-StartProgramIfNeeded {
 	$writer.Flush()
 	$writer.Close()
 }
-
-function Add-ConfigSettingIfRequired {
-	Add-NServiceBusMessageForwardingInCaseOfFaultConfig $project.Name
-	Add-NServiceBusUnicastBusConfig $project.Name
-    Add-NServiceBusAuditConfig $project.Name
-}
-
 function Add-EndpointConfigIfRequired {
 	$foundConfigureThisEndpoint = Test-HasConfigureThisEndpoint($project)
-	
+
 	if($foundConfigureThisEndpoint -eq $false) {
 		$namespace = $project.Properties.Item("DefaultNamespace").Value
 
@@ -116,8 +109,6 @@ function Add-EndpointConfigIfRequired {
 }
 
 Add-EndpointConfigIfRequired
-    
-Add-ConfigSettingIfRequired
 
 $project.Save()
 
