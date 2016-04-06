@@ -1,5 +1,5 @@
 
-namespace rootnamespace
+namespace $rootnamespace$
 {
     using NServiceBus;
 
@@ -11,7 +11,7 @@ namespace rootnamespace
             // Refer to the documentation for more details on specific options.
             endpointConfiguration.UsePersistence<PLEASE_SELECT_ONE>();
 
-            // NServiceBus will move messages that fail repeatedly to a separate "error" queue. We recommend 
+            // NServiceBus will move messages that fail repeatedly to a separate "error" queue. We recommend
             // that you start with a shared error queue for all your endpoints for easy integration with ServiceControl.
             endpointConfiguration.SendFailedMessagesTo("error");
 
