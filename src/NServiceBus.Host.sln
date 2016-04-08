@@ -18,6 +18,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{5026BE
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E8988E0D-F62E-4208-9997-55D4FC3CB766}"
 	ProjectSection(SolutionItems) = preProject
+		..\packaging\nuget\nservicebus.host\EndpointConfig.cs = ..\packaging\nuget\nservicebus.host\EndpointConfig.cs
+		..\packaging\nuget\nservicebus.host\install.ps1 = ..\packaging\nuget\nservicebus.host\install.ps1
 		TrapsAndPitfalls.md = TrapsAndPitfalls.md
 	EndProjectSection
 EndProject

@@ -4,22 +4,23 @@
     <id>NServiceBus.Host32</id>
     <title>NServiceBus Host32</title>
     <version>$version$</version>
-    <authors>NServiceBus Ltd</authors>
-    <owners>Udi Dahan, Andreas Ohlund, John Simons</owners>
-    <licenseUrl>http://particular.net/LicenseAgreement</licenseUrl>
-    <projectUrl>http://particular.net/</projectUrl>
-    <iconUrl>http://s3.amazonaws.com/nuget.images/NServiceBus_32.png</iconUrl>
-    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <authors>$authors$</authors>
+    <owners>$owners$</owners>
+    <licenseUrl>$licenseUrl$</licenseUrl>
+    <projectUrl>$projectUrl$</projectUrl>
+    <iconUrl>$iconUrl$</iconUrl>
+    <requireLicenseAcceptance>$requireLicenseAcceptance$</requireLicenseAcceptance>
     <description>The hosting template for the nservicebus, The most popular open-source service bus for .net</description>
     <releaseNotes></releaseNotes>
-    <copyright>Copyright 2010-2014 NServiceBus. All rights reserved</copyright>
-    <tags>nservicebus servicebus msmq cqrs publish subscribe</tags>
+    <copyright>$copyright$</copyright>
+    <tags>$tags$</tags>
     <dependencies>
       <dependency id="NServiceBus" version="[6.0.0-beta, 7.0.0)" />
     </dependencies>
   </metadata>
   <files>
     <file src="..\..\binaries\NServiceBus.Host32.???" target="lib\net452" />
-	<file src="..\..\packaging\nuget\nservicebus.host\*.*" target="tools" />
+    <file src="..\..\packaging\nuget\nservicebus.host\install.ps1" target="tools\net452" />
+    <file src="..\..\packaging\nuget\nservicebus.host\EndpointConfig.cs.pp" target="content\net452" />
   </files>
 </package>
