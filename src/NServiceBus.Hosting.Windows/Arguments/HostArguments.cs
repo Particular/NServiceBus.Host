@@ -24,17 +24,17 @@ namespace NServiceBus.Hosting.Windows.Arguments
                     },
                     {
                         "uninstall",
-                        @"Uninstall the endpoint as a Windows service."
+                        "Uninstall the endpoint as a Windows service."
                         , s => { }
                     },
                     {
                         "serviceName=",
-                        @"Specify the service name for the installed service."
+                        "Specify the service name for the installed service."
                         , s => { ServiceName = s; }
                     },
                     {
                         "sideBySide",
-                        @"Install the service with the version included in the service name. This allows running multiple endpoints side by side when doing hot deployments."
+                        "Install the service with the version included in the service name. This allows running multiple endpoints side by side when doing hot deployments."
                         , s => { SideBySide = true; }
                     },
                 };
@@ -48,32 +48,32 @@ namespace NServiceBus.Hosting.Windows.Arguments
                     },
                     {
                         "install",
-                        @"Install the endpoint as a Windows service."
+                        "Install the endpoint as a Windows service."
                         , s => { Install = true; }
                     },
                     {
                         "serviceName=",
-                        @"Specify the service name for the installed service."
+                        "Specify the service name for the installed service."
                         , s => { ServiceName = s; }
                     },
                     {
                         "displayName=",
-                        @"Friendly name for the installed service."
+                        "Friendly name for the installed service."
                         , s => { DisplayName = s; }
                     },
                     {
                         "description=",
-                        @"Description for the service."
+                        "Description for the service."
                         , s => { Description = s; }
                     },
                     {
                         "endpointConfigurationType=",
-                        @"Specify the type implementing IConfigureThisEndpoint that should be used."
+                        "Specify the type implementing IConfigureThisEndpoint that should be used."
                         , s => { EndpointConfigurationType = s; }
                     },
                     {
                         "dependsOn=",
-                        @"Specifies the names of services or groups which must start before this service."
+                        "Specifies the names of services or groups which must start before this service."
                         , s =>
                         {
                             foreach (var d in s.Split(','))
@@ -84,32 +84,32 @@ namespace NServiceBus.Hosting.Windows.Arguments
                     },
                     {
                         "sideBySide",
-                        @"Install the service with the version included in the service name. This allows running multiple endpoints side by side when doing hot deployments."
+                        "Install the service with the version included in the service name. This allows running multiple endpoints side by side when doing hot deployments."
                         , s => { SideBySide = true; }
                     },
                     {
                         "endpointName=",
-                        @"The name of this endpoint."
+                        "The name of this endpoint."
                         , s => { EndpointName = s; }
                     },
                     {
                         "username=",
-                        @"Username for the account the service should run under."
+                        "Username for the account the service should run under."
                         , s => { Username = s; }
                     },
                     {
                         "password=",
-                        @"Password for the service account."
+                        "Password for the service account."
                         , s => { Password = s; }
                     },
                     {
                         "startManually",
-                        @"Specifies that the service should start manually."
+                        "Specifies that the service should start manually."
                         , s => { StartManually = true; }
                     },
                     {
                         "scannedAssemblies=",
-                        @"Configures NServiceBus to use the types found in the given assemblies."
+                        "Configures NServiceBus to use the types found in the given assemblies."
                         , s => ScannedAssemblies.Add(s)
                     },
                 };

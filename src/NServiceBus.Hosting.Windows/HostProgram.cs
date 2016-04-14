@@ -51,19 +51,19 @@
             //Add the endpoint name so that the new appDomain can get it
             if (arguments.EndpointName == null && !string.IsNullOrEmpty(endpointName))
             {
-                args = args.Concat(new[] {$@"/endpointName={endpointName}"}).ToArray();
+                args = args.Concat(new[] {$"/endpointName={endpointName}"}).ToArray();
             }
 
             //Add the ScannedAssemblies name so that the new appDomain can get it
             if (arguments.ScannedAssemblies.Count == 0)
             {
-                args = assemblyScannerResults.Assemblies.Select(s => s.ToString()).Aggregate(args, (current, result) => current.Concat(new[] {$@"/scannedAssemblies={result}"}).ToArray());
+                args = assemblyScannerResults.Assemblies.Select(s => s.ToString()).Aggregate(args, (current, result) => current.Concat(new[] {$"/scannedAssemblies={result}"}).ToArray());
             }
 
             //Add the endpointConfigurationType name so that the new appDomain can get it
             if (arguments.EndpointConfigurationType == null)
             {
-                args = args.Concat(new[] {$@"/endpointConfigurationType={endpointConfigurationType.AssemblyQualifiedName}"}).ToArray();
+                args = args.Concat(new[] {$"/endpointConfigurationType={endpointConfigurationType.AssemblyQualifiedName}"}).ToArray();
             }
 
             if (arguments.Install)
