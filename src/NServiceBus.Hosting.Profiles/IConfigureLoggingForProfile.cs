@@ -14,7 +14,7 @@
         /// <summary>
         /// Performs all logging configuration.
         /// </summary>
-        // ReSharper disable once UnusedParameter.Global            
+        // ReSharper disable once UnusedParameter.Global
         void Configure(IConfigureThisEndpoint specifier);
     }
 
