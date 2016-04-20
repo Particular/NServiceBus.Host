@@ -236,7 +236,7 @@ namespace NServiceBus.Hosting.Tests
             public void Should_use_default_profile()
             {
                 var profileManager = new ProfileManager(allAssemblies, new string[] { }, new List<Type> { typeof(Production) });
-                
+
                 Assert.AreEqual(1, profileManager.activeProfiles.Count);
                 Assert.AreEqual(typeof(Production), profileManager.activeProfiles.First());
             }
@@ -287,7 +287,7 @@ namespace NServiceBus.Hosting.Tests
             }
         }
 
-     
+
 
         [TestFixture]
         public class When_multiple_handlers_for_a_profile_exist
@@ -396,7 +396,7 @@ namespace NServiceBus.Hosting.Tests
                 Assert.AreEqual(typeof(Profile2), profileManagerB.activeProfiles[0]);
                 Assert.AreEqual(typeof(Profile1), profileManagerB.activeProfiles[1]);
             }
-            
+
             [Test]
             public void Should_get_implementations_in_order()
             {
@@ -435,7 +435,7 @@ namespace NServiceBus.Hosting.Tests
                 CollectionAssert.AreEqual(new[] { typeof(Handler1), typeof(Handler2) }, activations);
 
                 activations.Clear();
-                
+
                 var profilesB = new[]
                                {
                                    typeof (Profile2).FullName,
@@ -594,7 +594,7 @@ namespace NServiceBus.Hosting.Tests
                 Assert.IsFalse(AbstractHandler.activated);
             }
         }
-      
+
         [TestFixture]
         public class When_handler_implements_IWantTheListOfActiveProfiles
         {
@@ -608,7 +608,7 @@ namespace NServiceBus.Hosting.Tests
 
                 public void ProfileActivated(EndpointConfiguration config)
                 {
-                    
+
                 }
 
                 public IEnumerable<Type> ActiveProfiles
