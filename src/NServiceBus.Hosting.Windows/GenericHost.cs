@@ -66,10 +66,9 @@ namespace NServiceBus
         /// <summary>
         /// When installing as windows service (/install), run infrastructure installers
         /// </summary>
-        public void Install(string username)
+        public Task Install(string username)
         {
-            PerformConfiguration(builder => builder.EnableInstallers(username))
-                .Dispose();
+            return PerformConfiguration(builder => builder.EnableInstallers(username));
         }
 
         Task<IStartableEndpoint> PerformConfiguration(Action<EndpointConfiguration> moreConfiguration = null)
