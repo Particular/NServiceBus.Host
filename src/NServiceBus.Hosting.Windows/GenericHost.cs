@@ -41,12 +41,12 @@ namespace NServiceBus
             profileManager = new ProfileManager(assembliesToScan, args, defaultProfiles);
         }
 
-        public void Start()
+        public async Task Start()
         {
             try
             {
-                var startableEndpoint = PerformConfiguration().GetAwaiter().GetResult();
-                endpoint = startableEndpoint.Start().GetAwaiter().GetResult();
+                var startableEndpoint = await PerformConfiguration().ConfigureAwait(false);
+                endpoint = await startableEndpoint.Start().ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -55,9 +55,12 @@ namespace NServiceBus
             }
         }
 
-        public void Stop()
+        public async Task Stop()
         {
-            endpoint?.Stop().GetAwaiter().GetResult();
+            if (endpoint != null)
+            {
+                await endpoint.Stop().ConfigureAwait(false);
+            }
         }
 
         /// <summary>

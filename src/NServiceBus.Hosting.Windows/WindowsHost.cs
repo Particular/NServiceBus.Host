@@ -26,7 +26,7 @@ namespace NServiceBus.Hosting.Windows
         /// </summary>
         public void Start()
         {
-            genericHost.Start();
+            genericHost.Start().GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace NServiceBus.Hosting.Windows
         /// </summary>
         public void Stop()
         {
-            genericHost.Stop();
+            genericHost.Stop().GetAwaiter().GetResult();
         }
 
     }
