@@ -1,13 +1,14 @@
 namespace EndpointTypeDeterminerTests
 {
+    using System.Threading.Tasks;
     using NServiceBus;
 
     //referenced from in app.config
-    class MyEndpointConfig : IConfigureThisEndpoint
+    class MyEndpointConfig : IStartThisEndpoint
     {
-        public void Customize(EndpointConfiguration configuration)
+        public Task<IEndpointInstance> Start(EndpointConfiguration configuration)
         {
-
+            return Task.FromResult(default(IEndpointInstance));
         }
     }
 }

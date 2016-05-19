@@ -20,7 +20,7 @@ The default for the display name is the same value as the service name, and the 
 
 You can also specify the endpoint configuration type in the file NServiceBus.Host.exe.config. This file is optional.
 
-If you don't specify the endpoint configuration type either in the command-line or in the NServiceBus.Host.exe.config file, all the DLLs in the runtime directory will be scanned for a type that implements NServiceBus.IConfigureThisEndpoint.
+If you don't specify the endpoint configuration type either in the command-line or in the NServiceBus.Host.exe.config file, all the DLLs in the runtime directory will be scanned for a type that implements NServiceBus.IStartThisEndpoint.
 
 If you set the service name and sidebyside during installation you will need to specify them when uninstalling them as well, eg:
 

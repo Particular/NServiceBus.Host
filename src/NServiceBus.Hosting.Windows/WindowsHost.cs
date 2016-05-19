@@ -12,11 +12,11 @@ namespace NServiceBus.Hosting.Windows
 
         /// <summary>
         /// Accepts the type which will specify the users custom configuration.
-        /// This type should implement <see cref="IConfigureThisEndpoint"/>.
+        /// This type should implement <see cref="IStartThisEndpoint"/>.
         /// </summary>
         public WindowsHost(Type endpointType, string[] args, string endpointName, IEnumerable<string> scannableAssembliesFullName)
         {
-            var specifier = (IConfigureThisEndpoint)Activator.CreateInstance(endpointType);
+            var specifier = (IStartThisEndpoint)Activator.CreateInstance(endpointType);
 
             genericHost = new GenericHost(specifier, args, new List<Type> { typeof(Production) }, endpointName, scannableAssembliesFullName);
         }
