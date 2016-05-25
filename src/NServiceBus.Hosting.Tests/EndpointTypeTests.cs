@@ -7,9 +7,9 @@ namespace NServiceBus.Hosting.Tests
         using Windows;
         using Windows.Arguments;
         using NUnit.Framework;
-        
+
         [TestFixture]
-        class OtherProperty_Getter_Tests 
+        class OtherProperty_Getter_Tests
         {
 
             [Test]
@@ -35,7 +35,7 @@ namespace NServiceBus.Hosting.Tests
         }
 
         [TestFixture]
-        class EndpointName_Getter_Tests 
+        class EndpointName_Getter_Tests
         {
 
             [Test]
@@ -64,7 +64,7 @@ namespace NServiceBus.Hosting.Tests
                     EndpointName = "EndpointNameFromHostArgs"
                 };
                 var configuration = new EndpointConfiguration("EndpointNameFromConfiguration");
-                
+
                 Endpoint.Create(configuration);
 
                 var endpointType = new EndpointType(hostArguments, typeof (TestEndpointType));
@@ -106,7 +106,7 @@ namespace NServiceBus.Hosting.Tests
         }
 
         [TestFixture]
-        class ServiceName_Getter_Tests 
+        class ServiceName_Getter_Tests
         {
 
             [Test]
@@ -144,12 +144,10 @@ namespace NServiceBus.Hosting.Tests
         public class Constructor_Tests
         {
             [Test]
-            [ExpectedException(typeof (InvalidOperationException),
-                ExpectedMessage = "Endpoint configuration type needs to have a default constructor",
-                MatchType = MessageMatch.StartsWith)]
             public void When_type_does_not_have_empty_public_constructor_it_should_blow_up()
             {
-                 new EndpointType(typeof (TypeWithoutEmptyPublicConstructor));
+                var exception = Assert.Throws<InvalidOperationException>(() => new EndpointType(typeof (TypeWithoutEmptyPublicConstructor)));
+                Assert.IsTrue(exception.Message.StartsWith("Endpoint configuration type needs to have a default constructor"));
             }
         }
 

@@ -21,7 +21,7 @@ namespace EndpointTypeDeterminerTests
                 // ReSharper disable once UnusedVariable
                 var type = endpointTypeDeterminer.GetEndpointConfigurationType().Type;
             });
-            Assert.That(exception.Message, Is.StringStarting("Host doesn't support hosting of multiple endpoints"));
+            Assert.That(exception.Message.StartsWith("Host doesn't support hosting of multiple endpoints"));
         }
 
         [Test]
@@ -47,7 +47,7 @@ namespace EndpointTypeDeterminerTests
                 // ReSharper disable once UnusedVariable
                 var type = endpointTypeDeterminer.GetEndpointConfigurationType().Type;
             });
-            Assert.That(exception.Message, Is.StringStarting("The 'EndpointConfigurationType' entry in the NServiceBus.Host.exe.config"));
+            Assert.That(exception.Message.StartsWith("The 'EndpointConfigurationType' entry in the NServiceBus.Host.exe.config"));
         }
 
         [Test]
@@ -69,7 +69,7 @@ namespace EndpointTypeDeterminerTests
                 // ReSharper disable once UnusedVariable
                 var type = endpointTypeDeterminer.GetEndpointConfigurationType().Type;
             });
-            Assert.That(exception.Message, Is.StringStarting("No endpoint configuration found in scanned assemblies"));
+            Assert.That(exception.Message.StartsWith("No endpoint configuration found in scanned assemblies"));
         }
 
         //this will cause more than one config to be found when scanning and make the when_multiple_endpoint_types_found_via_assembly_scanning_it_should_blow_up test pass

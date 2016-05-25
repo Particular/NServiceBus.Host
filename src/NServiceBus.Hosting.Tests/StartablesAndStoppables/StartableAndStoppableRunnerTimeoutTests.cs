@@ -51,9 +51,11 @@
 
             var mockLogger = new Mock<ILog>();
 
-            var runner = new StartableAndStoppableRunner(thingsToBeStarted);
+            var runner = new StartableAndStoppableRunner(thingsToBeStarted)
+            {
+                LongRunningWarningTimeSpan = TimeToWarn
+            };
 
-            runner.LongRunningWarningTimeSpan = TimeToWarn;
             StartableAndStoppableRunner.Log = mockLogger.Object;
 
             await runner.Start(null);
@@ -64,27 +66,27 @@
 
         class LongRunningStartable : IWantToRunWhenEndpointStartsAndStops
         {
-            public async Task Start(IMessageSession session)
+            public Task Start(IMessageSession session)
             {
-                await Task.Delay(LongRunningTimespan);
+                return Task.Delay(LongRunningTimespan);
             }
 
-            public async Task Stop(IMessageSession session)
+            public Task Stop(IMessageSession session)
             {
-                await Task.Delay(LongRunningTimespan);
+                return Task.Delay(LongRunningTimespan);
             }
         }
 
         class QuickRunningStartable : IWantToRunWhenEndpointStartsAndStops
         {
-            public async Task Start(IMessageSession session)
+            public Task Start(IMessageSession session)
             {
-                await Task.Delay(ShortRunningTimespan);
+                return Task.Delay(ShortRunningTimespan);
             }
 
-            public async Task Stop(IMessageSession session)
+            public Task Stop(IMessageSession session)
             {
-                await Task.Delay(ShortRunningTimespan);
+                return Task.Delay(ShortRunningTimespan);
             }
         }
     }
