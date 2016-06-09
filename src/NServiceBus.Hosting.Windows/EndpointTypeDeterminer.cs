@@ -14,7 +14,7 @@
     ///     The first eligible Type is returned, checking (in order):
     ///     Args (for windows hosted endpoints)
     ///     Configuration
-    ///     Assembly scanning for <see cref="IConfigureThisEndpoint" />
+    ///     Assembly scanning for <see cref="IStartThisEndpoint" />
     /// </remarks>
     class EndpointTypeDeterminer
     {
@@ -79,7 +79,7 @@
             }
 
             throw new InvalidOperationException("No endpoint configuration found in scanned assemblies. " +
-                                                "This usually happens when NServiceBus fails to load your assembly containing IConfigureThisEndpoint." +
+                                                "This usually happens when NServiceBus fails to load your assembly containing IStartThisEndpoint." +
                                                 " Try specifying the type explicitly in the NServiceBus.Host.exe.config using the appSetting key: EndpointConfigurationType, " +
                                                 "Scanned path: " + AppDomain.CurrentDomain.BaseDirectory);
         }
@@ -157,8 +157,8 @@
             var scannableAssemblies = assemblyScannerResults.Assemblies;
 
             return scannableAssemblies.SelectMany(assembly => assembly.GetTypes().Where(
-                t => typeof(IConfigureThisEndpoint).IsAssignableFrom(t)
-                     && t != typeof(IConfigureThisEndpoint)
+                t => typeof(IStartThisEndpoint).IsAssignableFrom(t)
+                     && t != typeof(IStartThisEndpoint)
                      && !t.IsAbstract));
         }
 

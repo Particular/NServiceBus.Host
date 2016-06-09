@@ -7,7 +7,7 @@
 
     class RoleManager
     {
-        public static void TweakConfigurationBuilder(IConfigureThisEndpoint specifier, EndpointConfiguration config)
+        public static void TweakConfigurationBuilder(IStartThisEndpoint specifier, EndpointConfiguration config)
         {
             // ReSharper disable once SuspiciousTypeConversion.Global
             if (specifier is AsA_Client)
@@ -26,7 +26,7 @@
             }
         }
 
-        static bool TryGetTransportDefinitionType(IConfigureThisEndpoint specifier, out Type transportDefinitionType)
+        static bool TryGetTransportDefinitionType(IStartThisEndpoint specifier, out Type transportDefinitionType)
         {
             var transportType= specifier.GetType()
                 .GetInterfaces()

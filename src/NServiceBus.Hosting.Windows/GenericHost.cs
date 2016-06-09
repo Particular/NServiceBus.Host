@@ -12,7 +12,7 @@ namespace NServiceBus
 
     class GenericHost
     {
-        public GenericHost(IConfigureThisEndpoint specifier, string[] args, List<Type> defaultProfiles, string endpointName, IEnumerable<string> scannableAssembliesFullName = null)
+        public GenericHost(IStartThisEndpoint specifier, string[] args, List<Type> defaultProfiles, string endpointName, IEnumerable<string> scannableAssembliesFullName = null)
         {
             this.specifier = specifier;
 
@@ -45,8 +45,7 @@ namespace NServiceBus
         {
             try
             {
-                var startableEndpoint = await PerformConfiguration().ConfigureAwait(false);
-                endpoint = await startableEndpoint.Start().ConfigureAwait(false);
+                endpoint = await PerformConfiguration().ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -71,13 +70,14 @@ namespace NServiceBus
             return PerformConfiguration(builder => builder.EnableInstallers(username));
         }
 
-        Task<IStartableEndpoint> PerformConfiguration(Action<EndpointConfiguration> moreConfiguration = null)
+        Task<IEndpointInstance> PerformConfiguration(Action<EndpointConfiguration> moreConfiguration = null)
         {
-            var loggingConfigurers = profileManager.GetLoggingConfigurer();
-            foreach (var loggingConfigurer in loggingConfigurers)
-            {
-                loggingConfigurer.Configure(specifier);
-            }
+            //var loggingConfigurers = profileManager.GetLoggingConfigurer();
+            //foreach (var loggingConfigurer in loggingConfigurers)
+            //{
+            //    // TODO: What about this?
+            //    loggingConfigurer.Configure(specifier);
+            //}
 
             var configuration = new EndpointConfiguration(endpointNameToUse);
             SetSlaFromAttribute(configuration, specifier);
@@ -86,16 +86,15 @@ namespace NServiceBus
 
             moreConfiguration?.Invoke(configuration);
 
-            specifier.Customize(configuration);
             RoleManager.TweakConfigurationBuilder(specifier, configuration);
             profileManager.ActivateProfileHandlers(configuration);
 
-            return Endpoint.Create(configuration);
+            return specifier.Start(configuration);
         }
 
-        void SetSlaFromAttribute(EndpointConfiguration configuration, IConfigureThisEndpoint configureThisEndpoint)
+        void SetSlaFromAttribute(EndpointConfiguration configuration, IStartThisEndpoint startThisEndpoint)
         {
-            var endpointConfigurationType = configureThisEndpoint
+            var endpointConfigurationType = startThisEndpoint
                 .GetType();
             TimeSpan sla;
             if (TryGetSlaFromEndpointConfigType(endpointConfigurationType, out sla))
@@ -132,6 +131,6 @@ namespace NServiceBus
         IEndpointInstance endpoint;
         string endpointNameToUse;
         ProfileManager profileManager;
-        IConfigureThisEndpoint specifier;
+        IStartThisEndpoint specifier;
     }
 }
