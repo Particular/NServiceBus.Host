@@ -15,7 +15,7 @@
                 config.PurgeOnStartup(true);
                 config.GetSettings().Set<TransportTransactionMode>(TransportTransactionMode.None);
 
-                config.DisableFeature<Features.SecondLevelRetries>();
+                config.SecondLevelRetries().Disable();
                 config.DisableFeature<TimeoutManager>();
             }
 
