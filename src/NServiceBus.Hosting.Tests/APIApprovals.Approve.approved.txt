@@ -23,12 +23,18 @@ namespace NServiceBus
         public EndpointSLAAttribute(string sla) { }
         public System.TimeSpan SLA { get; }
     }
+    [System.ObsoleteAttribute(". Will be treated as an error from version 8.0.0. Will be removed in version 9.0." +
+        "0.", false)]
     public interface IConfigureThisEndpoint
     {
         void Customize(NServiceBus.EndpointConfiguration configuration);
     }
     public interface Integration : NServiceBus.IProfile { }
     public interface IProfile { }
+    public interface IStartThisEndpoint
+    {
+        System.Threading.Tasks.Task<NServiceBus.IEndpointInstance> Start(string proposedEndpointName, System.Action<NServiceBus.EndpointConfiguration> applyHostConventions);
+    }
     public interface IWantTheListOfActiveProfiles
     {
         System.Collections.Generic.IEnumerable<System.Type> ActiveProfiles { get; set; }

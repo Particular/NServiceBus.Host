@@ -44,7 +44,7 @@
 
             var context = new IWantToRunContext();
 
-            IConfigureThisEndpoint configurer = new GenericEndpointConfig(context);
+            IStartThisEndpoint configurer = new GenericEndpointConfig(context);
 
             var host = new GenericHost(configurer, args, defaultProfiles, GenericEndpointConfig.EndpointName);
 
@@ -63,7 +63,7 @@
             public int InstanceTimesRegistered { get; set; }
         }
 
-        class GenericEndpointConfig : IConfigureThisEndpoint
+        class GenericEndpointConfig : IStartThisEndpoint
         {
             public GenericEndpointConfig(IWantToRunContext context)
             {
@@ -72,8 +72,9 @@
 
             public static string EndpointName = "When_starting_and_stopping_host";
 
-            public void Customize(EndpointConfiguration configuration)
+            public Task<IEndpointInstance> Start(string proposedEndpointName, Action<EndpointConfiguration> applyHostConventions)
             {
+                var configuration = new EndpointConfiguration(proposedEndpointName);
                 configuration.UseSerialization<JsonSerializer>();
                 configuration.EnableInstallers();
                 configuration.SendFailedMessagesTo("error");
@@ -81,6 +82,10 @@
                 configuration.RegisterComponents(c => c.ConfigureComponent(() => context, DependencyLifecycle.SingleInstance));
 
                 configuration.RunWhenEndpointStartsAndStops(new RunStuffInstance(context));
+
+                applyHostConventions(configuration);
+
+                return Endpoint.Start(configuration);
             }
 
             class RunStuffInstance : IWantToRunWhenEndpointStartsAndStops

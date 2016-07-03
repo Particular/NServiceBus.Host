@@ -68,7 +68,7 @@ namespace NServiceBus.Hosting.Windows.Arguments
                     },
                     {
                         "endpointConfigurationType=",
-                        "Specify the type implementing IConfigureThisEndpoint that should be used."
+                        "Specify the type implementing IStartThisEndpoint that should be used."
                         , s => { EndpointConfigurationType = s; }
                     },
                     {

@@ -4,6 +4,7 @@ namespace EndpointTypeDeterminerTests
     using System.Collections.Generic;
     using System.Configuration;
     using System.Reflection;
+    using System.Threading.Tasks;
     using NServiceBus;
     using NServiceBus.Hosting.Helpers;
     using NServiceBus.Hosting.Windows;
@@ -73,11 +74,13 @@ namespace EndpointTypeDeterminerTests
         }
 
         //this will cause more than one config to be found when scanning and make the when_multiple_endpoint_types_found_via_assembly_scanning_it_should_blow_up test pass
-        class MyEndpointConfig2 : IConfigureThisEndpoint
+        class MyEndpointConfig2 : IStartThisEndpoint
         {
-            public void Customize(EndpointConfiguration configuration)
+            public Task<IEndpointInstance> Start(string proposedEndpointName, Action<EndpointConfiguration> applyHostConventions)
             {
-
+                var configuration = new EndpointConfiguration(proposedEndpointName);
+                applyHostConventions(configuration);
+                return Task.FromResult(default(IEndpointInstance));
             }
         }
     }
