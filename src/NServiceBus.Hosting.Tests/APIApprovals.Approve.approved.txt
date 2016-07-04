@@ -9,7 +9,7 @@ namespace NServiceBus
     public interface AsA_Server { }
     public class static EndpointConfigurationExtensions
     {
-        public static void RunWhenEndpointStartsAndStops(this NServiceBus.EndpointConfiguration configuration, NServiceBus.IWantToRunWhenEndpointStartsAndStops startableAndStoppable) { }
+        public static void DefineEndpointName(this NServiceBus.EndpointConfiguration configuration, string endpointName) { }
     }
     [System.AttributeUsageAttribute(System.AttributeTargets.Class | System.AttributeTargets.All)]
     public sealed class EndpointNameAttribute : System.Attribute
@@ -22,6 +22,10 @@ namespace NServiceBus
     {
         public EndpointSLAAttribute(string sla) { }
         public System.TimeSpan SLA { get; }
+    }
+    public class static EndpointStartableAndStoppableExtensions
+    {
+        public static void RunWhenEndpointStartsAndStops(this NServiceBus.EndpointConfiguration configuration, NServiceBus.IWantToRunWhenEndpointStartsAndStops startableAndStoppable) { }
     }
     public interface IConfigureThisEndpoint
     {

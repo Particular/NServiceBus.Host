@@ -6,7 +6,7 @@ namespace NServiceBus
     /// <summary>
     /// Extension methods for EndpointConfiguration
     /// </summary>
-    public static class EndpointConfigurationExtensions
+    public static class EndpointStartableAndStoppableExtensions
     {
         /// <summary>
         /// Register a specific instance of an IWantToRunWhenEndpointStartsAndStops implementation
