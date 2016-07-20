@@ -110,6 +110,7 @@
       <Link>Profiles\ProfileManager.cs</Link>
     </Compile>
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="EndpointConfigurationExtensions.cs" />
     <Compile Include="EndpointNameAttribute.cs" />
     <Compile Include="EndpointSLAAttribute.cs" />
     <Compile Include="EndpointType.cs" />
@@ -132,7 +133,7 @@
     <Compile Include="Resharper.Annotations.g.cs" />
     <Compile Include="Roles\RoleManager.cs" />
     <Compile Include="Roles\UsingTransport.cs" />
-    <Compile Include="StartableAndStoppable\EndpointConfigurationExtensions.cs" />
+    <Compile Include="StartableAndStoppable\EndpointStartableAndStoppableExtensions.cs" />
     <Compile Include="StartableAndStoppable\IWantToRunWhenEndpointStartsAndStops.cs" />
     <Compile Include="StartableAndStoppable\StartableAndStoppableFeature.cs" />
     <Compile Include="StartableAndStoppable\StartableAndStoppableRunner.cs" />
