@@ -47,7 +47,7 @@ namespace NServiceBus
     public interface PerformanceCounters : NServiceBus.IProfile { }
     public interface Production : NServiceBus.IProfile { }
     public interface UsingTransport<T>
-        where T : NServiceBus.Transports.TransportDefinition { }
+        where T : NServiceBus.Transport.TransportDefinition { }
 }
 namespace NServiceBus.Hosting.Profiles
 {

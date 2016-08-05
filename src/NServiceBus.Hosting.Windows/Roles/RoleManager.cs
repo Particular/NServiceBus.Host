@@ -15,7 +15,7 @@
                 config.PurgeOnStartup(true);
                 config.GetSettings().Set<TransportTransactionMode>(TransportTransactionMode.None);
 
-                config.SecondLevelRetries().Disable();
+                config.Recoverability().Delayed(delayed => delayed.NumberOfRetries(0));
                 config.DisableFeature<TimeoutManager>();
             }
 
