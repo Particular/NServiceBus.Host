@@ -1,6 +1,6 @@
 namespace NServiceBus
 {
-    using Transports;
+    using NServiceBus.Transport;
 
     /// <summary>
     /// Role used to specify the desired transport to use
