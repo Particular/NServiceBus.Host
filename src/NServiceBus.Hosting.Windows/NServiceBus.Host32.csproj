@@ -15,7 +15,8 @@
     <AssemblyOriginatorKeyFile>..\NServiceBus.snk</AssemblyOriginatorKeyFile>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>54a22f0c</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
     <CreateDeploymentPackage>False</CreateDeploymentPackage>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
@@ -73,8 +74,9 @@
     <Reference Include="NServiceBus.Core">
       <HintPath>..\packages\NServiceBus.5.0.1\lib\net45\NServiceBus.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Obsolete">
-      <HintPath>..\packages\Obsolete.Fody.3.1.0.0\Lib\NET35\Obsolete.dll</HintPath>
+    <Reference Include="Obsolete, Version=4.1.0.0, Culture=neutral, PublicKeyToken=1ca091877d12ca03, processorArchitecture=MSIL">
+      <HintPath>..\packages\Obsolete.Fody.4.1.0\lib\dotnet\Obsolete.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -163,9 +165,9 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\NuGetPackager.0.4.12\build\NuGetPackager.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NuGetPackager.0.4.12\build\NuGetPackager.targets'))" />
     <Error Condition="!Exists('..\packages\GitVersionTask.1.3.3\Build\GitVersionTask.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\GitVersionTask.1.3.3\Build\GitVersionTask.targets'))" />
-    <Error Condition="!Exists('..\packages\Fody.1.26.1\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.1.26.1\build\Fody.targets'))" />
+    <Error Condition="!Exists('..\packages\Fody.1.29.4\build\dotnet\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.1.29.4\build\dotnet\Fody.targets'))" />
   </Target>
   <Import Project="..\packages\NuGetPackager.0.4.12\build\NuGetPackager.targets" Condition="Exists('..\packages\NuGetPackager.0.4.12\build\NuGetPackager.targets')" />
   <Import Project="..\packages\GitVersionTask.1.3.3\Build\GitVersionTask.targets" Condition="Exists('..\packages\GitVersionTask.1.3.3\Build\GitVersionTask.targets')" />
-  <Import Project="..\packages\Fody.1.26.1\build\Fody.targets" Condition="Exists('..\packages\Fody.1.26.1\build\Fody.targets')" />
+  <Import Project="..\packages\Fody.1.29.4\build\dotnet\Fody.targets" Condition="Exists('..\packages\Fody.1.29.4\build\dotnet\Fody.targets')" />
 </Project>
