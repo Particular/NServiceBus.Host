@@ -83,7 +83,7 @@
                     c.CreateServiceLocator(() => new HostServiceLocator());
                 });
 
-                if (arguments.Username != null && arguments.Password != null)
+                if (arguments.Username != null)
                 {
                     x.RunAs(arguments.Username, arguments.Password);
                 }
