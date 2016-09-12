@@ -43,11 +43,28 @@ namespace NServiceBus
         System.Threading.Tasks.Task Start(NServiceBus.IMessageSession session);
         System.Threading.Tasks.Task Stop(NServiceBus.IMessageSession session);
     }
+    [System.ObsoleteAttribute("WCF integration has been removed from the host. Refer to the NServiceBus.Host Ver" +
+        "sion 7 upgrade guide for further information. Will be removed in version 8.0.0.", true)]
+    public interface IWcfService<TRequest, TResponse>
+    {
+        [System.ObsoleteAttribute("WCF integration has been removed from the host. Refer to the NServiceBus.Host Ver" +
+            "sion 7 upgrade guide for further information. Will be removed in version 8.0.0.", true)]
+        System.IAsyncResult BeginProcess(TRequest request, System.AsyncCallback callback, object state);
+        [System.ObsoleteAttribute("WCF integration has been removed from the host. Refer to the NServiceBus.Host Ver" +
+            "sion 7 upgrade guide for further information. Will be removed in version 8.0.0.", true)]
+        TResponse EndProcess(System.IAsyncResult asyncResult);
+    }
     public interface Lite : NServiceBus.IProfile { }
     public interface PerformanceCounters : NServiceBus.IProfile { }
     public interface Production : NServiceBus.IProfile { }
     public interface UsingTransport<T>
         where T : NServiceBus.Transport.TransportDefinition { }
+    [System.ObsoleteAttribute("WCF integration has been removed from the host. Refer to the NServiceBus.Host Ver" +
+        "sion 7 upgrade guide for further information. Will be removed in version 8.0.0.", true)]
+    public abstract class WcfService<TRequest, TResponse> : NServiceBus.IWcfService<TRequest, TResponse>
+    {
+        protected WcfService() { }
+    }
 }
 namespace NServiceBus.Hosting.Profiles
 {
