@@ -23,13 +23,9 @@ namespace NServiceBus.Hosting.Tests
             {
                 internal static bool activated;
 
-                public void ProfileActivated(BusConfiguration config)
+                public void ProfileActivated(EndpointConfiguration config)
                 {
                     activated = true;
-                }
-
-                public void ProfileActivated(Configure config)
-                {
                 }
             }
 
@@ -79,13 +75,9 @@ namespace NServiceBus.Hosting.Tests
             {
                 internal static bool activated;
 
-                public void ProfileActivated(BusConfiguration config)
+                public void ProfileActivated(EndpointConfiguration config)
                 {
                     activated = true;
-                }
-
-                public void ProfileActivated(Configure config)
-                {
                 }
             }
 
@@ -139,13 +131,9 @@ namespace NServiceBus.Hosting.Tests
             {
                 public static bool activated;
 
-                public void ProfileActivated(BusConfiguration config)
+                public void ProfileActivated(EndpointConfiguration config)
                 {
                     activated = true;
-                }
-
-                public void ProfileActivated(Configure config)
-                {
                 }
             }
 
@@ -153,13 +141,9 @@ namespace NServiceBus.Hosting.Tests
             {
                 public static bool activated;
 
-                public void ProfileActivated(BusConfiguration config)
+                public void ProfileActivated(EndpointConfiguration config)
                 {
                     activated = true;
-                }
-
-                public void ProfileActivated(Configure config)
-                {
                 }
             }
             [Test]
@@ -252,7 +236,7 @@ namespace NServiceBus.Hosting.Tests
             public void Should_use_default_profile()
             {
                 var profileManager = new ProfileManager(allAssemblies, new string[] { }, new List<Type> { typeof(Production) });
-                
+
                 Assert.AreEqual(1, profileManager.activeProfiles.Count);
                 Assert.AreEqual(typeof(Production), profileManager.activeProfiles.First());
             }
@@ -273,14 +257,10 @@ namespace NServiceBus.Hosting.Tests
             {
                 public static int activatedCount;
 
-                public void ProfileActivated(BusConfiguration config)
+                public void ProfileActivated(EndpointConfiguration config)
                 {
                     activatedCount++;
                 }
-
-                public void ProfileActivated(Configure config)
-                {
-                    }
             }
             [Test]
             public void All_profiles_should_be_registered_in_active_profiles()
@@ -307,7 +287,7 @@ namespace NServiceBus.Hosting.Tests
             }
         }
 
-     
+
 
         [TestFixture]
         public class When_multiple_handlers_for_a_profile_exist
@@ -321,13 +301,9 @@ namespace NServiceBus.Hosting.Tests
             {
                 public static bool activated;
 
-                public void ProfileActivated(BusConfiguration config)
+                public void ProfileActivated(EndpointConfiguration config)
                 {
                     activated = true;
-                }
-
-                public void ProfileActivated(Configure config)
-                {
                 }
             }
 
@@ -335,13 +311,9 @@ namespace NServiceBus.Hosting.Tests
             {
                 public static bool activated;
 
-                public void ProfileActivated(BusConfiguration config)
+                public void ProfileActivated(EndpointConfiguration config)
                 {
                     activated = true;
-                }
-
-                public void ProfileActivated(Configure config)
-                {
                 }
             }
 
@@ -389,26 +361,17 @@ namespace NServiceBus.Hosting.Tests
 
             public class Handler1 : IHandleProfile<Profile1>
             {
-                public void ProfileActivated(BusConfiguration config)
+                public void ProfileActivated(EndpointConfiguration config)
                 {
                     activations.Add(GetType());
-                }
-
-                public void ProfileActivated(Configure config)
-                {
                 }
             }
 
             public class Handler2 : IHandleProfile<Profile2>
             {
-                public void ProfileActivated(BusConfiguration config)
+                public void ProfileActivated(EndpointConfiguration config)
                 {
                     activations.Add(GetType());
-                }
-
-                public void ProfileActivated(Configure config)
-                {
-                    
                 }
             }
 
@@ -433,7 +396,7 @@ namespace NServiceBus.Hosting.Tests
                 Assert.AreEqual(typeof(Profile2), profileManagerB.activeProfiles[0]);
                 Assert.AreEqual(typeof(Profile1), profileManagerB.activeProfiles[1]);
             }
-            
+
             [Test]
             public void Should_get_implementations_in_order()
             {
@@ -472,7 +435,7 @@ namespace NServiceBus.Hosting.Tests
                 CollectionAssert.AreEqual(new[] { typeof(Handler1), typeof(Handler2) }, activations);
 
                 activations.Clear();
-                
+
                 var profilesB = new[]
                                {
                                    typeof (Profile2).FullName,
@@ -500,13 +463,9 @@ namespace NServiceBus.Hosting.Tests
 
             public class Handler : IHandleProfile<Profile1>, IHandleProfile<Profile2>
             {
-                public void ProfileActivated(BusConfiguration config)
+                public void ProfileActivated(EndpointConfiguration config)
                 {
                     activations.Add(this);
-                }
-
-                public void ProfileActivated(Configure config)
-                {
                 }
             }
 
@@ -539,26 +498,17 @@ namespace NServiceBus.Hosting.Tests
 
             public class BaseHandler : IHandleProfile<BaseProfile>
             {
-                public void ProfileActivated(BusConfiguration config)
+                public void ProfileActivated(EndpointConfiguration config)
                 {
                     activations.Add(GetType());
-                }
-
-                public void ProfileActivated(Configure config)
-                {
-                    
                 }
             }
 
             public class SpecializedHandler : IHandleProfile<SpecializedProfile>
             {
-                public void ProfileActivated(BusConfiguration config)
+                public void ProfileActivated(EndpointConfiguration config)
                 {
                     activations.Add(GetType());
-                }
-
-                public void ProfileActivated(Configure config)
-                {
                 }
             }
 
@@ -601,7 +551,7 @@ namespace NServiceBus.Hosting.Tests
             {
                 public new static bool activated;
 
-                public override void ProfileActivated(BusConfiguration config)
+                public override void ProfileActivated(EndpointConfiguration config)
                 {
                     activated = true;
                 }
@@ -611,13 +561,9 @@ namespace NServiceBus.Hosting.Tests
             {
                 public static bool activated;
 
-                public virtual void ProfileActivated(BusConfiguration config)
+                public virtual void ProfileActivated(EndpointConfiguration config)
                 {
                     activated = true;
-                }
-
-                public  void ProfileActivated(Configure config)
-                {
                 }
             }
 
@@ -648,7 +594,7 @@ namespace NServiceBus.Hosting.Tests
                 Assert.IsFalse(AbstractHandler.activated);
             }
         }
-      
+
         [TestFixture]
         public class When_handler_implements_IWantTheListOfActiveProfiles
         {
@@ -660,13 +606,9 @@ namespace NServiceBus.Hosting.Tests
             {
                 internal static IEnumerable<Type> activeProfiles;
 
-                public void ProfileActivated(BusConfiguration config)
+                public void ProfileActivated(EndpointConfiguration config)
                 {
-                    
-                }
 
-                public void ProfileActivated(Configure config)
-                {
                 }
 
                 public IEnumerable<Type> ActiveProfiles
@@ -703,13 +645,9 @@ namespace NServiceBus.Hosting.Tests
             {
                 internal static bool activatedCalled;
 
-                public void ProfileActivated(BusConfiguration config)
+                public void ProfileActivated(EndpointConfiguration config)
                 {
                     activatedCalled = true;
-                }
-
-                public void ProfileActivated(Configure config)
-                {
                 }
 
             }
@@ -736,20 +674,16 @@ namespace NServiceBus.Hosting.Tests
 
             public class ChildHandler : BaseHandler
             {
-                public override void ProfileActivated(Configure config)
+                public override void ProfileActivated(EndpointConfiguration config)
                 {
                 }
             }
 
             public class BaseHandler : IHandleProfile<Profile>
             {
-                public void ProfileActivated(BusConfiguration config)
+                public virtual void ProfileActivated(EndpointConfiguration config)
                 {
                     throw new NotImplementedException();
-                }
-
-                public virtual void ProfileActivated(Configure config)
-                {
                 }
             }
 

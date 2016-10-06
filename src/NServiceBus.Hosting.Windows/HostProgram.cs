@@ -1,14 +1,13 @@
 ﻿namespace NServiceBus.Hosting.Windows
 {
-    using System;
     using System.Collections.Generic;
     using System.Configuration;
     using System.Linq;
     using System.Runtime.ExceptionServices;
     using Arguments;
-    using Helpers;
     using Installers;
     using Magnum.StateMachine;
+    using Helpers;
     using Topshelf;
     using Topshelf.Configuration;
 
@@ -50,21 +49,21 @@
             }
 
             //Add the endpoint name so that the new appDomain can get it
-            if (arguments.EndpointName == null && !String.IsNullOrEmpty(endpointName))
+            if (arguments.EndpointName == null && !string.IsNullOrEmpty(endpointName))
             {
-                args = args.Concat(new[] { String.Format(@"/endpointName={0}", endpointName) }).ToArray();
+                args = args.Concat(new[] {$"/endpointName={endpointName}"}).ToArray();
             }
 
             //Add the ScannedAssemblies name so that the new appDomain can get it
             if (arguments.ScannedAssemblies.Count == 0)
             {
-                args = assemblyScannerResults.Assemblies.Select(s => s.ToString()).Aggregate(args, (current, result) => current.Concat(new[] { String.Format(@"/scannedAssemblies={0}", result) }).ToArray());
+                args = assemblyScannerResults.Assemblies.Select(s => s.ToString()).Aggregate(args, (current, result) => current.Concat(new[] {$"/scannedAssemblies={result}"}).ToArray());
             }
 
             //Add the endpointConfigurationType name so that the new appDomain can get it
             if (arguments.EndpointConfigurationType == null)
             {
-                args = args.Concat(new[] { String.Format(@"/endpointConfigurationType={0}", endpointConfigurationType.AssemblyQualifiedName) }).ToArray();
+                args = args.Concat(new[] {$"/endpointConfigurationType={endpointConfigurationType.AssemblyQualifiedName}"}).ToArray();
             }
 
             if (arguments.Install)
@@ -83,7 +82,7 @@
                     c.CreateServiceLocator(() => new HostServiceLocator());
                 });
 
-                if (arguments.Username != null && arguments.Password != null)
+                if (arguments.Username != null)
                 {
                     x.RunAs(arguments.Username, arguments.Password);
                 }
@@ -99,28 +98,28 @@
 
                 x.SetDisplayName(arguments.DisplayName ?? displayName);
                 x.SetServiceName(serviceName);
-                x.SetDescription(arguments.Description ?? string.Format("NServiceBus Endpoint Host Service for {0}", displayName));
+                x.SetDescription(arguments.Description ?? $"NServiceBus Endpoint Host Service for {displayName}");
 
                 var serviceCommandLine = new List<string>();
 
-                if (!String.IsNullOrEmpty(arguments.EndpointConfigurationType))
+                if (!string.IsNullOrEmpty(arguments.EndpointConfigurationType))
                 {
-                    serviceCommandLine.Add(String.Format(@"/endpointConfigurationType:""{0}""", arguments.EndpointConfigurationType));
+                    serviceCommandLine.Add($@"/endpointConfigurationType:""{arguments.EndpointConfigurationType}""");
                 }
 
-                if (!String.IsNullOrEmpty(endpointName))
+                if (!string.IsNullOrEmpty(endpointName))
                 {
-                    serviceCommandLine.Add(String.Format(@"/endpointName:""{0}""", endpointName));
+                    serviceCommandLine.Add($@"/endpointName:""{endpointName}""");
                 }
 
-                if (!String.IsNullOrEmpty(serviceName))
+                if (!string.IsNullOrEmpty(serviceName))
                 {
-                    serviceCommandLine.Add(String.Format(@"/serviceName:""{0}""", serviceName));
+                    serviceCommandLine.Add($@"/serviceName:""{serviceName}""");
                 }
 
                 if (!assemblyScannerResults.ErrorsThrownDuringScanning && arguments.ScannedAssemblies.Count > 0)
                 {
-                    serviceCommandLine.AddRange(arguments.ScannedAssemblies.Select(assembly => String.Format(@"/scannedAssemblies:""{0}""", assembly)));
+                    serviceCommandLine.AddRange(arguments.ScannedAssemblies.Select(assembly => $@"/scannedAssemblies:""{assembly}"""));
                 }
 
                 if (arguments.OtherArgs.Any())
@@ -128,7 +127,7 @@
                     serviceCommandLine.AddRange(arguments.OtherArgs);
                 }
 
-                var commandLine = String.Join(" ", serviceCommandLine);
+                var commandLine = string.Join(" ", serviceCommandLine);
                 x.SetServiceCommandLine(commandLine);
 
                 if (arguments.DependsOn != null)

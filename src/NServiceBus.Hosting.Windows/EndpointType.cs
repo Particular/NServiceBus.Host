@@ -2,6 +2,7 @@
 {
     using System;
     using System.IO;
+    using System.Linq;
     using Arguments;
 
     /// <summary>
@@ -13,7 +14,7 @@
         {
             if (arguments == null)
             {
-                throw new ArgumentNullException("arguments");
+                throw new ArgumentNullException(nameof(arguments));
             }
             this.arguments = arguments;
         }
@@ -26,47 +27,27 @@
         {
             if (type == null)
             {
-                throw new ArgumentNullException("type");
+                throw new ArgumentNullException(nameof(type));
             }
-            this.type = type;
+            Type = type;
             AssertIsValid();
         }
 
-        internal Type Type
-        {
-            get { return type; }
-        }
+        internal Type Type { get; }
 
-        public string EndpointConfigurationFile
-        {
-            get { return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, type.Assembly.ManifestModule.Name + ".config"); }
-        }
+        public string EndpointConfigurationFile => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Type.Assembly.ManifestModule.Name + ".config");
 
-        public string EndpointVersion
-        {
-            get { return FileVersionRetriever.GetFileVersion(type); }
-        }
+        public string EndpointVersion => FileVersionRetriever.GetFileVersion(Type);
 
-        public string AssemblyQualifiedName
-        {
-            get { return type.AssemblyQualifiedName; }
-        }
+        public string AssemblyQualifiedName => Type.AssemblyQualifiedName;
 
         public string EndpointName
         {
             get
             {
-                var arr = type.GetCustomAttributes(typeof (EndpointNameAttribute), false);
-                if (arr.Length == 1)
-                {
-                    return ((EndpointNameAttribute) arr[0]).Name;
-                }
-                
-                if (arguments.EndpointName != null)
-                {
-                    return arguments.EndpointName;
-                }
-                return null;
+                var hostEndpointAttribute = (EndpointNameAttribute)Type.GetCustomAttributes(typeof(EndpointNameAttribute), false)
+                    .FirstOrDefault();
+                return hostEndpointAttribute != null ? hostEndpointAttribute.Name : arguments.EndpointName;
             }
         }
 
@@ -74,7 +55,7 @@
         {
             get
             {
-                var serviceName = type.Namespace ?? type.Assembly.GetName().Name;
+                var serviceName = Type.Namespace ?? Type.Assembly.GetName().Name;
 
                 if (arguments.ServiceName != null)
                 {
@@ -87,16 +68,15 @@
 
         void AssertIsValid()
         {
-            var constructor = type.GetConstructor(Type.EmptyTypes);
+            var constructor = Type.GetConstructor(Type.EmptyTypes);
 
             if (constructor == null)
             {
                 throw new InvalidOperationException(
-                    "Endpoint configuration type needs to have a default constructor: " + type.FullName);
+                    "Endpoint configuration type needs to have a default constructor: " + Type.FullName);
             }
         }
 
         readonly HostArguments arguments = new HostArguments(new string[0]);
-        readonly Type type;
     }
 }

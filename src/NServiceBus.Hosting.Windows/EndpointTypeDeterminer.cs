@@ -29,20 +29,17 @@
         {
             if (assemblyScanner == null)
             {
-                throw new ArgumentNullException("assemblyScanner");
+                throw new ArgumentNullException(nameof(assemblyScanner));
             }
             if (getEndpointConfigurationTypeFromConfig == null)
             {
-                throw new ArgumentNullException("getEndpointConfigurationTypeFromConfig");
+                throw new ArgumentNullException(nameof(getEndpointConfigurationTypeFromConfig));
             }
             this.assemblyScanner = assemblyScanner;
             this.getEndpointConfigurationTypeFromConfig = getEndpointConfigurationTypeFromConfig;
         }
 
-        public AssemblyScannerResults AssemblyScannerResults
-        {
-            get { return assemblyScannerResults; }
-        }
+        public AssemblyScannerResults AssemblyScannerResults => assemblyScannerResults;
 
         internal EndpointType GetEndpointConfigurationTypeForHostedEndpoint(HostArguments arguments)
         {
@@ -99,9 +96,7 @@
             if (endpointType == null)
             {
                 throw new ConfigurationErrorsException(
-                    string.Format(
-                        "Command line argument 'endpointConfigurationType' has specified to use the type '{0}' but that type could not be loaded.",
-                        arguments.EndpointConfigurationType));
+                    $"Command line argument 'endpointConfigurationType' has specified to use the type '{arguments.EndpointConfigurationType}' but that type could not be loaded.");
             }
             type = endpointType;
             return true;
@@ -120,9 +115,7 @@
             if (endpointType == null)
             {
                 throw new ConfigurationErrorsException(
-                    string.Format(
-                        "The 'EndpointConfigurationType' entry in the NServiceBus.Host.exe.config has specified to use the type '{0}' but that type could not be loaded.",
-                        endpoint));
+                    $"The 'EndpointConfigurationType' entry in the NServiceBus.Host.exe.config has specified to use the type '{endpoint}' but that type could not be loaded.");
             }
 
             type = endpointType;

@@ -2,23 +2,20 @@
 {
     using System;
     using System.Linq;
-    using NServiceBus.Features;
+    using Configuration.AdvanceExtensibility;
+    using Features;
 
     class RoleManager
     {
-        public static void TweakConfigurationBuilder(IConfigureThisEndpoint specifier, BusConfiguration config)
+        public static void TweakConfigurationBuilder(IConfigureThisEndpoint specifier, EndpointConfiguration config)
         {
-            if (specifier is AsA_Server)
-            {
-                config.ScaleOut().UseSingleBrokerQueue();
-            }
-            else if (specifier is AsA_Client)
+            // ReSharper disable once SuspiciousTypeConversion.Global
+            if (specifier is AsA_Client)
             {
                 config.PurgeOnStartup(true);
-                config.Transactions().Disable();
+                config.GetSettings().Set<TransportTransactionMode>(TransportTransactionMode.None);
 
-                config.DisableFeature<Features.SecondLevelRetries>();
-                config.DisableFeature<StorageDrivenPublishing>();
+                config.Recoverability().Delayed(delayed => delayed.NumberOfRetries(0));
                 config.DisableFeature<TimeoutManager>();
             }
 

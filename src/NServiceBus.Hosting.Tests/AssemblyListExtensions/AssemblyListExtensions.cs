@@ -5,7 +5,7 @@ namespace NServiceBus.Hosting.Helpers
     using System.Linq;
     using System.Reflection;
 
-    internal static class AssemblyListExtensions
+    static class AssemblyListExtensions
     {
         public static IEnumerable<Type> AllTypes(this IEnumerable<Assembly> assemblies)
         {
