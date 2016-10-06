@@ -2,7 +2,7 @@ namespace NServiceBus.Hosting.Tests
 {
     using System;
     using System.Threading.Tasks;
-    using Transports;
+    using Transport;
 
     class FakeReceiver : IPushMessages
     {
@@ -11,7 +11,7 @@ namespace NServiceBus.Hosting.Tests
             this.throwCritical = throwCritical;
         }
 
-        public Task Init(Func<PushContext, Task> pipe, CriticalError criticalError, PushSettings settings)
+        public Task Init(Func<MessageContext, Task> onMessage, Func<ErrorContext, Task<ErrorHandleResult>> onError, CriticalError criticalError, PushSettings settings)
         {
             this.criticalError = criticalError;
             return Task.FromResult(0);

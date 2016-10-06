@@ -20,6 +20,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		..\packaging\nuget\nservicebus.host\EndpointConfig.cs = ..\packaging\nuget\nservicebus.host\EndpointConfig.cs
 		..\packaging\nuget\nservicebus.host\install.ps1 = ..\packaging\nuget\nservicebus.host\install.ps1
+		..\packaging\nuget\nservicebus.host.nuspec = ..\packaging\nuget\nservicebus.host.nuspec
+		..\packaging\nuget\nservicebus.host32.nuspec = ..\packaging\nuget\nservicebus.host32.nuspec
+		..\packaging\nuget\nservicebus.hosting.profiles.nuspec = ..\packaging\nuget\nservicebus.hosting.profiles.nuspec
 		TrapsAndPitfalls.md = TrapsAndPitfalls.md
 	EndProjectSection
 EndProject

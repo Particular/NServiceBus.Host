@@ -9,32 +9,32 @@
     public class When_starting_and_stopping_host
     {
         [Test]
-        public void Start_and_stop_are_called_for_scanned_type()
+        public async Task Start_and_stop_are_called_for_scanned_type()
         {
-            var context = RunHost();
+            var context = await RunHost();
 
             Assert.True(context.ScannedStartCalled);
             Assert.True(context.ScannedStopCalled);
         }
 
         [Test]
-        public void Start_and_stop_are_called_for_instance()
+        public async Task Start_and_stop_are_called_for_instance()
         {
-            var context = RunHost();
+            var context = await RunHost();
 
             Assert.True(context.InstanceStartCalled);
             Assert.True(context.InstanceStopCalled);
         }
 
         [Test]
-        public void Instance_is_registered_once()
+        public async Task Instance_is_registered_once()
         {
-            var context = RunHost();
+            var context = await RunHost();
 
             Assert.AreEqual(1, context.InstanceTimesRegistered);
         }
 
-        static IWantToRunContext RunHost()
+        static async Task<IWantToRunContext> RunHost()
         {
             var defaultProfiles = new List<Type>
             {
@@ -48,8 +48,8 @@
 
             var host = new GenericHost(configurer, args, defaultProfiles, GenericEndpointConfig.EndpointName);
 
-            host.Start();
-            host.Stop();
+            await host.Start();
+            await host.Stop();
 
             return context;
         }

@@ -28,7 +28,7 @@ namespace NServiceBus.Hosting.Windows
         /// <param name="username">Username passed in to host.</param>
         public void Install(string username)
         {
-            genericHost.Install(username);
+            genericHost.Install(username).GetAwaiter().GetResult();
         }
     }
 }
