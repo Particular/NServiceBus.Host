@@ -37,6 +37,7 @@ namespace NServiceBus.Hosting.Tests
         [TestFixture]
         class EndpointName_Getter_Tests
         {
+           
 
             [Test]
             public void when_endpointName_attribute_exists_it_should_have_first_priority()
@@ -82,6 +83,20 @@ namespace NServiceBus.Hosting.Tests
                 var endpointType = new EndpointType(hostArguments, typeof (TestEndpointType));
 
                 Assert.AreEqual("EndpointNameFromHostArgs", endpointType.EndpointName);
+            }
+
+            [Test]
+            public void when_defineEnpointName_argument_contains_at_it_should_throw_ArgumentException()
+            {
+                var configuration = new EndpointConfiguration("EndpointNameFromConfiguration");
+                Assert.Throws<ArgumentException>(() => configuration.DefineEndpointName("EndpointNameOverride@localhost"));
+            }
+
+            [Test]
+            public void when_defineEnpointName_argument_is_empty_it_should_throw_ArgumentException()
+            {
+                var configuration = new EndpointConfiguration("EndpointNameFromConfiguration");
+                Assert.Throws<ArgumentException>(() => configuration.DefineEndpointName(""));
             }
 
             [Test]
