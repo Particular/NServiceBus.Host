@@ -126,7 +126,7 @@ namespace NServiceBus
                 await Task.Delay(10000).ConfigureAwait(false); // so that user can see on their screen the problem
             }
 
-            Environment.FailFast("The following critical error was encountered by NServiceBus:NServiceBus is shutting down.");
+            Environment.FailFast("The following critical error was encountered by NServiceBus:NServiceBus is shutting down.", context.Exception);
         }
 
         IEndpointInstance endpoint;
