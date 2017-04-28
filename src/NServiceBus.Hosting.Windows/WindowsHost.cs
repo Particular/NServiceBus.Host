@@ -33,7 +33,7 @@ namespace NServiceBus.Hosting.Windows
             }
             catch (Exception exception)
             {
-                var log = LogManager.GetLogger<WindowsHost>();
+                var log = LogManager.GetLogger<WindowsHost>(); // Defers logger creation to allow custom logging configuration
                 log.Fatal("Start failure", exception);
                 Environment.Exit(-1);
             }
@@ -50,7 +50,7 @@ namespace NServiceBus.Hosting.Windows
             }
             catch (Exception exception)
             {
-                var log = LogManager.GetLogger<WindowsHost>();
+                var log = LogManager.GetLogger<WindowsHost>(); // Defers logger creation to allow custom logging configuration
                 log.Fatal("Stop failure", exception);
                 Environment.Exit(-2);
             }
