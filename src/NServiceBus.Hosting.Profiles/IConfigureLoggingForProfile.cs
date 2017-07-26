@@ -5,10 +5,12 @@
     /// <summary>
     /// Configure logging in the constructor of the class that implements IConfigureThisEndpoint.
     /// </summary>
+#if HOST
     [ObsoleteEx(
         TreatAsErrorFromVersion = "7.0",
         Message = "Configure logging in the constructor of the class that implements IConfigureThisEndpoint.",
         RemoveInVersion = "8.0")]
+#endif
     public interface IConfigureLogging
     {
         /// <summary>
