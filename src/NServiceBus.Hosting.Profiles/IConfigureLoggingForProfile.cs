@@ -1,17 +1,12 @@
-﻿namespace NServiceBus.Hosting.Profiles
+﻿// ReSharper disable PartialTypeWithSinglePart
+namespace NServiceBus.Hosting.Profiles
 {
     using NServiceBus;
 
     /// <summary>
     /// Configure logging in the constructor of the class that implements IConfigureThisEndpoint.
     /// </summary>
-#if HOST
-    [ObsoleteEx(
-        TreatAsErrorFromVersion = "7.0",
-        Message = "Configure logging in the constructor of the class that implements IConfigureThisEndpoint.",
-        RemoveInVersion = "8.0")]
-#endif
-    public interface IConfigureLogging
+    public partial interface IConfigureLogging
     {
         /// <summary>
         /// Performs all logging configuration.
@@ -25,5 +20,5 @@
     /// If an implementation isn't found for a given profile, then the search continues
     /// recursively up that profile's inheritance hierarchy.
     /// </summary>
-    public interface IConfigureLoggingForProfile<T> : IConfigureLogging where T : IProfile {}
+    public partial interface IConfigureLoggingForProfile<T> : IConfigureLogging where T : IProfile {}
 }

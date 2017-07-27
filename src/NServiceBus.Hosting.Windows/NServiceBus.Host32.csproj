@@ -36,7 +36,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <AssemblyName>NServiceBus.Host32</AssemblyName>
     <OutputPath>..\..\binaries\</OutputPath>
-    <DefineConstants>TRACE;HOST</DefineConstants>
+    <DefineConstants>TRACE</DefineConstants>
     <DocumentationFile>..\..\binaries\NServiceBus.Host32.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
@@ -130,6 +130,7 @@
     <Compile Include="Profiles\Handlers\IntegrationProfileHandler.cs" />
     <Compile Include="Profiles\Handlers\LiteProfileHandler.cs" />
     <Compile Include="Profiles\Handlers\PerformanceCountersProfileHandler.cs" />
+    <Compile Include="Profiles\IConfigureLoggingForProfiles.obsoletes.cs" />
     <Compile Include="Resharper.Annotations.g.cs" />
     <Compile Include="Roles\RoleManager.cs" />
     <Compile Include="Roles\UsingTransport.cs" />
