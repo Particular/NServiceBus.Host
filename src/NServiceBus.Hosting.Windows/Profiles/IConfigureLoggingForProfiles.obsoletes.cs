@@ -6,7 +6,7 @@
     [ObsoleteEx(
         TreatAsErrorFromVersion = "8.0",
         Message = "Configure logging in the constructor of the class that implements IConfigureThisEndpoint.",
-        RemoveInVersion = "8.0")]
+        RemoveInVersion = "9.0")]
     public partial interface IConfigureLogging
     {
     }
@@ -19,7 +19,7 @@
     [ObsoleteEx(
         TreatAsErrorFromVersion = "8.0",
         Message = "Configure logging in the constructor of the class that implements IConfigureThisEndpoint.",
-        RemoveInVersion = "8.0")]
+        RemoveInVersion = "9.0")]
     public partial interface IConfigureLoggingForProfile<T>
     {
     }
