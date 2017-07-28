@@ -6,8 +6,8 @@ namespace NServiceBus
     /// </summary>
 
     [ObsoleteEx(
-    TreatAsErrorFromVersion = "7.1",
-    Message = "The functionality of AsA_Server, and AsA_Publisher has been made defaults in the core.",
-    RemoveInVersion = "8.0")]
+    TreatAsErrorFromVersion = "8.0",
+    Message = "The AsA_Server, and AsA_Publisher roles are obsoleted. Manually configure the EndpointConfiguration object via IConfigureThisEndpoint.Customize(EndpointConfiguration endpointConfiguration)",
+    RemoveInVersion = "9.0")]
     public interface AsA_Client {}
 }

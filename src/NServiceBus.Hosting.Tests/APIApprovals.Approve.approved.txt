@@ -5,13 +5,9 @@
 [assembly: System.Runtime.Versioning.TargetFrameworkAttribute(".NETFramework,Version=v4.5.2", FrameworkDisplayName=".NET Framework 4.5.2")]
 namespace NServiceBus
 {
-    [System.ObsoleteAttribute("The functionality of AsA_Server, and AsA_Publisher has been made defaults in the " +
-        "core. Will be treated as an error from version 7.1.0. Will be removed in version" +
-        " 8.0.0.", false)]
+    [System.ObsoleteAttribute(@"The AsA_Server, and AsA_Publisher roles are obsoleted. Manually configure the EndpointConfiguration object via IConfigureThisEndpoint.Customize(EndpointConfiguration endpointConfiguration). Will be treated as an error from version 8.0.0. Will be removed in version 9.0.0.", false)]
     public interface AsA_Client { }
-    [System.ObsoleteAttribute("The functionality of AsA_Server, and AsA_Publisher has been made defaults in the " +
-        "core. Will be treated as an error from version 7.1.0. Will be removed in version" +
-        " 8.0.0.", false)]
+    [System.ObsoleteAttribute(@"The AsA_Server, and AsA_Publisher roles are obsoleted. Manually configure the EndpointConfiguration object via IConfigureThisEndpoint.Customize(EndpointConfiguration endpointConfiguration). Will be treated as an error from version 8.0.0. Will be removed in version 9.0.0.", false)]
     public interface AsA_Server { }
     public class static EndpointConfigurationExtensions
     {
