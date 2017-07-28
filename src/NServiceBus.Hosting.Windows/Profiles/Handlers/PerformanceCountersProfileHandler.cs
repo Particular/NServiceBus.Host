@@ -1,5 +1,6 @@
 ﻿namespace NServiceBus.Hosting.Windows.Profiles.Handlers
 {
+    using System;
     using Hosting.Profiles;
 
     /// <summary>
@@ -9,8 +10,9 @@
     {
         public void ProfileActivated(EndpointConfiguration config)
         {
-            config.EnableCriticalTimePerformanceCounter();
-            config.EnableSLAPerformanceCounter();
+            var performanceCounters = config.EnableWindowsPerformanceCounters();
+            performanceCounters.EnableSLAPerformanceCounters(TimeSpan.FromSeconds(100));
+            performanceCounters.UpdateCounterEvery(TimeSpan.FromSeconds(2));
         }
     }
 }
