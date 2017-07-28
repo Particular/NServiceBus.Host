@@ -87,10 +87,31 @@ namespace NServiceBus
             moreConfiguration?.Invoke(configuration);
 
             specifier.Customize(configuration);
-            RoleManager.TweakConfigurationBuilder(specifier, configuration);
+
+            Type transportDefinitionType;
+            if (TryGetTransportDefinitionType(specifier, out transportDefinitionType))
+            {
+                configuration.UseTransport(transportDefinitionType);
+            }
+
             profileManager.ActivateProfileHandlers(configuration);
 
             return Endpoint.Create(configuration);
+        }
+
+        static bool TryGetTransportDefinitionType(IConfigureThisEndpoint specifier, out Type transportDefinitionType)
+        {
+            var transportType = specifier.GetType()
+                .GetInterfaces()
+                .Where(x => x.IsGenericType)
+                .SingleOrDefault(x => x.GetGenericTypeDefinition() == typeof(UsingTransport<>));
+            if (transportType != null)
+            {
+                transportDefinitionType = transportType.GetGenericArguments().First();
+                return true;
+            }
+            transportDefinitionType = null;
+            return false;
         }
 
         void SetSlaFromAttribute(EndpointConfiguration configuration, IConfigureThisEndpoint configureThisEndpoint)
