@@ -26,7 +26,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\..\binaries\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;HOST</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>..\..\binaries\NServiceBus.Host.xml</DocumentationFile>
@@ -118,6 +118,7 @@
     <Compile Include="Installers\WindowsInstaller.cs" />
     <Compile Include="InternalsVisibleTo.cs" />
     <Compile Include="obsoletes.cs" />
+    <Compile Include="Profiles\IConfigureLoggingForProfiles.obsoletes.cs" />
     <Compile Include="Resharper.Annotations.g.cs" />
     <Compile Include="StartableAndStoppable\EndpointStartableAndStoppableExtensions.cs" />
     <Compile Include="StartableAndStoppable\IWantToRunWhenEndpointStartsAndStops.cs" />
