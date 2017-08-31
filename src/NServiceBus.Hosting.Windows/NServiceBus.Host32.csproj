@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\ILRepack.2.0.13\build\ILRepack.props" Condition="Exists('..\packages\ILRepack.2.0.13\build\ILRepack.props')" />
   <Import Project="..\packages\Particular.CodeRules.0.1.1\build\Particular.CodeRules.props" Condition="Exists('..\packages\Particular.CodeRules.0.1.1\build\Particular.CodeRules.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -69,8 +70,8 @@
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
-    <Reference Include="NServiceBus.Core, Version=6.0.0.0, Culture=neutral, PublicKeyToken=9fc386479f8a226c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NServiceBus.6.0.0\lib\net452\NServiceBus.Core.dll</HintPath>
+    <Reference Include="NServiceBus.Core">
+      <HintPath>..\packages\NServiceBus.7.0.0-beta0001\lib\net452\NServiceBus.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Obsolete, Version=4.1.0.0, Culture=neutral, PublicKeyToken=1ca091877d12ca03, processorArchitecture=MSIL">
@@ -90,9 +91,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\NServiceBus.Hosting.Profiles\IConfigureLoggingForProfile.cs">
-      <Link>Profiles\IConfigureLoggingForProfile.cs</Link>
-    </Compile>
     <Compile Include="..\NServiceBus.Hosting.Profiles\IHandleAnyProfile.cs">
       <Link>Profiles\IHandleAnyProfile.cs</Link>
     </Compile>
@@ -121,16 +119,10 @@
     <Compile Include="Installers\WindowsInstaller.cs" />
     <Compile Include="InstallWindowsHost.cs" />
     <Compile Include="InternalsVisibleTo.cs" />
-    <Compile Include="LoggingHandlers\IntegrationLoggingHandler.cs" />
-    <Compile Include="LoggingHandlers\LiteLoggingHandler.cs" />
-    <Compile Include="LoggingHandlers\ProductionLoggingHandler.cs" />
-    <Compile Include="obsoletes.cs" />
     <Compile Include="Options.cs" />
     <Compile Include="Arguments\HostArguments.cs" />
     <Compile Include="Profiles\Handlers\IntegrationProfileHandler.cs" />
     <Compile Include="Profiles\Handlers\LiteProfileHandler.cs" />
-    <Compile Include="Profiles\Handlers\PerformanceCountersProfileHandler.cs" />
-    <Compile Include="Resharper.Annotations.g.cs" />
     <Compile Include="Roles\RoleManager.cs" />
     <Compile Include="Roles\UsingTransport.cs" />
     <Compile Include="StartableAndStoppable\EndpointStartableAndStoppableExtensions.cs" />
@@ -159,24 +151,29 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="ReleaseAfterBuild" AfterTargets="AfterBuild" Condition=" '$(Configuration)' == 'Release' ">
     <MakeDir Directories="$(IntermediateOutputPath)temp\" />
-    <Exec Command="&quot;$(SolutionDir)..\tools\IlMerge\ilmerge.exe&quot; /keyfile:&quot;$(SolutionDir)NServiceBus.snk&quot; /internalize /out:&quot;$(IntermediateOutputPath)temp\$(TargetFileName)&quot; &quot;$(TargetPath)&quot; &quot;$(TargetDir)log4net.dll&quot; &quot;$(TargetDir)Microsoft.Practices.ServiceLocation.dll&quot; &quot;$(TargetDir)Topshelf.dll&quot; /targetplatform:&quot;v4,$(FrameworkPathOverride)&quot;" />
+     <PropertyGroup>
+      <TempFolder>$(ProjectDir)$(OutputPath)temp\</TempFolder>
+    </PropertyGroup>
+    <MakeDir Directories="$(TempFolder)" />
+    <Exec Command="$(ILRepack) /out:&quot;$(TempFolder)\$(TargetFileName)&quot; &quot;$(TargetPath)&quot; &quot;$(TargetDir)log4net.dll&quot; &quot;$(TargetDir)Microsoft.Practices.ServiceLocation.dll&quot; &quot;$(TargetDir)Topshelf.dll&quot; /targetplatform:v4 /internalize /keyfile:&quot;$(SolutionDir)NServiceBus.snk&quot;" />
     <ItemGroup>
-      <TempFiles Include="$(IntermediateOutputPath)temp\*.*" />
+      <TempFiles Include="$(TempFolder)*.*" />
     </ItemGroup>
     <Copy SourceFiles="@(TempFiles)" DestinationFolder="$(TargetDir)" OverwriteReadOnlyFiles="true" />
     <Delete Files="@(TempFiles)" />
-    <RemoveDir Directories="$(IntermediateOutputPath)temp\" />
+    <RemoveDir Directories="$(TempFolder)" />
   </Target>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\GitVersionTask.3.6.3\build\dotnet\GitVersionTask.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\GitVersionTask.3.6.3\build\dotnet\GitVersionTask.targets'))" />
-    <Error Condition="!Exists('..\packages\NuGetPackager.0.6.0\build\NuGetPackager.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NuGetPackager.0.6.0\build\NuGetPackager.targets'))" />
+    <Error Condition="!Exists('..\packages\NuGetPackager.0.6.5\build\NuGetPackager.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NuGetPackager.0.6.5\build\NuGetPackager.targets'))" />
     <Error Condition="!Exists('..\packages\Fody.1.29.4\build\dotnet\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.1.29.4\build\dotnet\Fody.targets'))" />
     <Error Condition="!Exists('..\packages\Particular.CodeRules.0.1.1\build\Particular.CodeRules.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Particular.CodeRules.0.1.1\build\Particular.CodeRules.props'))" />
+    <Error Condition="!Exists('..\packages\ILRepack.2.0.13\build\ILRepack.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\ILRepack.2.0.13\build\ILRepack.props'))" />
   </Target>
   <Import Project="..\packages\GitVersionTask.3.6.3\build\dotnet\GitVersionTask.targets" Condition="Exists('..\packages\GitVersionTask.3.6.3\build\dotnet\GitVersionTask.targets')" />
-  <Import Project="..\packages\NuGetPackager.0.6.0\build\NuGetPackager.targets" Condition="Exists('..\packages\NuGetPackager.0.6.0\build\NuGetPackager.targets')" />
+  <Import Project="..\packages\NuGetPackager.0.6.5\build\NuGetPackager.targets" Condition="Exists('..\packages\NuGetPackager.0.6.5\build\NuGetPackager.targets')" />
   <Import Project="..\packages\Fody.1.29.4\build\dotnet\Fody.targets" Condition="Exists('..\packages\Fody.1.29.4\build\dotnet\Fody.targets')" />
 </Project>

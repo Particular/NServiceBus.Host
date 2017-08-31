@@ -1,7 +1,7 @@
 namespace NServiceBus
 {
     using System.Collections.Generic;
-    using Configuration.AdvanceExtensibility;
+    using Configuration.AdvancedExtensibility;
 
     /// <summary>
     /// Extension methods for EndpointConfiguration

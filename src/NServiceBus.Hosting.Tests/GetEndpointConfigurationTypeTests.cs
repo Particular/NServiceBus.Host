@@ -55,7 +55,6 @@ namespace EndpointTypeDeterminerTests
         {
             var AssemblyScanner = new AssemblyScanner
             {
-                IncludeExesInScan = false,
                 AssembliesToSkip = new List<string>
                 {
                     Assembly.GetExecutingAssembly().GetName().Name
