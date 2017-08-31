@@ -14,9 +14,6 @@
     <releaseNotes></releaseNotes>
     <copyright>$copyright$</copyright>
     <tags>$tags$</tags>
-    <dependencies>
-	  <dependency id="Obsolete.Fody" />
-    </dependencies>
   </metadata>
   <files>
     <file src="..\..\src\NServiceBus.Hosting.Profiles\**\*.cs" target="content\App_Packages\NServiceBus.Hosting.Profiles" exclude="IConfigureThisEndpoint.cs" />
