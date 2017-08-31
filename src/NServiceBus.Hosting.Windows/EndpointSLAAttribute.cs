@@ -29,6 +29,6 @@
         /// <summary>
         /// The SLA of the endpoint.
         /// </summary>
-        public TimeSpan SLA { get; private set; }
+        public TimeSpan SLA { get; }
     }
 }

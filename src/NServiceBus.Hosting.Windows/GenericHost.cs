@@ -5,7 +5,7 @@ namespace NServiceBus
     using System.Linq;
     using System.Reflection;
     using System.Threading.Tasks;
-    using Configuration.AdvanceExtensibility;
+    using Configuration.AdvancedExtensibility;
     using Hosting.Helpers;
     using Hosting.Profiles;
     using Logging;
@@ -73,12 +73,6 @@ namespace NServiceBus
 
         Task<IStartableEndpoint> PerformConfiguration(Action<EndpointConfiguration> moreConfiguration = null)
         {
-            var loggingConfigurers = profileManager.GetLoggingConfigurer();
-            foreach (var loggingConfigurer in loggingConfigurers)
-            {
-                loggingConfigurer.Configure(specifier);
-            }
-
             var configuration = new EndpointConfiguration(endpointNameToUse);
             SetSlaFromAttribute(configuration, specifier);
 

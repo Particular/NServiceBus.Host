@@ -37,45 +37,20 @@ namespace NServiceBus
     {
         System.Collections.Generic.IEnumerable<System.Type> ActiveProfiles { get; set; }
     }
-    [JetBrains.Annotations.UsedImplicitlyAttribute(JetBrains.Annotations.ImplicitUseTargetFlags.Default | JetBrains.Annotations.ImplicitUseTargetFlags.Itself | JetBrains.Annotations.ImplicitUseTargetFlags.Members | JetBrains.Annotations.ImplicitUseTargetFlags.WithMembers)]
     public interface IWantToRunWhenEndpointStartsAndStops
     {
         System.Threading.Tasks.Task Start(NServiceBus.IMessageSession session);
         System.Threading.Tasks.Task Stop(NServiceBus.IMessageSession session);
     }
-    [System.ObsoleteAttribute("WCF integration has been removed from the host. Refer to the NServiceBus.Host Ver" +
-        "sion 7 upgrade guide for further information. Will be removed in version 8.0.0.", true)]
-    public interface IWcfService<TRequest, TResponse>
-    {
-        [System.ObsoleteAttribute("WCF integration has been removed from the host. Refer to the NServiceBus.Host Ver" +
-            "sion 7 upgrade guide for further information. Will be removed in version 8.0.0.", true)]
-        System.IAsyncResult BeginProcess(TRequest request, System.AsyncCallback callback, object state);
-        [System.ObsoleteAttribute("WCF integration has been removed from the host. Refer to the NServiceBus.Host Ver" +
-            "sion 7 upgrade guide for further information. Will be removed in version 8.0.0.", true)]
-        TResponse EndProcess(System.IAsyncResult asyncResult);
-    }
     public interface Lite : NServiceBus.IProfile { }
+    [System.ObsoleteAttribute(@"PerformanceCounters has been moved to the external nuget package 'NServiceBus.Metrics.PerformanceCounters'. Add an extra package reference and then call endpointConfiguration.EnableCriticalTimePerformanceCounter(); and endpointConfiguration.EnableSLAPerformanceCounter(); inside the IConfigureThisEndpoint.Customize(). Will be removed in version 9.0.0.", true)]
     public interface PerformanceCounters : NServiceBus.IProfile { }
     public interface Production : NServiceBus.IProfile { }
     public interface UsingTransport<T>
         where T : NServiceBus.Transport.TransportDefinition { }
-    [System.ObsoleteAttribute("WCF integration has been removed from the host. Refer to the NServiceBus.Host Ver" +
-        "sion 7 upgrade guide for further information. Will be removed in version 8.0.0.", true)]
-    public abstract class WcfService<TRequest, TResponse> : NServiceBus.IWcfService<TRequest, TResponse>
-    {
-        protected WcfService() { }
-    }
 }
 namespace NServiceBus.Hosting.Profiles
 {
-    [System.ObsoleteAttribute("Configure logging in the constructor of the class that implements IConfigureThisE" +
-        "ndpoint. Will be removed in version 8.0.0.", true)]
-    public interface IConfigureLogging
-    {
-        void Configure(NServiceBus.IConfigureThisEndpoint specifier);
-    }
-    public interface IConfigureLoggingForProfile<T> : NServiceBus.Hosting.Profiles.IConfigureLogging
-        where T : NServiceBus.IProfile { }
     public interface IHandleAnyProfile : NServiceBus.Hosting.Profiles.IHandleProfile, NServiceBus.Hosting.Profiles.IHandleProfile<NServiceBus.IProfile>, NServiceBus.IWantTheListOfActiveProfiles { }
     public interface IHandleProfile
     {

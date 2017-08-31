@@ -1,13 +1,11 @@
 ﻿namespace NServiceBus
 {
     using System.Threading.Tasks;
-    using JetBrains.Annotations;
 
     /// <summary>
     /// Implementers will be invoked when the endpoint starts up.
     /// Dependency injection is provided for these types.
     /// </summary>
-    [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
     public interface IWantToRunWhenEndpointStartsAndStops
     {
         /// <summary>

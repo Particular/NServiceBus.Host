@@ -74,8 +74,9 @@
 
             public void Customize(EndpointConfiguration configuration)
             {
-                configuration.UseSerialization<JsonSerializer>();
                 configuration.EnableInstallers();
+                configuration.UseTransport<LearningTransport>();
+                configuration.UsePersistence<LearningPersistence>();
                 configuration.SendFailedMessagesTo("error");
                 configuration.UsePersistence<InMemoryPersistence>();
                 configuration.RegisterComponents(c => c.ConfigureComponent(() => context, DependencyLifecycle.SingleInstance));

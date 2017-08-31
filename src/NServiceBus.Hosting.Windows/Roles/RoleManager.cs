@@ -2,7 +2,7 @@
 {
     using System;
     using System.Linq;
-    using Configuration.AdvanceExtensibility;
+    using Configuration.AdvancedExtensibility;
     using Features;
 
     class RoleManager

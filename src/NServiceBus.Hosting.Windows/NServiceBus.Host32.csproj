@@ -69,8 +69,8 @@
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
-    <Reference Include="NServiceBus.Core, Version=6.0.0.0, Culture=neutral, PublicKeyToken=9fc386479f8a226c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NServiceBus.6.0.0\lib\net452\NServiceBus.Core.dll</HintPath>
+    <Reference Include="NServiceBus.Core">
+      <HintPath>..\packages\NServiceBus.7.0.0-beta0001\lib\net452\NServiceBus.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Obsolete, Version=4.1.0.0, Culture=neutral, PublicKeyToken=1ca091877d12ca03, processorArchitecture=MSIL">
@@ -82,6 +82,9 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.4.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -90,9 +93,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\NServiceBus.Hosting.Profiles\IConfigureLoggingForProfile.cs">
-      <Link>Profiles\IConfigureLoggingForProfile.cs</Link>
-    </Compile>
     <Compile Include="..\NServiceBus.Hosting.Profiles\IHandleAnyProfile.cs">
       <Link>Profiles\IHandleAnyProfile.cs</Link>
     </Compile>
@@ -121,16 +121,10 @@
     <Compile Include="Installers\WindowsInstaller.cs" />
     <Compile Include="InstallWindowsHost.cs" />
     <Compile Include="InternalsVisibleTo.cs" />
-    <Compile Include="LoggingHandlers\IntegrationLoggingHandler.cs" />
-    <Compile Include="LoggingHandlers\LiteLoggingHandler.cs" />
-    <Compile Include="LoggingHandlers\ProductionLoggingHandler.cs" />
-    <Compile Include="obsoletes.cs" />
     <Compile Include="Options.cs" />
     <Compile Include="Arguments\HostArguments.cs" />
     <Compile Include="Profiles\Handlers\IntegrationProfileHandler.cs" />
     <Compile Include="Profiles\Handlers\LiteProfileHandler.cs" />
-    <Compile Include="Profiles\Handlers\PerformanceCountersProfileHandler.cs" />
-    <Compile Include="Resharper.Annotations.g.cs" />
     <Compile Include="Roles\RoleManager.cs" />
     <Compile Include="Roles\UsingTransport.cs" />
     <Compile Include="StartableAndStoppable\EndpointStartableAndStoppableExtensions.cs" />
