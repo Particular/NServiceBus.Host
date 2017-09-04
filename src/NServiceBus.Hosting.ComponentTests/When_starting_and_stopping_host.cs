@@ -43,9 +43,7 @@
             string[] args = {};
 
             var context = new IWantToRunContext();
-
-            IConfigureThisEndpoint configurer = new GenericEndpointConfig(context);
-
+            var configurer = new GenericEndpointConfig(context);
             var host = new GenericHost(configurer, args, defaultProfiles, GenericEndpointConfig.EndpointName);
 
             await host.Start();
