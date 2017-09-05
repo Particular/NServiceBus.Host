@@ -18,6 +18,8 @@ namespace NServiceBus
         public string Name { get; }
     }
     [System.AttributeUsageAttribute(System.AttributeTargets.Class | System.AttributeTargets.All)]
+    [System.ObsoleteAttribute("Performance counters are now provided via a separate package. Will be removed in " +
+        "version 9.0.0.", true)]
     public sealed class EndpointSLAAttribute : System.Attribute
     {
         public EndpointSLAAttribute(string sla) { }
