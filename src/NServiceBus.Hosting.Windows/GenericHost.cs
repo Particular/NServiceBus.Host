@@ -5,7 +5,6 @@ namespace NServiceBus
     using System.Linq;
     using System.Reflection;
     using System.Threading.Tasks;
-    using Configuration.AdvancedExtensibility;
     using Hosting.Helpers;
     using Hosting.Profiles;
     using Logging;
@@ -74,8 +73,7 @@ namespace NServiceBus
         Task<IStartableEndpoint> PerformConfiguration(Action<EndpointConfiguration> moreConfiguration = null)
         {
             var configuration = new EndpointConfiguration(endpointNameToUse);
-            SetSlaFromAttribute(configuration, specifier);
-
+            
             configuration.DefineCriticalErrorAction(OnCriticalError);
 
             moreConfiguration?.Invoke(configuration);
@@ -85,31 +83,6 @@ namespace NServiceBus
             profileManager.ActivateProfileHandlers(configuration);
 
             return Endpoint.Create(configuration);
-        }
-
-        void SetSlaFromAttribute(EndpointConfiguration configuration, IConfigureThisEndpoint configureThisEndpoint)
-        {
-            var endpointConfigurationType = configureThisEndpoint
-                .GetType();
-            TimeSpan sla;
-            if (TryGetSlaFromEndpointConfigType(endpointConfigurationType, out sla))
-            {
-                configuration.GetSettings().Set("EndpointSLA", sla);
-            }
-        }
-
-        internal static bool TryGetSlaFromEndpointConfigType(Type endpointConfigurationType, out TimeSpan sla)
-        {
-            var hostSLAAttribute = (EndpointSLAAttribute) endpointConfigurationType
-                .GetCustomAttributes(typeof(EndpointSLAAttribute), false)
-                .FirstOrDefault();
-            if (hostSLAAttribute != null)
-            {
-                sla = hostSLAAttribute.SLA;
-                return true;
-            }
-            sla = TimeSpan.Zero;
-            return false;
         }
 
         // Windows hosting behavior when critical error occurs is suicide.

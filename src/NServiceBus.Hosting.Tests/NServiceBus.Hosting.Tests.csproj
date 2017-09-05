@@ -102,7 +102,6 @@
     <Compile Include="AssemblyListExtensions\WhereConcreteTests.cs" />
     <Compile Include="AssemblyPathHelper.cs" />
     <Compile Include="EndpointTypeDeterminerTests.cs" />
-    <Compile Include="EndpointSlaTests.cs" />
     <Compile Include="EndpointTypeTests.cs" />
     <Compile Include="FakeDispatcher.cs" />
     <Compile Include="FakeQueueCreator.cs" />

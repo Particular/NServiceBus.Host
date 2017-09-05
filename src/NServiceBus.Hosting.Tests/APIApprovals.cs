@@ -15,7 +15,7 @@ public class APIApprovals
     [MethodImpl(MethodImplOptions.NoInlining)]
     public void Approve()
     {
-        var assemblyPath = Path.GetFullPath(typeof(EndpointSLAAttribute).Assembly.Location);
+        var assemblyPath = Path.GetFullPath(typeof(IConfigureThisEndpoint).Assembly.Location);
         var asm = AssemblyDefinition.ReadAssembly(assemblyPath);
         var publicApi = Filter(PublicApiGenerator.CreatePublicApiForAssembly(asm));
         Approvals.Verify(publicApi);
