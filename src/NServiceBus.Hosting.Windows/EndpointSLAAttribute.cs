@@ -2,33 +2,27 @@
 {
     using System;
 
-    /// <summary>
-    /// Defines the SLA for this endpoint. Needs to be set on the endpoint configuration class
-    /// </summary>
+
+    [ObsoleteEx(
+        TreatAsErrorFromVersion = "8.0",
+        Message = "Performance counters are now provided via a separate package.",
+        RemoveInVersion = "9.0")]
     [AttributeUsage(AttributeTargets.Class)]
+#pragma warning disable 1591
     public sealed class EndpointSLAAttribute : Attribute
+
     {
-        /// <summary>
-        /// Used to define the SLA for this endpoint
-        /// </summary>
-        /// <param name="sla">A <see cref="string"/> representing a <see cref="TimeSpan"/></param>
         public EndpointSLAAttribute(string sla)
         {
-            TimeSpan timespan;
-            if (!TimeSpan.TryParse(sla, out timespan))
-            {
-                throw new InvalidOperationException("A invalid SLA string has been defined - " + sla);
-            }
-            if (timespan <= TimeSpan.Zero)
-            {
-                throw new InvalidOperationException("A invalid SLA string has been defined. It must be a positive timespan. - " + sla);
-            }
-            SLA = timespan;
+            throw new NotImplementedException();
         }
-
-        /// <summary>
-        /// The SLA of the endpoint.
-        /// </summary>
-        public TimeSpan SLA { get; }
+        public TimeSpan SLA
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
     }
+#pragma warning restore 1591
 }
