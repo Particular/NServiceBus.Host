@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using ApiApprover;
 using ApprovalTests;
 using Mono.Cecil;
-using NServiceBus;
+using NServiceBus.Hosting.Windows;
 using NUnit.Framework;
 
 [TestFixture]
@@ -15,7 +15,7 @@ public class APIApprovals
     [MethodImpl(MethodImplOptions.NoInlining)]
     public void Approve()
     {
-        var assemblyPath = Path.GetFullPath(typeof(IConfigureThisEndpoint).Assembly.Location);
+        var assemblyPath = Path.GetFullPath(typeof(Program).Assembly.Location);
         var asm = AssemblyDefinition.ReadAssembly(assemblyPath);
         var publicApi = Filter(PublicApiGenerator.CreatePublicApiForAssembly(asm));
         Approvals.Verify(publicApi);

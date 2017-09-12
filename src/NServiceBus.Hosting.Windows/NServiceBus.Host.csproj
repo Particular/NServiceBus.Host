@@ -121,7 +121,6 @@
     <Compile Include="Arguments\HostArguments.cs" />
     <Compile Include="Profiles\Handlers\IntegrationProfileHandler.cs" />
     <Compile Include="Profiles\Handlers\LiteProfileHandler.cs" />
-    <Compile Include="Roles\RoleManager.cs" />
     <Compile Include="Roles\UsingTransport.cs" />
     <Compile Include="InstallWindowsHost.cs" />
     <Compile Include="StartableAndStoppable\StartableAndStoppableFeature.cs" />
