@@ -5,7 +5,13 @@
 [assembly: System.Runtime.Versioning.TargetFrameworkAttribute(".NETFramework,Version=v4.5.2", FrameworkDisplayName=".NET Framework 4.5.2")]
 namespace NServiceBus
 {
+    [System.ObsoleteAttribute("Roles are obsoleted please manually configure the EndpointConfiguration object vi" +
+        "a IConfigureThisEndpoint.Customize(EndpointConfiguration endpointConfiguration)." +
+        " See upgrade guide for details. Will be removed in version 9.0.0.", true)]
     public interface AsA_Client { }
+    [System.ObsoleteAttribute("Roles are obsoleted please manually configure the EndpointConfiguration object vi" +
+        "a IConfigureThisEndpoint.Customize(EndpointConfiguration endpointConfiguration)." +
+        " See upgrade guide for details. Will be removed in version 9.0.0.", true)]
     public interface AsA_Server { }
     public class static EndpointConfigurationExtensions
     {
@@ -51,6 +57,9 @@ namespace NServiceBus
     [System.ObsoleteAttribute(@"PerformanceCounters has been moved to the external nuget package 'NServiceBus.Metrics.PerformanceCounters'. Add an extra package reference and then call endpointConfiguration.EnableCriticalTimePerformanceCounter(); and endpointConfiguration.EnableSLAPerformanceCounter(); inside the IConfigureThisEndpoint.Customize(). Will be removed in version 9.0.0.", true)]
     public interface PerformanceCounters : NServiceBus.IProfile { }
     public interface Production : NServiceBus.IProfile { }
+    [System.ObsoleteAttribute("Roles are obsoleted please manually configure the EndpointConfiguration object vi" +
+        "a IConfigureThisEndpoint.Customize(EndpointConfiguration endpointConfiguration)." +
+        " See upgrade guide for details. Will be removed in version 9.0.0.", true)]
     public interface UsingTransport<T>
         where T : NServiceBus.Transport.TransportDefinition { }
 }

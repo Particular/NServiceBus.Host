@@ -79,7 +79,6 @@ namespace NServiceBus
             moreConfiguration?.Invoke(configuration);
 
             specifier.Customize(configuration);
-            RoleManager.TweakConfigurationBuilder(specifier, configuration);
             profileManager.ActivateProfileHandlers(configuration);
 
             return Endpoint.Create(configuration);
