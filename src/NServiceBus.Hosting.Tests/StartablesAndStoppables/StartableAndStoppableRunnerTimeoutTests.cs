@@ -44,7 +44,7 @@
 
             mockLogger.Verify(m => m.Warn(It.IsRegex(shutdownWarning)), Times.Never);
         }
-
+#pragma warning disable 0618
         static async Task<Mock<ILog>> RunStartableWarningTest(IWantToRunWhenEndpointStartsAndStops instanceToTest)
         {
             var thingsToBeStarted = new[] { instanceToTest };
@@ -89,5 +89,6 @@
                 return Task.Delay(ShortRunningTimespan);
             }
         }
+#pragma warning restore 0618
     }
 }
