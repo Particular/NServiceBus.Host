@@ -91,21 +91,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\NServiceBus.Hosting.Profiles\IHandleAnyProfile.cs">
-      <Link>Profiles\IHandleAnyProfile.cs</Link>
-    </Compile>
-    <Compile Include="..\NServiceBus.Hosting.Profiles\IHandleProfile.cs">
-      <Link>Profiles\IHandleProfile.cs</Link>
-    </Compile>
-    <Compile Include="..\NServiceBus.Hosting.Profiles\IProfile.cs">
-      <Link>Profiles\IProfile.cs</Link>
-    </Compile>
-    <Compile Include="..\NServiceBus.Hosting.Profiles\IWantTheListOfActiveProfiles.cs">
-      <Link>Profiles\IWantTheListOfActiveProfiles.cs</Link>
-    </Compile>
-    <Compile Include="..\NServiceBus.Hosting.Profiles\ProfileManager.cs">
-      <Link>Profiles\ProfileManager.cs</Link>
-    </Compile>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="EndpointConfigurationExtensions.cs" />
     <Compile Include="EndpointNameAttribute.cs" />
@@ -123,6 +108,11 @@
     <Compile Include="Arguments\HostArguments.cs" />
     <Compile Include="Profiles\Handlers\IntegrationProfileHandler.cs" />
     <Compile Include="Profiles\Handlers\LiteProfileHandler.cs" />
+    <Compile Include="Profiles\IHandleAnyProfile.cs" />
+    <Compile Include="Profiles\IHandleProfile.cs" />
+    <Compile Include="Profiles\IProfile.cs" />
+    <Compile Include="Profiles\IWantTheListOfActiveProfiles.cs" />
+    <Compile Include="Profiles\ProfileManager.cs" />
     <Compile Include="Roles\UsingTransport.cs" />
     <Compile Include="StartableAndStoppable\EndpointStartableAndStoppableExtensions.cs" />
     <Compile Include="StartableAndStoppable\IWantToRunWhenEndpointStartsAndStops.cs" />
