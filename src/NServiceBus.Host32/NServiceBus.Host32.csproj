@@ -27,6 +27,8 @@
   <ItemGroup>
     <Compile Include="..\NServiceBus.Hosting.Windows\**\*.cs" Exclude="..\NServiceBus.Hosting.Windows\obj\**\*.cs" />
     <EmbeddedResource Include="..\NServiceBus.Hosting.Windows\**\*.txt" Exclude="..\NServiceBus.Hosting.Windows\obj\**\*.txt" />
+    <None Include="..\NServiceBus.Hosting.Windows\EndpointConfig.cs.pp" Pack="true" PackagePath="content\net452" />
+    <None Include="..\NServiceBus.Hosting.Windows\install.ps1" Pack="true" PackagePath="tools\net452" />
   </ItemGroup>
 
 </Project>

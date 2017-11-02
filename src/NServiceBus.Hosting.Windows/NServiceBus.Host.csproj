@@ -26,6 +26,8 @@
   <ItemGroup>
     <None Remove="Content\Help.txt" />
     <EmbeddedResource Include="Content\Help.txt" />
+    <None Update="EndpointConfig.cs.pp" Pack="true" PackagePath="content\net452" />
+    <None Update="install.ps1" Pack="true" PackagePath="tools\net452" />
   </ItemGroup>
 
 </Project>
