@@ -60,8 +60,10 @@
             public bool InstanceStopCalled { get; set; }
             public int InstanceTimesRegistered { get; set; }
         }
-#pragma warning disable 0618
+
+#pragma warning disable CS0618
         class GenericEndpointConfig : IConfigureThisEndpoint
+#pragma warning restore CS0618
         {
             public GenericEndpointConfig(IWantToRunContext context)
             {
@@ -82,7 +84,9 @@
                 configuration.RunWhenEndpointStartsAndStops(new RunStuffInstance(context));
             }
 
+#pragma warning disable CS0618
             class RunStuffInstance : IWantToRunWhenEndpointStartsAndStops
+#pragma warning restore CS0618
             {
                 public RunStuffInstance(IWantToRunContext context)
                 {
@@ -107,9 +111,9 @@
 
             IWantToRunContext context;
         }
-#pragma warning restore 0618
-
+#pragma warning disable CS0618
         class RunStuffScanned : IWantToRunWhenEndpointStartsAndStops
+#pragma warning restore CS0618
         {
             public RunStuffScanned(IWantToRunContext context)
             {
