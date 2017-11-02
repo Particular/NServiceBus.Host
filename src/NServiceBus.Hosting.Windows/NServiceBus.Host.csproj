@@ -1,166 +1,30 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\ILRepack.2.0.13\build\ILRepack.props" Condition="Exists('..\packages\ILRepack.2.0.13\build\ILRepack.props')" />
-  <Import Project="..\packages\Particular.CodeRules.0.1.1\build\Particular.CodeRules.props" Condition="Exists('..\packages\Particular.CodeRules.0.1.1\build\Particular.CodeRules.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{85E813C0-4A94-4946-8B1F-DE1E39AA7D11}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NServiceBus.Hosting.Windows</RootNamespace>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
+    <TargetFramework>net452</TargetFramework>
+    <ApplicationIcon>NServiceBus.ico</ApplicationIcon>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\NServiceBus.snk</AssemblyOriginatorKeyFile>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-    <CreateDeploymentPackage>False</CreateDeploymentPackage>
+    <Description>Functionality for generically hosting NServiceBus processes</Description>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <AssemblyName>NServiceBus.Host</AssemblyName>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>..\..\binaries\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\binaries\NServiceBus.Host.xml</DocumentationFile>
-    <NoWarn>
-    </NoWarn>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <AssemblyName>NServiceBus.Host</AssemblyName>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>..\..\binaries\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\binaries\NServiceBus.Host.xml</DocumentationFile>
-    <NoWarn>
-    </NoWarn>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup>
-    <DelaySign>true</DelaySign>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationIcon>NServiceBus.ico</ApplicationIcon>
-  </PropertyGroup>
+
   <ItemGroup>
-    <None Include="FodyWeavers.xml">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
-    <Reference Include="log4net">
-      <HintPath>..\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Practices.ServiceLocation">
-      <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
-    </Reference>
-    <Reference Include="NServiceBus.Core, Version=7.0.0.0, Culture=neutral, PublicKeyToken=9fc386479f8a226c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NServiceBus.7.0.0-beta0008\lib\net452\NServiceBus.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Obsolete, Version=4.1.0.0, Culture=neutral, PublicKeyToken=1ca091877d12ca03, processorArchitecture=MSIL">
-      <HintPath>..\packages\Obsolete.Fody.4.1.0\lib\dotnet\Obsolete.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.configuration" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.ServiceModel" />
-    <Reference Include="System.Web.Services" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
-    <Reference Include="Topshelf">
-      <HintPath>..\..\lib\Topshelf\Topshelf.dll</HintPath>
-    </Reference>
+    <Reference Include="Topshelf" HintPath="..\..\lib\Topshelf\Topshelf.dll" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="EndpointNameAttribute.cs" />
-    <Compile Include="EndpointConfigurationExtensions.cs" />
-    <Compile Include="EndpointSLAAttribute.cs" />
-    <Compile Include="EndpointType.cs" />
-    <Compile Include="EndpointTypeDeterminer.cs" />
-    <Compile Include="FileVersionRetriever.cs" />
-    <Compile Include="GenericHost.cs" />
-    <Compile Include="IConfigureThisEndpoint.cs" />
-    <Compile Include="Installers\WindowsInstaller.cs" />
-    <Compile Include="InternalsVisibleTo.cs" />
-    <Compile Include="Profiles\IHandleAnyProfile.cs" />
-    <Compile Include="Profiles\IHandleProfile.cs" />
-    <Compile Include="Profiles\IProfile.cs" />
-    <Compile Include="Profiles\IWantTheListOfActiveProfiles.cs" />
-    <Compile Include="Profiles\ProfileManager.cs" />
-    <Compile Include="StartableAndStoppable\EndpointStartableAndStoppableExtensions.cs" />
-    <Compile Include="StartableAndStoppable\IWantToRunWhenEndpointStartsAndStops.cs" />
-    <Compile Include="Options.cs" />
-    <Compile Include="Arguments\HostArguments.cs" />
-    <Compile Include="Profiles\Handlers\IntegrationProfileHandler.cs" />
-    <Compile Include="Profiles\Handlers\LiteProfileHandler.cs" />
-    <Compile Include="Roles\UsingTransport.cs" />
-    <Compile Include="InstallWindowsHost.cs" />
-    <Compile Include="StartableAndStoppable\StartableAndStoppableFeature.cs" />
-    <Compile Include="StartableAndStoppable\StartableAndStoppableRunner.cs" />
-    <Compile Include="TaskEx.cs" />
-    <Compile Include="WindowsHost.cs" />
-    <Compile Include="Profiles\Integration.cs" />
-    <Compile Include="Profiles\Lite.cs" />
-    <Compile Include="Profiles\PerformanceCounters.cs" />
-    <Compile Include="Profiles\Production.cs" />
-    <Compile Include="HostProgram.cs" />
-    <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="HostServiceLocator.cs" />
-    <Compile Include="Roles\AsA_Client.cs" />
-    <Compile Include="Roles\AsA_Server.cs" />
+    <PackageReference Include="CommonServiceLocator" Version="1.0.0" />
+    <PackageReference Include="Fody" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="NServiceBus" Version="[7.0.0-beta0011, 8.0.0)" />
+    <PackageReference Include="Obsolete.Fody" Version="4.3.2" PrivateAssets="All" />
+    <PackageReference Include="Particular.CodeRules" Version="0.1.1" PrivateAssets="All" />
+    <PackageReference Include="Particular.Packaging" Version="0.1.0" PrivateAssets="All" />
   </ItemGroup>
+
   <ItemGroup>
+    <None Remove="Content\Help.txt" />
     <EmbeddedResource Include="Content\Help.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="NServiceBus.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Analyzer Include="..\packages\Particular.CodeRules.0.1.1\tools\..\analyzers\dotnet\cs\Particular.CodeRules.dll" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="ReleaseAfterBuild" AfterTargets="AfterBuild" Condition=" '$(Configuration)' == 'Release' ">
-    <PropertyGroup>
-      <TempFolder>$(ProjectDir)$(OutputPath)temp\</TempFolder>
-    </PropertyGroup>
-    <MakeDir Directories="$(TempFolder)" />
-    <Exec Command="$(ILRepack) /out:&quot;$(TempFolder)\$(TargetFileName)&quot; &quot;$(TargetPath)&quot; &quot;$(TargetDir)log4net.dll&quot; &quot;$(TargetDir)Microsoft.Practices.ServiceLocation.dll&quot; &quot;$(TargetDir)Topshelf.dll&quot; /targetplatform:v4 /internalize /keyfile:&quot;$(SolutionDir)NServiceBus.snk&quot;" />
-    <ItemGroup>
-      <TempFiles Include="$(TempFolder)*.*" />
-    </ItemGroup>
-    <Copy SourceFiles="@(TempFiles)" DestinationFolder="$(TargetDir)" OverwriteReadOnlyFiles="true" />
-    <Delete Files="@(TempFiles)" />
-    <RemoveDir Directories="$(TempFolder)" />
-  </Target>
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Fody.1.29.4\build\dotnet\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.1.29.4\build\dotnet\Fody.targets'))" />
-    <Error Condition="!Exists('..\packages\Particular.CodeRules.0.1.1\build\Particular.CodeRules.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Particular.CodeRules.0.1.1\build\Particular.CodeRules.props'))" />
-    <Error Condition="!Exists('..\packages\GitVersionTask.3.6.3\build\dotnet\GitVersionTask.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\GitVersionTask.3.6.3\build\dotnet\GitVersionTask.targets'))" />
-    <Error Condition="!Exists('..\packages\ILRepack.2.0.13\build\ILRepack.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\ILRepack.2.0.13\build\ILRepack.props'))" />
-    <Error Condition="!Exists('..\packages\NuGetPackager.0.6.5\build\NuGetPackager.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NuGetPackager.0.6.5\build\NuGetPackager.targets'))" />
-  </Target>
-  <Import Project="..\packages\Fody.1.29.4\build\dotnet\Fody.targets" Condition="Exists('..\packages\Fody.1.29.4\build\dotnet\Fody.targets')" />
-  <Import Project="..\packages\GitVersionTask.3.6.3\build\dotnet\GitVersionTask.targets" Condition="Exists('..\packages\GitVersionTask.3.6.3\build\dotnet\GitVersionTask.targets')" />
-  <Import Project="..\packages\NuGetPackager.0.6.5\build\NuGetPackager.targets" Condition="Exists('..\packages\NuGetPackager.0.6.5\build\NuGetPackager.targets')" />
+
 </Project>
