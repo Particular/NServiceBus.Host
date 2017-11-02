@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NServiceBus.Host32", "NServiceBus.Hosting.Windows\NServiceBus.Host32.csproj", "{79487CAA-C060-49C8-B689-6250C61A46D5}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NServiceBus.Hosting.Tests", "NServiceBus.Hosting.Tests\NServiceBus.Hosting.Tests.csproj", "{93B2CD66-7860-47A3-A039-B7D778E9A8F4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{5026BEC4-5BC6-485B-A497-12F1D604D755}"
@@ -15,6 +13,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E8988E0D-F62E-4208-9997-55D4FC3CB766}"
 	ProjectSection(SolutionItems) = preProject
 		..\packaging\nuget\nservicebus.host\EndpointConfig.cs = ..\packaging\nuget\nservicebus.host\EndpointConfig.cs
+		FodyWeavers.xml = FodyWeavers.xml
 		..\packaging\nuget\nservicebus.host\install.ps1 = ..\packaging\nuget\nservicebus.host\install.ps1
 		..\packaging\nuget\nservicebus.host.nuspec = ..\packaging\nuget\nservicebus.host.nuspec
 		..\packaging\nuget\nservicebus.host32.nuspec = ..\packaging\nuget\nservicebus.host32.nuspec
@@ -24,6 +23,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NServiceBus.Hosting.ComponentTests", "NServiceBus.Hosting.ComponentTests\NServiceBus.Hosting.ComponentTests.csproj", "{0E2673EF-63C0-4088-861E-960CE1389AFC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NServiceBus.Host", "NServiceBus.Hosting.Windows\NServiceBus.Host.csproj", "{66D9A6A2-8561-45DA-A9C8-BD0464EFEBF5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NServiceBus.Host32", "NServiceBus.Host32\NServiceBus.Host32.csproj", "{8F2BB47A-EC1B-4A71-B776-9158C5CBA1C6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,16 +36,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{79487CAA-C060-49C8-B689-6250C61A46D5}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{79487CAA-C060-49C8-B689-6250C61A46D5}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{79487CAA-C060-49C8-B689-6250C61A46D5}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{79487CAA-C060-49C8-B689-6250C61A46D5}.Debug|x86.ActiveCfg = Debug|x86
-		{79487CAA-C060-49C8-B689-6250C61A46D5}.Debug|x86.Build.0 = Debug|x86
-		{79487CAA-C060-49C8-B689-6250C61A46D5}.Release|Any CPU.ActiveCfg = Release|x86
-		{79487CAA-C060-49C8-B689-6250C61A46D5}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{79487CAA-C060-49C8-B689-6250C61A46D5}.Release|Mixed Platforms.Build.0 = Release|x86
-		{79487CAA-C060-49C8-B689-6250C61A46D5}.Release|x86.ActiveCfg = Release|x86
-		{79487CAA-C060-49C8-B689-6250C61A46D5}.Release|x86.Build.0 = Release|x86
 		{93B2CD66-7860-47A3-A039-B7D778E9A8F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{93B2CD66-7860-47A3-A039-B7D778E9A8F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93B2CD66-7860-47A3-A039-B7D778E9A8F4}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -79,6 +70,18 @@ Global
 		{66D9A6A2-8561-45DA-A9C8-BD0464EFEBF5}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{66D9A6A2-8561-45DA-A9C8-BD0464EFEBF5}.Release|x86.ActiveCfg = Release|Any CPU
 		{66D9A6A2-8561-45DA-A9C8-BD0464EFEBF5}.Release|x86.Build.0 = Release|Any CPU
+		{8F2BB47A-EC1B-4A71-B776-9158C5CBA1C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F2BB47A-EC1B-4A71-B776-9158C5CBA1C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F2BB47A-EC1B-4A71-B776-9158C5CBA1C6}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{8F2BB47A-EC1B-4A71-B776-9158C5CBA1C6}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{8F2BB47A-EC1B-4A71-B776-9158C5CBA1C6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8F2BB47A-EC1B-4A71-B776-9158C5CBA1C6}.Debug|x86.Build.0 = Debug|Any CPU
+		{8F2BB47A-EC1B-4A71-B776-9158C5CBA1C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F2BB47A-EC1B-4A71-B776-9158C5CBA1C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F2BB47A-EC1B-4A71-B776-9158C5CBA1C6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{8F2BB47A-EC1B-4A71-B776-9158C5CBA1C6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{8F2BB47A-EC1B-4A71-B776-9158C5CBA1C6}.Release|x86.ActiveCfg = Release|Any CPU
+		{8F2BB47A-EC1B-4A71-B776-9158C5CBA1C6}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
