@@ -3,6 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net452</TargetFramework>
+    <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <RootNamespace>NServiceBus.Hosting.Windows</RootNamespace>
     <ApplicationIcon>..\NServiceBus.Hosting.Windows\NServiceBus.ico</ApplicationIcon>
@@ -16,8 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommonServiceLocator" Version="1.0.0" />
+    <PackageReference Include="CommonServiceLocator" Version="1.0.0" PrivateAssets="All" />
     <PackageReference Include="Fody" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="log4net" Version="1.2.10" PrivateAssets="All" />
     <PackageReference Include="NServiceBus" Version="[7.0.0-beta0011, 8.0.0)" />
     <PackageReference Include="Obsolete.Fody" Version="4.3.2" PrivateAssets="All" />
     <PackageReference Include="Particular.CodeRules" Version="0.1.1" PrivateAssets="All" />
@@ -30,5 +32,7 @@
     <None Include="..\NServiceBus.Hosting.Windows\EndpointConfig.cs.pp" Pack="true" PackagePath="content\net452" />
     <None Include="..\NServiceBus.Hosting.Windows\install.ps1" Pack="true" PackagePath="tools\net452" />
   </ItemGroup>
+
+  <Import Project="..\MergeDependencies.targets" />
 
 </Project>
