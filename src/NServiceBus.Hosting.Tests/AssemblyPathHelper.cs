@@ -14,7 +14,7 @@ namespace NServiceBus.Hosting.Tests
             var uri = new UriBuilder(codeBase);
             var path = Uri.UnescapeDataString(uri.Path);
             var directoryName = Path.GetDirectoryName(path);
-            var files = Directory.EnumerateFiles(directoryName, "*.dll").ToList();
+            var files = Directory.EnumerateFiles(directoryName, "*.dll").Where(f => f.IndexOf("nunit", StringComparison.OrdinalIgnoreCase) == -1).ToList();
 
             return files
                 .Select(Assembly.LoadFrom)
