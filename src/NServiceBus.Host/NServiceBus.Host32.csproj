@@ -4,12 +4,12 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>net452</TargetFramework>
     <DebugType>full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
     <RootNamespace>NServiceBus.Hosting.Windows</RootNamespace>
-    <ApplicationIcon>..\NServiceBus.Hosting.Windows\NServiceBus.ico</ApplicationIcon>
+    <ApplicationIcon>NServiceBus.ico</ApplicationIcon>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\NServiceBus.snk</AssemblyOriginatorKeyFile>
     <Description>Functionality for generically hosting NServiceBus processes</Description>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
@@ -27,10 +27,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\NServiceBus.Hosting.Windows\**\*.cs" Exclude="..\NServiceBus.Hosting.Windows\obj\**\*.cs" />
-    <EmbeddedResource Include="..\NServiceBus.Hosting.Windows\**\*.txt" Exclude="..\NServiceBus.Hosting.Windows\obj\**\*.txt" />
-    <None Include="..\NServiceBus.Hosting.Windows\EndpointConfig.cs.pp" Pack="true" PackagePath="content\net452" />
-    <None Include="..\NServiceBus.Hosting.Windows\install.ps1" Pack="true" PackagePath="tools\net452" />
+    <None Remove="Content\Help.txt" />
+    <EmbeddedResource Include="Content\Help.txt" />
+    <None Update="EndpointConfig.cs.pp" Pack="true" PackagePath="content\net452" />
+    <None Update="install.ps1" Pack="true" PackagePath="tools\net452" />
   </ItemGroup>
 
   <Import Project="..\MergeDependencies.targets" />

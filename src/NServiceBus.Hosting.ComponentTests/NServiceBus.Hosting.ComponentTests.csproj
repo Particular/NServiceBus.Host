@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NServiceBus.Hosting.Windows\NServiceBus.Host.csproj" />
+    <ProjectReference Include="..\NServiceBus.Host\NServiceBus.Host.csproj" />
   </ItemGroup>
 
   <ItemGroup>

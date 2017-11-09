@@ -12,9 +12,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		TrapsAndPitfalls.md = TrapsAndPitfalls.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NServiceBus.Host", "NServiceBus.Hosting.Windows\NServiceBus.Host.csproj", "{66D9A6A2-8561-45DA-A9C8-BD0464EFEBF5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NServiceBus.Host", "NServiceBus.Host\NServiceBus.Host.csproj", "{66D9A6A2-8561-45DA-A9C8-BD0464EFEBF5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NServiceBus.Host32", "NServiceBus.Host32\NServiceBus.Host32.csproj", "{8F2BB47A-EC1B-4A71-B776-9158C5CBA1C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NServiceBus.Host32", "NServiceBus.Host\NServiceBus.Host32.csproj", "{8F2BB47A-EC1B-4A71-B776-9158C5CBA1C6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NServiceBus.Hosting.ComponentTests", "NServiceBus.Hosting.ComponentTests\NServiceBus.Hosting.ComponentTests.csproj", "{051D0B0C-16B3-4F22-B305-269D80E159D5}"
 EndProject
