@@ -9,7 +9,6 @@ namespace NServiceBus.Hosting.Windows
     /// </summary>
     public class WindowsHost : MarshalByRefObject
     {
-        ILog Log = LogManager.GetLogger<WindowsHost>();
         NServiceBus.GenericHost genericHost;
 
         /// <summary>
@@ -34,7 +33,9 @@ namespace NServiceBus.Hosting.Windows
             }
             catch (Exception ex)
             {
-                Log.Fatal("Start failure", ex);
+                var log = LogManager.GetLogger<WindowsHost>();  // Defers logger creation to allow custom logging configuration
+
+                log.Fatal("Start failure", ex);
                 Environment.Exit(-1);
             }
         }
@@ -50,10 +51,10 @@ namespace NServiceBus.Hosting.Windows
             }
             catch (Exception ex)
             {
-                Log.Fatal("Stop failure", ex);
+                var log = LogManager.GetLogger<WindowsHost>();  // Defers logger creation to allow custom logging configuration
+                log.Fatal("Stop failure", ex);
                 Environment.Exit(-2);
             }
         }
-
     }
 }
