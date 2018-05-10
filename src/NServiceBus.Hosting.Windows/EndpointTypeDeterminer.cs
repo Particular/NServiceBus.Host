@@ -154,12 +154,11 @@
         IEnumerable<Type> ScanAssembliesForEndpoints()
         {
             assemblyScannerResults = assemblyScanner.GetScannableAssemblies();
-            var scannableAssemblies = assemblyScannerResults.Assemblies;
-
-            return scannableAssemblies.SelectMany(assembly => assembly.GetTypes().Where(
+          
+            return assemblyScannerResults.Types.Where(
                 t => typeof(IConfigureThisEndpoint).IsAssignableFrom(t)
                      && t != typeof(IConfigureThisEndpoint)
-                     && !t.IsAbstract));
+                     && !t.IsAbstract);
         }
 
         readonly AssemblyScanner assemblyScanner;

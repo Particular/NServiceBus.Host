@@ -1,7 +1,6 @@
-CommonServiceLocator and Log4Net get IlMerged
+- CommonServiceLocator and Log4Net get IlMerged (handled by the MergeDependencies.targets file)
 
-Topshelf uses a specific version of CommonServiceLocator 1.0.0.0
+- Topshelf uses a specific version of CommonServiceLocator 1.0.0.0
 
-nuget won't update the csproj file for the 32bit version of the host
- so you've got to edit it manually if you get errors about not being able to find assemblies in the 32bit version
+- You have to update the dependencies of NServiceBus.Host and NServiceBus.Host32 separately, so they need to be kept in sync.
  

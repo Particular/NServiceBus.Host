@@ -1,0 +1,25 @@
+<Project>
+
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ILRepack" Version="2.0.13" PrivateAssets="All" />
+  </ItemGroup>
+
+  <Target Name="MergeDependencies" AfterTargets="CopyFilesToOutputDirectory" Condition="'$(Configuration)' == 'Release'">
+    <PropertyGroup>
+      <TempFolder>$(ProjectDir)$(OutputPath)temp</TempFolder>
+    </PropertyGroup>
+    <MakeDir Directories="$(TempFolder)" />
+    <Exec Command="&quot;$(ILRepack)&quot; /out:&quot;$(TempFolder)\$(AssemblyName).exe&quot; &quot;$(ProjectDir)$(OutputPath)$(AssemblyName).exe&quot; &quot;$(ProjectDir)$(OutputPath)log4net.dll&quot; &quot;$(ProjectDir)$(OutputPath)Microsoft.Practices.ServiceLocation.dll&quot; &quot;$(ProjectDir)$(OutputPath)Topshelf.dll&quot; /targetplatform:v4 /internalize /keyfile:$(AssemblyOriginatorKeyFile)" />
+    <ItemGroup>
+      <TempFiles Include="$(TempFolder)\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(TempFiles)" DestinationFolder="$(OutputPath)" OverwriteReadOnlyFiles="true" />
+    <Delete Files="@(TempFiles)" />
+    <RemoveDir Directories="$(TempFolder)" />
+  </Target>
+
+</Project>

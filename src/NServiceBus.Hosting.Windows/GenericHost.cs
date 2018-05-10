@@ -5,7 +5,6 @@ namespace NServiceBus
     using System.Linq;
     using System.Reflection;
     using System.Threading.Tasks;
-    using Configuration.AdvanceExtensibility;
     using Hosting.Helpers;
     using Hosting.Profiles;
     using Logging;
@@ -73,49 +72,16 @@ namespace NServiceBus
 
         Task<IStartableEndpoint> PerformConfiguration(Action<EndpointConfiguration> moreConfiguration = null)
         {
-            var loggingConfigurers = profileManager.GetLoggingConfigurer();
-            foreach (var loggingConfigurer in loggingConfigurers)
-            {
-                loggingConfigurer.Configure(specifier);
-            }
-
             var configuration = new EndpointConfiguration(endpointNameToUse);
-            SetSlaFromAttribute(configuration, specifier);
-
+            
             configuration.DefineCriticalErrorAction(OnCriticalError);
 
             moreConfiguration?.Invoke(configuration);
 
             specifier.Customize(configuration);
-            RoleManager.TweakConfigurationBuilder(specifier, configuration);
             profileManager.ActivateProfileHandlers(configuration);
 
             return Endpoint.Create(configuration);
-        }
-
-        void SetSlaFromAttribute(EndpointConfiguration configuration, IConfigureThisEndpoint configureThisEndpoint)
-        {
-            var endpointConfigurationType = configureThisEndpoint
-                .GetType();
-            TimeSpan sla;
-            if (TryGetSlaFromEndpointConfigType(endpointConfigurationType, out sla))
-            {
-                configuration.GetSettings().Set("EndpointSLA", sla);
-            }
-        }
-
-        internal static bool TryGetSlaFromEndpointConfigType(Type endpointConfigurationType, out TimeSpan sla)
-        {
-            var hostSLAAttribute = (EndpointSLAAttribute) endpointConfigurationType
-                .GetCustomAttributes(typeof(EndpointSLAAttribute), false)
-                .FirstOrDefault();
-            if (hostSLAAttribute != null)
-            {
-                sla = hostSLAAttribute.SLA;
-                return true;
-            }
-            sla = TimeSpan.Zero;
-            return false;
         }
 
         // Windows hosting behavior when critical error occurs is suicide.
@@ -126,7 +92,7 @@ namespace NServiceBus
                 await Task.Delay(10000).ConfigureAwait(false); // so that user can see on their screen the problem
             }
 
-            Environment.FailFast("The following critical error was encountered by NServiceBus:NServiceBus is shutting down.");
+            Environment.FailFast("The following critical error was encountered by NServiceBus:NServiceBus is shutting down.", context.Exception);
         }
 
         IEndpointInstance endpoint;

@@ -43,9 +43,7 @@
             string[] args = {};
 
             var context = new IWantToRunContext();
-
-            IConfigureThisEndpoint configurer = new GenericEndpointConfig(context);
-
+            var configurer = new GenericEndpointConfig(context);
             var host = new GenericHost(configurer, args, defaultProfiles, GenericEndpointConfig.EndpointName);
 
             await host.Start();
@@ -63,7 +61,9 @@
             public int InstanceTimesRegistered { get; set; }
         }
 
+#pragma warning disable CS0618
         class GenericEndpointConfig : IConfigureThisEndpoint
+#pragma warning restore CS0618
         {
             public GenericEndpointConfig(IWantToRunContext context)
             {
@@ -74,8 +74,9 @@
 
             public void Customize(EndpointConfiguration configuration)
             {
-                configuration.UseSerialization<JsonSerializer>();
                 configuration.EnableInstallers();
+                configuration.UseTransport<LearningTransport>();
+                configuration.UsePersistence<LearningPersistence>();
                 configuration.SendFailedMessagesTo("error");
                 configuration.UsePersistence<InMemoryPersistence>();
                 configuration.RegisterComponents(c => c.ConfigureComponent(() => context, DependencyLifecycle.SingleInstance));
@@ -83,7 +84,9 @@
                 configuration.RunWhenEndpointStartsAndStops(new RunStuffInstance(context));
             }
 
+#pragma warning disable CS0618
             class RunStuffInstance : IWantToRunWhenEndpointStartsAndStops
+#pragma warning restore CS0618
             {
                 public RunStuffInstance(IWantToRunContext context)
                 {
@@ -108,8 +111,9 @@
 
             IWantToRunContext context;
         }
-
+#pragma warning disable CS0618
         class RunStuffScanned : IWantToRunWhenEndpointStartsAndStops
+#pragma warning restore CS0618
         {
             public RunStuffScanned(IWantToRunContext context)
             {

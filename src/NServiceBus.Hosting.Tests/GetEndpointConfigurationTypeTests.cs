@@ -55,7 +55,6 @@ namespace EndpointTypeDeterminerTests
         {
             var AssemblyScanner = new AssemblyScanner
             {
-                IncludeExesInScan = false,
                 AssembliesToSkip = new List<string>
                 {
                     Assembly.GetExecutingAssembly().GetName().Name
@@ -73,6 +72,7 @@ namespace EndpointTypeDeterminerTests
         }
 
         //this will cause more than one config to be found when scanning and make the when_multiple_endpoint_types_found_via_assembly_scanning_it_should_blow_up test pass
+#pragma warning disable 0618
         class MyEndpointConfig2 : IConfigureThisEndpoint
         {
             public void Customize(EndpointConfiguration configuration)
@@ -80,5 +80,6 @@ namespace EndpointTypeDeterminerTests
 
             }
         }
+#pragma warning restore 0618
     }
 }

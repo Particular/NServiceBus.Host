@@ -44,14 +44,6 @@ namespace NServiceBus.Hosting.Profiles
         }
 
 
-        /// <summary>
-        /// Returns an object to configure logging based on the specification and profiles passed in.
-        /// </summary>
-        public IEnumerable<IConfigureLogging> GetLoggingConfigurer()
-        {
-            return GetImplementor<IConfigureLogging>(typeof(IConfigureLoggingForProfile<>));
-        }
-
         internal IEnumerable<T> GetImplementor<T>(Type openGenericType) where T : class
         {
             var options = new List<Type>();

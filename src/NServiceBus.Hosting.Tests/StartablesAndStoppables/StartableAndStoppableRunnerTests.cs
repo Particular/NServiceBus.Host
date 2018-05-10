@@ -3,7 +3,7 @@
     using System;
     using System.Threading.Tasks;
     using NUnit.Framework;
-
+#pragma warning disable 0618
     public class StartableAndStoppableRunnerTests
     {
         [Test]
@@ -280,4 +280,6 @@
             }
         }
     }
+
+#pragma warning restore 0618
 }
