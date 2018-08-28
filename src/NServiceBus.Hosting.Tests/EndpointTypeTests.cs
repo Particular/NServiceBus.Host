@@ -4,6 +4,7 @@ namespace NServiceBus.Hosting.Tests
     {
         using System;
         using System.Diagnostics;
+        using System.Threading.Tasks;
         using Windows;
         using Windows.Arguments;
         using NUnit.Framework;
@@ -58,7 +59,7 @@ namespace NServiceBus.Hosting.Tests
 
             [Test]
             [Ignore("this hasn't been implemented yet as far as i can tell")]
-            public void when_endpointName_is_provided_via_configuration_it_should_have_second_priority()
+            public async Task when_endpointName_is_provided_via_configuration_it_should_have_second_priority()
             {
                 var hostArguments = new HostArguments(new string[0])
                 {
@@ -66,7 +67,7 @@ namespace NServiceBus.Hosting.Tests
                 };
                 var configuration = new EndpointConfiguration("EndpointNameFromConfiguration");
 
-                Endpoint.Create(configuration);
+                await Endpoint.Create(configuration);
 
                 var endpointType = new EndpointType(hostArguments, typeof (TestEndpointType));
 
