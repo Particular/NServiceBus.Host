@@ -17,6 +17,7 @@ namespace NServiceBus.Hosting.Tests
             var files = Directory.EnumerateFiles(directoryName, "*.dll").ToList();
 
             return files
+                .Where(s => !s.Contains("NUnit3.TestAdapter.dll"))
                 .Select(Assembly.LoadFrom)
                 .ToList();
         }
