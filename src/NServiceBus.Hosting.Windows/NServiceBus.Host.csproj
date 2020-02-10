@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommonServiceLocator" Version="1.0.0" PrivateAssets="All" />
+    <PackageReference Include="CommonServiceLocator" Version="2.0.5" PrivateAssets="All" />
     <PackageReference Include="Fody" Version="6.1.0" PrivateAssets="All" />
     <PackageReference Include="log4net" Version="1.2.10" PrivateAssets="All" />
     <PackageReference Include="NServiceBus" Version="[7.0.0, 8.0.0)" />
