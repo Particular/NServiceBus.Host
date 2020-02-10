@@ -42,7 +42,6 @@ namespace NServiceBus
     {
         void Customize(NServiceBus.EndpointConfiguration configuration);
     }
-    public interface Integration : NServiceBus.IProfile { }
     public interface IProfile { }
     public interface IWantTheListOfActiveProfiles
     {
@@ -56,6 +55,7 @@ namespace NServiceBus
         System.Threading.Tasks.Task Start(NServiceBus.IMessageSession session);
         System.Threading.Tasks.Task Stop(NServiceBus.IMessageSession session);
     }
+    public interface Integration : NServiceBus.IProfile { }
     public interface Lite : NServiceBus.IProfile { }
     [System.ObsoleteAttribute(@"PerformanceCounters has been moved to the external nuget package 'NServiceBus.Metrics.PerformanceCounters'. Add an extra package reference and then call endpointConfiguration.EnableCriticalTimePerformanceCounter(); and endpointConfiguration.EnableSLAPerformanceCounter(); inside the IConfigureThisEndpoint.Customize(). Will be removed in version 9.0.0.", true)]
     public interface PerformanceCounters : NServiceBus.IProfile { }
