@@ -36,7 +36,7 @@ namespace NServiceBus
         public static void RunWhenEndpointStartsAndStops(this NServiceBus.EndpointConfiguration configuration, NServiceBus.IWantToRunWhenEndpointStartsAndStops startableAndStoppable) { }
     }
     [System.ObsoleteAttribute("The windows host will be deprecated in the next major version. See upgrade guide " +
-        "and doco for alternatives. Will be treated as an error from version 9.0.0. Will " +
+        "and docs for alternatives. Will be treated as an error from version 9.0.0. Will " +
         "be removed in version 10.0.0.", false)]
     public interface IConfigureThisEndpoint
     {
@@ -48,7 +48,7 @@ namespace NServiceBus
         System.Collections.Generic.IEnumerable<System.Type> ActiveProfiles { get; set; }
     }
     [System.ObsoleteAttribute("The windows host will be deprecated in the next major version. See upgrade guide " +
-        "and doco for alternatives. Will be treated as an error from version 9.0.0. Will " +
+        "and docs for alternatives. Will be treated as an error from version 9.0.0. Will " +
         "be removed in version 10.0.0.", false)]
     public interface IWantToRunWhenEndpointStartsAndStops
     {

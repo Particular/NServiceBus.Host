@@ -6,7 +6,7 @@
     /// Implementers will be invoked when the endpoint starts up.
     /// Dependency injection is provided for these types.
     /// </summary>
-    [ObsoleteEx(Message = "The windows host will be deprecated in the next major version. See upgrade guide and doco for alternatives.",
+    [ObsoleteEx(Message = "The windows host will be deprecated in the next major version. See upgrade guide and docs for alternatives.",
         RemoveInVersion = "10.0")]
     public interface IWantToRunWhenEndpointStartsAndStops
     {
