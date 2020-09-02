@@ -8,7 +8,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Directory.Build.props = Directory.Build.props
 		FodyWeavers.xml = FodyWeavers.xml
 		..\GitVersion.yml = ..\GitVersion.yml
-		TrapsAndPitfalls.md = TrapsAndPitfalls.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NServiceBus.Host", "NServiceBus.Hosting.Windows\NServiceBus.Host.csproj", "{66D9A6A2-8561-45DA-A9C8-BD0464EFEBF5}"

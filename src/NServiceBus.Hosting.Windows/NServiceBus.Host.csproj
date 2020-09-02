@@ -1,35 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
     <TargetFramework>net472</TargetFramework>
     <DebugType>full</DebugType>
     <RootNamespace>NServiceBus.Hosting.Windows</RootNamespace>
-    <ApplicationIcon>NServiceBus.ico</ApplicationIcon>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\NServiceBus.snk</AssemblyOriginatorKeyFile>
     <Description>Functionality for generically hosting NServiceBus processes</Description>
   </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="Topshelf" HintPath="..\..\lib\Topshelf\Topshelf.dll" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="CommonServiceLocator" Version="1.0.0" PrivateAssets="All" />
     <PackageReference Include="Fody" Version="6.2.4" PrivateAssets="All" />
-    <PackageReference Include="log4net" Version="1.2.10" PrivateAssets="All" />
     <PackageReference Include="NServiceBus" Version="[8.0.0-alpha.554, 9.0.0)" />
     <PackageReference Include="Obsolete.Fody" Version="5.2.1" PrivateAssets="All" />
     <PackageReference Include="Particular.CodeRules" Version="0.3.0" PrivateAssets="All" />
     <PackageReference Include="Particular.Packaging" Version="0.9.0" PrivateAssets="All" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="Content\Help.txt" />
-    <EmbeddedResource Include="Content\Help.txt" />
-    <None Update="EndpointConfig.cs.pp" Pack="true" PackagePath="content\net452" />
-    <None Update="install.ps1" Pack="true" PackagePath="tools\net452" />
   </ItemGroup>
 
 </Project>
