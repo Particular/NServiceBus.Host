@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net452</TargetFramework>
+    <TargetFramework>net472</TargetFramework>
     <DebugType>full</DebugType>
     <RootNamespace>NServiceBus.Hosting.Windows</RootNamespace>
     <ApplicationIcon>NServiceBus.ico</ApplicationIcon>
