@@ -7,6 +7,7 @@
     /// Dependency injection is provided for these types.
     /// </summary>
     [ObsoleteEx(Message = "The windows host will be deprecated in the next major version. See upgrade guide and docs for alternatives.",
+        TreatAsErrorFromVersion = "9.0",
         RemoveInVersion = "10.0")]
     public interface IWantToRunWhenEndpointStartsAndStops
     {

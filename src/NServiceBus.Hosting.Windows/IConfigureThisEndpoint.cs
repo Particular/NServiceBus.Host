@@ -1,6 +1,7 @@
 ﻿namespace NServiceBus
 {
     [ObsoleteEx(Message = "The windows host will be deprecated in the next major version. See upgrade guide and docs for alternatives.",
+        TreatAsErrorFromVersion = "9.0",
         RemoveInVersion = "10.0")]
 #pragma warning disable 1591
     public interface IConfigureThisEndpoint
