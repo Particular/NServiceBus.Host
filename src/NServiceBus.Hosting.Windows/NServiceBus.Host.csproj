@@ -32,6 +32,4 @@
     <None Update="install.ps1" Pack="true" PackagePath="tools\net452" />
   </ItemGroup>
 
-  <Import Project="..\MergeDependencies.targets" />
-
 </Project>
