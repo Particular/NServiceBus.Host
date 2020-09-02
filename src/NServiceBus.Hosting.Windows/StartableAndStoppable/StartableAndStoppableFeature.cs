@@ -5,6 +5,7 @@ namespace NServiceBus
     using System.Linq;
     using System.Threading.Tasks;
     using Features;
+    using Microsoft.Extensions.DependencyInjection;
 
     class StartableAndStoppableFeature : Feature
     {
@@ -30,7 +31,7 @@ namespace NServiceBus
 
             context.RegisterStartupTask(b =>
             {
-                var instances = b.BuildAll<IWantToRunWhenEndpointStartsAndStops>().Concat(startableStoppableInstances);
+                var instances = b.GetServices<IWantToRunWhenEndpointStartsAndStops>().Concat(startableStoppableInstances);
                 return new StartableAndStoppableTask(instances);
             });
         }
