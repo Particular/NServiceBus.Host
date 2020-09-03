@@ -1,96 +1,157 @@
-[assembly: System.CLSCompliantAttribute(true)]
-[assembly: System.Runtime.CompilerServices.InternalsVisibleToAttribute(@"NServiceBus.Hosting.ComponentTests, PublicKey=0024000004800000940000000602000000240000525341310004000001000100cd8d2c941187b37b1108e7b07d88a7af9b6b3e133152f3d5403f0dba54a2a0c22111ace29f883c5a8e3899a3e150586cc332aa86a4a730c45acf07afacb38a400f5b55de677c60c54fae957d4af7f6986af56c668d33bf0c49c5360dba868a4ae8e297d1dec659a5eb6e97da27aa944edda1dc33d83824e3b0ee9df4dc1747dc")]
+[assembly: System.CLSCompliantAttribute(false)]
 [assembly: System.Runtime.CompilerServices.InternalsVisibleToAttribute(@"NServiceBus.Hosting.Tests, PublicKey=0024000004800000940000000602000000240000525341310004000001000100dde965e6172e019ac82c2639ffe494dd2e7dd16347c34762a05732b492e110f2e4e2e1b5ef2d85c848ccfb671ee20a47c8d1376276708dc30a90ff1121b647ba3b7259a6bc383b2034938ef0e275b58b920375ac605076178123693c6c4f1331661a62eba28c249386855637780e3ff5f23a6d854700eaa6803ef48907513b92")]
 [assembly: System.Runtime.InteropServices.ComVisibleAttribute(false)]
-[assembly: System.Runtime.Versioning.TargetFrameworkAttribute(".NETFramework,Version=v4.5.2", FrameworkDisplayName=".NET Framework 4.5.2")]
+[assembly: System.Runtime.Versioning.TargetFrameworkAttribute(".NETFramework,Version=v4.7.2", FrameworkDisplayName=".NET Framework 4.7.2")]
 namespace NServiceBus
 {
-    [System.ObsoleteAttribute("Roles are obsoleted please manually configure the EndpointConfiguration object vi" +
-        "a IConfigureThisEndpoint.Customize(EndpointConfiguration endpointConfiguration)." +
-        " See upgrade guide for details. Will be removed in version 9.0.0.", true)]
-    public interface AsA_Client { }
-    [System.ObsoleteAttribute("Roles are obsoleted please manually configure the EndpointConfiguration object vi" +
-        "a IConfigureThisEndpoint.Customize(EndpointConfiguration endpointConfiguration)." +
-        " See upgrade guide for details. Will be removed in version 9.0.0.", true)]
-    public interface AsA_Server { }
+    [System.ObsoleteAttribute("The windows host has been deprecated. It is recommended to switch to self-hosting" +
+        " or the generic host instead. See the upgrade guide and docs for alternatives. W" +
+        "ill be removed in version 10.0.0.", true)]
     public class static EndpointConfigurationExtensions
     {
+        [System.ObsoleteAttribute("The windows host has been deprecated. It is recommended to switch to self-hosting" +
+            " or the generic host instead. See the upgrade guide and docs for alternatives. T" +
+            "he member currently throws a NotImplementedException. Will be removed in version" +
+            " 10.0.0.", true)]
         public static void DefineEndpointName(this NServiceBus.EndpointConfiguration configuration, string endpointName) { }
     }
     [System.AttributeUsageAttribute(System.AttributeTargets.Class | System.AttributeTargets.All)]
+    [System.ObsoleteAttribute("The windows host has been deprecated. It is recommended to switch to self-hosting" +
+        " or the generic host instead. See the upgrade guide and docs for alternatives. W" +
+        "ill be removed in version 10.0.0.", true)]
     public sealed class EndpointNameAttribute : System.Attribute
     {
         public EndpointNameAttribute(string name) { }
         public string Name { get; }
     }
-    [System.AttributeUsageAttribute(System.AttributeTargets.Class | System.AttributeTargets.All)]
-    [System.ObsoleteAttribute("Performance counters are now provided via a separate package. Will be removed in " +
-        "version 9.0.0.", true)]
-    public sealed class EndpointSLAAttribute : System.Attribute
-    {
-        public EndpointSLAAttribute(string sla) { }
-        public System.TimeSpan SLA { get; }
-    }
+    [System.ObsoleteAttribute("The windows host has been deprecated. It is recommended to switch to self-hosting" +
+        " or the generic host instead. See the upgrade guide and docs for alternatives. W" +
+        "ill be removed in version 10.0.0.", true)]
     public class static EndpointStartableAndStoppableExtensions
     {
+        [System.ObsoleteAttribute("The windows host has been deprecated. It is recommended to switch to self-hosting" +
+            " or the generic host instead. See the upgrade guide and docs for alternatives. T" +
+            "he member currently throws a NotImplementedException. Will be removed in version" +
+            " 10.0.0.", true)]
         public static void RunWhenEndpointStartsAndStops(this NServiceBus.EndpointConfiguration configuration, NServiceBus.IWantToRunWhenEndpointStartsAndStops startableAndStoppable) { }
     }
-    [System.ObsoleteAttribute("The windows host will be deprecated in the next major version. See upgrade guide " +
-        "and docs for alternatives. Will be treated as an error from version 9.0.0. Will " +
-        "be removed in version 10.0.0.", false)]
+    [System.ObsoleteAttribute("The windows host has been deprecated. It is recommended to switch to self-hosting" +
+        " or the generic host instead. See the upgrade guide and docs for alternatives. W" +
+        "ill be removed in version 10.0.0.", true)]
     public interface IConfigureThisEndpoint
     {
+        [System.ObsoleteAttribute("The windows host has been deprecated. It is recommended to switch to self-hosting" +
+            " or the generic host instead. See the upgrade guide and docs for alternatives. W" +
+            "ill be removed in version 10.0.0.", true)]
         void Customize(NServiceBus.EndpointConfiguration configuration);
     }
+    [System.ObsoleteAttribute("The windows host has been deprecated. It is recommended to switch to self-hosting" +
+        " or the generic host instead. See the upgrade guide and docs for alternatives. W" +
+        "ill be removed in version 10.0.0.", true)]
     public interface IProfile { }
+    [System.ObsoleteAttribute("The windows host has been deprecated. It is recommended to switch to self-hosting" +
+        " or the generic host instead. See the upgrade guide and docs for alternatives. W" +
+        "ill be removed in version 10.0.0.", true)]
     public interface IWantTheListOfActiveProfiles
     {
+        [System.ObsoleteAttribute("The windows host has been deprecated. It is recommended to switch to self-hosting" +
+            " or the generic host instead. See the upgrade guide and docs for alternatives. W" +
+            "ill be removed in version 10.0.0.", true)]
         System.Collections.Generic.IEnumerable<System.Type> ActiveProfiles { get; set; }
     }
-    [System.ObsoleteAttribute("The windows host will be deprecated in the next major version. See upgrade guide " +
-        "and docs for alternatives. Will be treated as an error from version 9.0.0. Will " +
-        "be removed in version 10.0.0.", false)]
+    [System.ObsoleteAttribute("The windows host has been deprecated. It is recommended to switch to self-hosting" +
+        " or the generic host instead. See the upgrade guide and docs for alternatives. W" +
+        "ill be removed in version 10.0.0.", true)]
     public interface IWantToRunWhenEndpointStartsAndStops
     {
+        [System.ObsoleteAttribute("The windows host has been deprecated. It is recommended to switch to self-hosting" +
+            " or the generic host instead. See the upgrade guide and docs for alternatives. W" +
+            "ill be removed in version 10.0.0.", true)]
         System.Threading.Tasks.Task Start(NServiceBus.IMessageSession session);
+        [System.ObsoleteAttribute("The windows host has been deprecated. It is recommended to switch to self-hosting" +
+            " or the generic host instead. See the upgrade guide and docs for alternatives. W" +
+            "ill be removed in version 10.0.0.", true)]
         System.Threading.Tasks.Task Stop(NServiceBus.IMessageSession session);
     }
+    [System.ObsoleteAttribute("The windows host has been deprecated. It is recommended to switch to self-hosting" +
+        " or the generic host instead. See the upgrade guide and docs for alternatives. W" +
+        "ill be removed in version 10.0.0.", true)]
     public interface Integration : NServiceBus.IProfile { }
+    [System.ObsoleteAttribute("The windows host has been deprecated. It is recommended to switch to self-hosting" +
+        " or the generic host instead. See the upgrade guide and docs for alternatives. W" +
+        "ill be removed in version 10.0.0.", true)]
     public interface Lite : NServiceBus.IProfile { }
-    [System.ObsoleteAttribute(@"PerformanceCounters has been moved to the external nuget package 'NServiceBus.Metrics.PerformanceCounters'. Add an extra package reference and then call endpointConfiguration.EnableCriticalTimePerformanceCounter(); and endpointConfiguration.EnableSLAPerformanceCounter(); inside the IConfigureThisEndpoint.Customize(). Will be removed in version 9.0.0.", true)]
-    public interface PerformanceCounters : NServiceBus.IProfile { }
+    [System.ObsoleteAttribute("The windows host has been deprecated. It is recommended to switch to self-hosting" +
+        " or the generic host instead. See the upgrade guide and docs for alternatives. W" +
+        "ill be removed in version 10.0.0.", true)]
     public interface Production : NServiceBus.IProfile { }
-    [System.ObsoleteAttribute("Roles are obsoleted please manually configure the EndpointConfiguration object vi" +
-        "a IConfigureThisEndpoint.Customize(EndpointConfiguration endpointConfiguration)." +
-        " See upgrade guide for details. Will be removed in version 9.0.0.", true)]
-    public interface UsingTransport<T>
-        where T : NServiceBus.Transport.TransportDefinition { }
 }
 namespace NServiceBus.Hosting.Profiles
 {
+    [System.ObsoleteAttribute("The windows host has been deprecated. It is recommended to switch to self-hosting" +
+        " or the generic host instead. See the upgrade guide and docs for alternatives. W" +
+        "ill be removed in version 10.0.0.", true)]
     public interface IHandleAnyProfile : NServiceBus.Hosting.Profiles.IHandleProfile, NServiceBus.Hosting.Profiles.IHandleProfile<NServiceBus.IProfile>, NServiceBus.IWantTheListOfActiveProfiles { }
+    [System.ObsoleteAttribute("The windows host has been deprecated. It is recommended to switch to self-hosting" +
+        " or the generic host instead. See the upgrade guide and docs for alternatives. W" +
+        "ill be removed in version 10.0.0.", true)]
     public interface IHandleProfile
     {
+        [System.ObsoleteAttribute("The windows host has been deprecated. It is recommended to switch to self-hosting" +
+            " or the generic host instead. See the upgrade guide and docs for alternatives. W" +
+            "ill be removed in version 10.0.0.", true)]
         void ProfileActivated(NServiceBus.EndpointConfiguration config);
     }
+    [System.ObsoleteAttribute("The windows host has been deprecated. It is recommended to switch to self-hosting" +
+        " or the generic host instead. See the upgrade guide and docs for alternatives. W" +
+        "ill be removed in version 10.0.0.", true)]
     public interface IHandleProfile<T> : NServiceBus.Hosting.Profiles.IHandleProfile
         where T : NServiceBus.IProfile { }
 }
 namespace NServiceBus.Hosting.Windows
 {
+    [System.ObsoleteAttribute("The windows host has been deprecated. It is recommended to switch to self-hosting" +
+        " or the generic host instead. See the upgrade guide and docs for alternatives. W" +
+        "ill be removed in version 10.0.0.", true)]
     public class InstallWindowsHost : System.MarshalByRefObject
     {
+        [System.ObsoleteAttribute("The windows host has been deprecated. It is recommended to switch to self-hosting" +
+            " or the generic host instead. See the upgrade guide and docs for alternatives. T" +
+            "he member currently throws a NotImplementedException. Will be removed in version" +
+            " 10.0.0.", true)]
         public InstallWindowsHost(System.Type endpointType, string[] args, string endpointName, System.Collections.Generic.IEnumerable<string> scannableAssembliesFullName) { }
+        [System.ObsoleteAttribute("The windows host has been deprecated. It is recommended to switch to self-hosting" +
+            " or the generic host instead. See the upgrade guide and docs for alternatives. T" +
+            "he member currently throws a NotImplementedException. Will be removed in version" +
+            " 10.0.0.", true)]
         public void Install(string username) { }
     }
+    [System.ObsoleteAttribute("The windows host has been deprecated. It is recommended to switch to self-hosting" +
+        " or the generic host instead. See the upgrade guide and docs for alternatives. W" +
+        "ill be removed in version 10.0.0.", true)]
     public class Program
     {
         public Program() { }
     }
+    [System.ObsoleteAttribute("The windows host has been deprecated. It is recommended to switch to self-hosting" +
+        " or the generic host instead. See the upgrade guide and docs for alternatives. W" +
+        "ill be removed in version 10.0.0.", true)]
     public class WindowsHost : System.MarshalByRefObject
     {
+        [System.ObsoleteAttribute("The windows host has been deprecated. It is recommended to switch to self-hosting" +
+            " or the generic host instead. See the upgrade guide and docs for alternatives. T" +
+            "he member currently throws a NotImplementedException. Will be removed in version" +
+            " 10.0.0.", true)]
         public WindowsHost(System.Type endpointType, string[] args, string endpointName, System.Collections.Generic.IEnumerable<string> scannableAssembliesFullName) { }
+        [System.ObsoleteAttribute("The windows host has been deprecated. It is recommended to switch to self-hosting" +
+            " or the generic host instead. See the upgrade guide and docs for alternatives. T" +
+            "he member currently throws a NotImplementedException. Will be removed in version" +
+            " 10.0.0.", true)]
         public void Start() { }
+        [System.ObsoleteAttribute("The windows host has been deprecated. It is recommended to switch to self-hosting" +
+            " or the generic host instead. See the upgrade guide and docs for alternatives. T" +
+            "he member currently throws a NotImplementedException. Will be removed in version" +
+            " 10.0.0.", true)]
         public void Stop() { }
     }
 }
