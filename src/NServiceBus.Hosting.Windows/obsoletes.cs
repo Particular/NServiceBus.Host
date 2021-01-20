@@ -84,7 +84,9 @@ namespace NServiceBus
     [ObsoleteEx(Message = "The windows host has been deprecated. It is recommended to switch to self-hosting or the generic host instead. See the upgrade guide and docs for alternatives.",
         TreatAsErrorFromVersion = "9.0",
         RemoveInVersion = "10.0")]
+#pragma warning disable IDE1006 // Naming Styles
     public interface Integration : IProfile
+#pragma warning restore IDE1006 // Naming Styles
     {
     }
 
@@ -109,14 +111,18 @@ namespace NServiceBus
     [ObsoleteEx(Message = "The windows host has been deprecated. It is recommended to switch to self-hosting or the generic host instead. See the upgrade guide and docs for alternatives.",
         TreatAsErrorFromVersion = "9.0",
         RemoveInVersion = "10.0")]
+#pragma warning disable IDE1006 // Naming Styles
     public interface Lite : IProfile
+#pragma warning restore IDE1006 // Naming Styles
     {
     }
 
     [ObsoleteEx(Message = "The windows host has been deprecated. It is recommended to switch to self-hosting or the generic host instead. See the upgrade guide and docs for alternatives.",
         TreatAsErrorFromVersion = "9.0",
         RemoveInVersion = "10.0")]
+#pragma warning disable IDE1006 // Naming Styles
     public interface Production : IProfile
+#pragma warning restore IDE1006 // Naming Styles
     {
     }
 }
