@@ -1,0 +1,7 @@
+- match:
+    dependency_name: fluentvalidation
+    update_type: all
+
+- match:
+    dependency_name: moq
+    update_type: all
