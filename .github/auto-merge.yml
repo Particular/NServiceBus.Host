@@ -3,5 +3,5 @@
     update_type: all
 
 - match:
-    dependency_name: moq
+    dependency_name: Moq
     update_type: all
