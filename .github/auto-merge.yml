@@ -1,7 +1,11 @@
 - match:
-    dependency_name: fluentvalidation
+    dependency_name: FluentValidation
     update_type: all
 
 - match:
     dependency_name: Moq
+    update_type: all
+    
+- match:
+    dependency_name: Fody
     update_type: all
