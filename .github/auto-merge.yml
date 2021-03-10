@@ -9,3 +9,7 @@
 - match:
     dependency_name: Fody
     update_type: all
+
+- match:
+    dependency_name: Particular.Packaging
+    update_type: all
