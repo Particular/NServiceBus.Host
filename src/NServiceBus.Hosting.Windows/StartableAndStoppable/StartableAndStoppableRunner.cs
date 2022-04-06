@@ -33,12 +33,12 @@
                     We can't use the await keyword because of the conditional logging. 
                     Since we want to start them concurrently and log per instance there is not much else we can do.
                 */
-                task.ContinueWith(t =>
+                _ = task.ContinueWith(t =>
                 {
                     thingsRanAtStartup.Add(startable1);
                     Log.DebugFormat("Started {0}.", startableName);
                 }, TaskContinuationOptions.OnlyOnRanToCompletion | TaskContinuationOptions.ExecuteSynchronously);
-                task.ContinueWith(t =>
+                _ = task.ContinueWith(t =>
                 {
                     Log.Error($"Startup task {startableName} failed to complete.", t.Exception);
                 }, TaskContinuationOptions.OnlyOnFaulted | TaskContinuationOptions.ExecuteSynchronously);
@@ -109,7 +109,7 @@
             var delayTokenSource = new CancellationTokenSource();
 
             var warningWaitTimeTask = Task.Delay(LongRunningWarningTimeSpan, delayTokenSource.Token);
-            Task.WhenAny(taskToWatch, warningWaitTimeTask)
+            _ = Task.WhenAny(taskToWatch, warningWaitTimeTask)
                 .ContinueWith(t =>
                 {
                     delayTokenSource.Cancel();
