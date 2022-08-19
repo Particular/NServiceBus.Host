@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - master
-      - release-0*
+      - release-*
   pull_request:
   workflow_dispatch:
 env:
